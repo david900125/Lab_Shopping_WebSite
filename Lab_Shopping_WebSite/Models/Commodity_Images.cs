@@ -15,11 +15,14 @@ namespace Lab_Shopping_WebSite.Models
         }
 
         #region 屬性
+        [Key]
+        public int Commodity_ImageID { get; set; }
+
         [Required(ErrorMessage = "CommodityID is required")]
         public int CommodityID { get; set; }
 
         [Required]
-        public int? FileID { get; set; }
+        public string? Url { get; set; }
 
         [Required]
         public int Order { get; set; }
@@ -28,9 +31,6 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("CommodityID"), InverseProperty("Images")]
         public virtual Commodities? Commodity { get; set; }
-
-        [ForeignKey("FileID"), InverseProperty("Commodity_Images")]
-        public virtual Files? File { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("CommodityImagesCreator")]
         public virtual Members? CreateMember { get; set; }

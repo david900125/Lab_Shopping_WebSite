@@ -30,7 +30,7 @@ namespace Lab_Shopping_WebSite.DBContext
     {
         public void Configure(EntityTypeBuilder<Commodity_Images> builder)
         {
-            builder.HasKey(n => new { n.CommodityID, n.FileID });
+            //builder.HasKey(n => new { n.CommodityID, n.FileID });
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityImagesCreator).HasForeignKey(n => n.Creator);

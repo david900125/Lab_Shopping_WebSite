@@ -6,7 +6,7 @@ using Lab_Shopping_WebSite.Models;
 
 namespace Lab_Shopping_WebSite.Services
 {
-    public class MemberService : IService
+    public class MemberService : IService<MemberService>
     {
         private readonly DataContext _db;
 

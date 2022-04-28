@@ -1,14 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-
 using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Models;
 
 namespace Lab_Shopping_WebSite.Services
 {
-    public class BlogService : IService
+    public class BlogService : IService<BlogService>
     {
-        private readonly DataContext _db;
+        //private readonly DataContext _db;
 
         public BlogService(DataContext db)
         {
@@ -19,33 +17,51 @@ namespace Lab_Shopping_WebSite.Services
 
         public async Task<bool> UpdateBlogs(Blogs blog)
         {
-            using var transaction = _db.Database.BeginTransaction();
-
-            try
+            var result = await Updater<Blogs>(blog);
+            if (result.Item1)
             {
-                _db.Update(blog);
-                await _db.SaveChangesAsync();
-                transaction.Commit();
                 return true;
             }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                transaction.Rollback();
-
-                Blogs? Item = await _db.Blogs?.FirstOrDefaultAsync(b => b.BlogID == blog.BlogID);
-
-                if (Item == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    ex.Entries.Single().Reload();
-                    throw;
-                }
-            }
-
+            return false;
         }
 
+        public async Task<bool> UpdateBlogContents(List<Blog_Contents> Contents)
+        {
+            foreach(var content in Contents)
+            {
+                var result = await Updater<Blog_Contents>(content);
+                if (!result.Item1)
+                {
+                    break;
+                }
+            }        
+            return true;
+        }
+
+        public async Task<bool> UpdateBlogHrefs(List<Blog_Hrefs> Hrefs)
+        {
+            foreach(var href in Hrefs)
+            {
+                var result = await Updater<Blog_Hrefs>(href);
+                if (!result.Item1)
+                {
+                    break;
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateBlogImages(List<Blog_Images> Images)
+        {
+            foreach (var Image in Images)
+            {
+                var result = await Updater<Blog_Images>(Image);
+                if (!result.Item1)
+                {
+                    break;
+                }
+            }
+            return true;
+        }
     }
 }

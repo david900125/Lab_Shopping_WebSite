@@ -2,11 +2,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Json;
-
+using AutoMapper;
 using Lab_Shopping_WebSite.Apis;
 using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
+using Lab_Shopping_WebSite.Map;
 
 
 // .NET 6 IConfiguration
@@ -29,7 +30,8 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 
 // AutoMapper
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Cors
 builder.Services.AddCors(option => option.AddPolicy("Policy", builder =>
 {
@@ -51,6 +53,7 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.Creat
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
     dbContext.Database.EnsureCreated();
 }
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -91,6 +94,7 @@ foreach (var api in apis)
 }
 
 
+
 app.Run();
 
 
@@ -99,12 +103,19 @@ void RegisterServices(IServiceCollection svcs)
     // Add HttpContext
     svcs.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     // Add Apis
-    svcs.AddTransient<IApi, ClientApi>();
-    svcs.AddTransient<IApi, TestApi>();
     svcs.AddTransient<IApi, ArticleApi>();
 
 
     // Add Sevices
-    svcs.AddTransient<IService, BlogService>();
-    svcs.AddTransient<IService, MemberService>();
+    svcs.AddTransient<IService<BlogService>, BlogService>();
+    svcs.AddTransient<IService<MemberService>, MemberService>();
+
+    var mapperConfig = new MapperConfiguration(mc =>
+    {
+        mc.AddProfile(new MappingProfile());
+    });
+    
+    IMapper mapper = mapperConfig.CreateMapper();
+    //mapper.ConfigurationProvider.AssertConfigurationIsValid();
+    svcs.AddSingleton(mapper);
 }
