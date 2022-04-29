@@ -6,7 +6,7 @@ using Lab_Shopping_WebSite.Interfaces;
 namespace Lab_Shopping_WebSite.Models
 {
     [Table("Members")]
-    public class Members
+    public class Members : IModel
     {
         public Members()
         {
@@ -19,14 +19,16 @@ namespace Lab_Shopping_WebSite.Models
         [Required(ErrorMessage = "Email Address is Required.")]
         [StringLength(320, ErrorMessage = "欄位長度不可大於320個字元")]
         public string? Email_Address { get; set; }
+
         [Required(ErrorMessage = "")]
         public string? Password { get; set; }
+        [Required]
         public string? Name { get; set; }
         public string? Address { get; set; }
         [Phone]
         public string? Phone_Number { get; set; }
-        public bool Gender { get; set; }
-        public DateOnly BirthDay { get; set; }
+        public bool? Gender { get; set; }
+        public DateOnly? BirthDay { get; set; }
         public int RoleID { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }

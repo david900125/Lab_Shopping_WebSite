@@ -6,13 +6,9 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class BlogService : IService<BlogService>
     {
-        //private readonly DataContext _db;
 
-        public BlogService(DataContext db)
+        public BlogService(DataContext db):base(db)
         {
-            if (db == null)
-                throw new ArgumentNullException("db");
-            this._db = db;
         }
 
         public async Task<bool> UpdateBlogs(Blogs blog)

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Lab_Shopping_WebSite.Migrations
 {
-    public partial class InitinalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -138,17 +138,20 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "Commodity_Images",
                 columns: table => new
                 {
+                    Commodity_ImageID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CommodityID = table.Column<int>(type: "int", nullable: false),
-                    FileID = table.Column<int>(type: "int", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
+                    FilesFileID = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Commodity_Images", x => new { x.CommodityID, x.FileID });
+                    table.PrimaryKey("PK_Commodity_Images", x => x.Commodity_ImageID);
                     table.ForeignKey(
                         name: "FK_Commodity_Images_Commodities_CommodityID",
                         column: x => x.CommodityID,
@@ -464,11 +467,13 @@ namespace Lab_Shopping_WebSite.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<bool>(type: "bit", nullable: false),
-                    BirthDay = table.Column<DateTime>(type: "date", nullable: false),
+                    Gender = table.Column<bool>(type: "bit", nullable: true),
+                    BirthDay = table.Column<DateTime>(type: "date", nullable: true),
                     RoleID = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
-                    Creator = table.Column<int>(type: "int", nullable: true)
+                    Creator = table.Column<int>(type: "int", nullable: true),
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -992,6 +997,16 @@ namespace Lab_Shopping_WebSite.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "RoleID", "CreateTime", "Creator", "Modifier", "ModifyTime", "RoleName" },
+                values: new object[] { 1, new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4517), null, null, new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4528), "管理者" });
+
+            migrationBuilder.InsertData(
+                table: "Members",
+                columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
+                values: new object[] { 1, null, null, new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7634), 1, "root@gmail.com", null, 1, new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7624), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Action_Auths_Creator",
                 table: "Action_Auths",
@@ -1083,14 +1098,19 @@ namespace Lab_Shopping_WebSite.Migrations
                 column: "Modifier");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Commodity_Images_CommodityID",
+                table: "Commodity_Images",
+                column: "CommodityID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Commodity_Images_Creator",
                 table: "Commodity_Images",
                 column: "Creator");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Commodity_Images_FileID",
+                name: "IX_Commodity_Images_FilesFileID",
                 table: "Commodity_Images",
-                column: "FileID");
+                column: "FilesFileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Commodity_Images_Modifier",
@@ -1660,12 +1680,11 @@ namespace Lab_Shopping_WebSite.Migrations
                 principalColumn: "MemberID");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Commodity_Images_Files_FileID",
+                name: "FK_Commodity_Images_Files_FilesFileID",
                 table: "Commodity_Images",
-                column: "FileID",
+                column: "FilesFileID",
                 principalTable: "Files",
-                principalColumn: "FileID",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "FileID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Commodity_Images_Members_Creator",

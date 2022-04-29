@@ -121,6 +121,17 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.RolesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.RolesModifer).HasForeignKey(n => n.Modifier);
+
+            builder.HasData(
+                new Roles
+                {
+                    RoleID = 1,
+                    RoleName = "管理者",
+                    CreateTime = DateTime.Now,
+                    ModifyTime = DateTime.Now
+                }
+
+            );
         }
     }
     public class ReceivedCouponsConfiguration : IEntityTypeConfiguration<Received_Coupons>
@@ -285,6 +296,21 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.MembersCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.MembersModifer).HasForeignKey(n => n.Modifier);
+            // seeds
+            builder.HasData(
+                new Members
+                {
+                    MemberID = 1,
+                    Name = "administrator",
+                    Email_Address = "root@gmail.com",
+                    Password = "63A9F0EA7BB98050796B649E85481845",
+                    RoleID = 1,
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                }
+            );
         }
     }
     public class InventoriesConfiguration : IEntityTypeConfiguration<Inventories>

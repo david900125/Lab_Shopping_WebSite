@@ -284,16 +284,22 @@ namespace Lab_Shopping_WebSite.Migrations
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Images", b =>
                 {
-                    b.Property<int>("CommodityID")
+                    b.Property<int>("Commodity_ImageID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("FileID")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Commodity_ImageID"), 1L, 1);
+
+                    b.Property<int>("CommodityID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Creator")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FilesFileID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Modifier")
@@ -305,11 +311,17 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.HasKey("CommodityID", "FileID");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Commodity_ImageID");
+
+                    b.HasIndex("CommodityID");
 
                     b.HasIndex("Creator");
 
-                    b.HasIndex("FileID");
+                    b.HasIndex("FilesFileID");
 
                     b.HasIndex("Modifier");
 
@@ -884,8 +896,11 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BirthDay")
+                    b.Property<DateTime?>("BirthDay")
                         .HasColumnType("date");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("Creator")
                         .HasColumnType("int");
@@ -895,11 +910,14 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasMaxLength(320)
                         .HasColumnType("nvarchar(320)");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("bit");
 
                     b.Property<int?>("Modifier")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifyTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -923,6 +941,20 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("Members");
+
+                    b.HasData(
+                        new
+                        {
+                            MemberID = 1,
+                            CreateTime = new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7634),
+                            Creator = 1,
+                            Email_Address = "root@gmail.com",
+                            Modifier = 1,
+                            ModifyTime = new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7624),
+                            Name = "administrator",
+                            Password = "63A9F0EA7BB98050796B649E85481845",
+                            RoleID = 1
+                        });
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Menus", b =>
@@ -1168,6 +1200,15 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.HasIndex("Modifier");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleID = 1,
+                            CreateTime = new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4517),
+                            ModifyTime = new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4528),
+                            RoleName = "管理者"
+                        });
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Sales", b =>
@@ -1698,11 +1739,9 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasForeignKey("Creator")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Lab_Shopping_WebSite.Models.Files", "File")
+                    b.HasOne("Lab_Shopping_WebSite.Models.Files", null)
                         .WithMany("Commodity_Images")
-                        .HasForeignKey("FileID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FilesFileID");
 
                     b.HasOne("Lab_Shopping_WebSite.Models.Members", "ModifyMember")
                         .WithMany("CommodityImagesModifer")
@@ -1712,8 +1751,6 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Navigation("Commodity");
 
                     b.Navigation("CreateMember");
-
-                    b.Navigation("File");
 
                     b.Navigation("ModifyMember");
                 });

@@ -1,14 +1,20 @@
+using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AutoMapper;
 using Lab_Shopping_WebSite.Apis;
 using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Map;
-
+using Lab_Shopping_WebSite.Extension;
+using Microsoft.Extensions.ObjectPool;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // .NET 6 IConfiguration
 var builder = WebApplication.CreateBuilder(args);
@@ -23,10 +29,11 @@ builder.Services.AddControllers();
 // Configure JSON options.
 builder.Services.Configure<JsonOptions>(options =>
 {
-    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    //options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.WriteIndented = true;
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+    options.SerializerOptions.PropertyNamingPolicy = null;
 });
 
 // AutoMapper
@@ -43,9 +50,36 @@ builder.Services.AddCors(option => option.AddPolicy("Policy", builder =>
 // 資料庫連線
 builder.Services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// JwtBareer
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        // 設定 JWT Bearer Token 的檢查選項
+        .AddJwtBearer(options =>
+        {
+            options.IncludeErrorDetails = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                ValidateIssuer = true, //發行者驗證
+                ValidIssuer = builder.Configuration.GetValue<string>("JwtSettings:Issuer"),
+                ValidateAudience = false,
+                ValidateLifetime = true, //存活時間驗證
+                ValidateIssuerSigningKey = false, //金鑰驗證
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JwtSettings:SignKey")))
+            };
+        });
+
 // Authorization
-// builder.Services.AddAuthorization(o => o.AddPolicy("AdminsOnly",
-//                                   b => b.RequireClaim("admin", "true")));
+builder.Services.AddAuthorization(options =>
+{
+    var PolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme, "Admin");
+    //var PolicyBuilder2 = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme, "Users");
+    PolicyBuilder = PolicyBuilder.RequireAuthenticatedUser();
+    //PolicyBuilder2 = PolicyBuilder2.RequireAuthenticatedUser();
+    options.DefaultPolicy = PolicyBuilder.Build();
+    //options.DefaultPolicy = PolicyBuilder2.Build();
+});
 
 var app = builder.Build();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
@@ -53,7 +87,6 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.Creat
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
     dbContext.Database.EnsureCreated();
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -72,6 +105,7 @@ else
     // 全域性異常處理中介軟體
     app.UseExceptionHandler("error");
 }
+
 // HTTP 要求重新導向至 HTTPS
 app.UseHttpsRedirection();
 //啟用靜態檔案
@@ -93,22 +127,22 @@ foreach (var api in apis)
     api.Register(app);
 }
 
-
-
 app.Run();
 
 
 void RegisterServices(IServiceCollection svcs)
 {
+    // Jwt
+    svcs.AddSingleton<Jwt>();
     // Add HttpContext
     svcs.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     // Add Apis
     svcs.AddTransient<IApi, ArticleApi>();
-
-
+    svcs.AddTransient<IApi, MemberApi>();
     // Add Sevices
     svcs.AddTransient<IService<BlogService>, BlogService>();
     svcs.AddTransient<IService<MemberService>, MemberService>();
+
 
     var mapperConfig = new MapperConfiguration(mc =>
     {
