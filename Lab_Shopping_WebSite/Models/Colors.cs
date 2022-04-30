@@ -19,7 +19,10 @@ namespace Lab_Shopping_WebSite.Models
         public int ColorID { get; set; }
 
         [Required(ErrorMessage = "Color is required.")]
-        public int Color { get; set; }
+        public string Color { get; set; }
+
+        [Required]
+        public string Url { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("ColorsCreator")]
         public virtual Members? CreateMember { get; set; }

@@ -19,7 +19,6 @@ namespace Lab_Shopping_WebSite.DBContext
     {
         public void Configure(EntityTypeBuilder<Blog_Images> builder)
         {
-            builder.HasKey(n => new { n.BlogID, n.FileID });
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.Blog_ImagesCreator).HasForeignKey(n => n.Creator);
@@ -100,6 +99,30 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.PricesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.PricesModifer).HasForeignKey(n => n.Modifier);
+
+            builder.HasData(
+                new Prices
+                {
+                    PriceID = 1,
+                    Price = "優惠價",
+                    CreateTime = DateTime.Now,
+                    ModifyTime = DateTime.Now
+                },
+                 new Prices
+                 {
+                     PriceID = 2,
+                     Price = "標價",
+                     CreateTime = DateTime.Now,
+                     ModifyTime = DateTime.Now
+                 },
+                  new Prices
+                  {
+                      PriceID = 3,
+                      Price = "單價",
+                      CreateTime = DateTime.Now,
+                      ModifyTime = DateTime.Now
+                  }
+            );
         }
     }
     public class PagesConfiguration : IEntityTypeConfiguration<Pages>
@@ -266,6 +289,58 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ColorsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ColorsModifer).HasForeignKey(n => n.Modifier);
+            builder.HasData(
+                new Colors
+                {
+                    ColorID = 1,
+                    Color = "黑色",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 2,
+                    Color = "白色",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/FSV0001_3_01.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 3,
+                    Color = "咖啡",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_01.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 4,
+                    Color = "黃色",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/crv0307_3_01.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 5,
+                    Color = "灰色",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_03.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                }
+            );
         }
     }
     public class CommoditiesConfiguration : IEntityTypeConfiguration<Commodities>
@@ -286,6 +361,44 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityKindsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityKindsModifer).HasForeignKey(n => n.Modifier);
+            builder.HasData(
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 1,
+                    Description = "上身",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 2,
+                    Description = "下身",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 3,
+                    Description = "配件",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 4,
+                    Description = "SHOES",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                }
+            );
         }
     }
     public class MembersConfiguration : IEntityTypeConfiguration<Members>

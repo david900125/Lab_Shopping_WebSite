@@ -29,6 +29,7 @@ namespace Lab_Shopping_WebSite.Models
         public virtual Members? ModifyMember { get; set; }
 
         public ICollection<Tags>? Tags { get; set; }
+        public ICollection<Sizes>? Sizes { get; set; }
         #endregion
     }
 }

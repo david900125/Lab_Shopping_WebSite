@@ -18,6 +18,9 @@ namespace Lab_Shopping_WebSite.Models
         [Required(ErrorMessage = "CommodityID is required")]
         public int CommodityID { get; set; }
 
+        [Required]
+        public string CommodityName { get; set; }
+
         [StringLength(250, ErrorMessage = "欄位長度不可大於250個字元")]
         public string? Description { get; set; }
 
@@ -37,9 +40,9 @@ namespace Lab_Shopping_WebSite.Models
 
         public ICollection<Blog_Hrefs>? Blog_Hrefs { get; set; }
         public ICollection<Commodity_Images>? Images { get; set; }
-        public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
         public ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
         public ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
+        public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
         public ICollection<Sizes>? Sizes { get; set; }
         public ICollection<Like_Commodities>? Like_Commodities { get; set; }
         public ICollection<Recently_Viewed>? Recently_Viewed { get; set; }

@@ -139,9 +139,11 @@ void RegisterServices(IServiceCollection svcs)
     // Add Apis
     svcs.AddTransient<IApi, ArticleApi>();
     svcs.AddTransient<IApi, MemberApi>();
+    svcs.AddTransient<IApi, CommodityApi>();
     // Add Sevices
     svcs.AddTransient<IService<BlogService>, BlogService>();
     svcs.AddTransient<IService<MemberService>, MemberService>();
+    svcs.AddTransient<IService<CommodityService>, CommodityService>();
 
 
     var mapperConfig = new MapperConfiguration(mc =>
