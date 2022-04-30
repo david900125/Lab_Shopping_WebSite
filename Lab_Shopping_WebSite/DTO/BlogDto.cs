@@ -55,7 +55,7 @@ namespace Lab_Shopping_WebSite.DTO
     public class BlogImageDto
     {
         public int BlogID { get; set; }
-        public int FileID { get; set; }
+        public string Url { get; set; }
         public int Order { get; set; }
         public List<Blog_Images> Split(BlogDto blogdto)
         {
@@ -67,7 +67,7 @@ namespace Lab_Shopping_WebSite.DTO
                 blogs.Add(new Blog_Images
                 {
                     BlogID = blogdto.BlogID,
-                    FileID = dto.FileID,
+                    Url = dto.Url,
                     Order = dto.Order
                 });
             }

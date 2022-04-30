@@ -68,17 +68,20 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "Blog_Images",
                 columns: table => new
                 {
+                    Blog_Images_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BlogID = table.Column<int>(type: "int", nullable: false),
-                    FileID = table.Column<int>(type: "int", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
+                    FilesFileID = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blog_Images", x => new { x.BlogID, x.FileID });
+                    table.PrimaryKey("PK_Blog_Images", x => x.Blog_Images_ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +107,8 @@ namespace Lab_Shopping_WebSite.Migrations
                 {
                     ColorID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Color = table.Column<int>(type: "int", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -121,6 +125,7 @@ namespace Lab_Shopping_WebSite.Migrations
                 {
                     CommodityID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CommodityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     Material = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     isReleased = table.Column<bool>(type: "bit", nullable: false),
@@ -185,6 +190,9 @@ namespace Lab_Shopping_WebSite.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CommodityID = table.Column<int>(type: "int", nullable: false),
                     PriceID = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "date", nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -464,7 +472,7 @@ namespace Lab_Shopping_WebSite.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email_Address = table.Column<string>(type: "nvarchar(320)", maxLength: 320, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone_Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<bool>(type: "bit", nullable: true),
@@ -750,10 +758,11 @@ namespace Lab_Shopping_WebSite.Migrations
                 {
                     SizeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CommodityID = table.Column<int>(type: "int", nullable: false),
+                    Commodity_KindsID = table.Column<int>(type: "int", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    Size = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    CommoditiesCommodityID = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -761,10 +770,15 @@ namespace Lab_Shopping_WebSite.Migrations
                 {
                     table.PrimaryKey("PK_Sizes", x => x.SizeID);
                     table.ForeignKey(
-                        name: "FK_Sizes_Commodities_CommodityID",
-                        column: x => x.CommodityID,
+                        name: "FK_Sizes_Commodities_CommoditiesCommodityID",
+                        column: x => x.CommoditiesCommodityID,
                         principalTable: "Commodities",
-                        principalColumn: "CommodityID",
+                        principalColumn: "CommodityID");
+                    table.ForeignKey(
+                        name: "FK_Sizes_Commodity_Kinds_Commodity_KindsID",
+                        column: x => x.Commodity_KindsID,
+                        principalTable: "Commodity_Kinds",
+                        principalColumn: "Commodity_KindID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sizes_Members_Creator",
@@ -998,14 +1012,24 @@ namespace Lab_Shopping_WebSite.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Prices",
+                columns: new[] { "PriceID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Price" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6221), null, null, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6228), "優惠價" },
+                    { 2, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6230), null, null, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6231), "標價" },
+                    { 3, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6231), null, null, new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6232), "單價" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "RoleID", "CreateTime", "Creator", "Modifier", "ModifyTime", "RoleName" },
-                values: new object[] { 1, new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4517), null, null, new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4528), "管理者" });
+                values: new object[] { 1, new DateTime(2022, 4, 29, 21, 58, 44, 583, DateTimeKind.Local).AddTicks(8633), null, null, new DateTime(2022, 4, 29, 21, 58, 44, 583, DateTimeKind.Local).AddTicks(8639), "管理者" });
 
             migrationBuilder.InsertData(
                 table: "Members",
                 columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
-                values: new object[] { 1, null, null, new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7634), 1, "root@gmail.com", null, 1, new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7624), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
+                values: new object[] { 1, null, null, new DateTime(2022, 4, 29, 21, 58, 44, 544, DateTimeKind.Local).AddTicks(863), 1, "root@gmail.com", null, 1, new DateTime(2022, 4, 29, 21, 58, 44, 544, DateTimeKind.Local).AddTicks(854), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Action_Auths_Creator",
@@ -1053,14 +1077,19 @@ namespace Lab_Shopping_WebSite.Migrations
                 column: "Modifier");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Blog_Images_BlogID",
+                table: "Blog_Images",
+                column: "BlogID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Blog_Images_Creator",
                 table: "Blog_Images",
                 column: "Creator");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Blog_Images_FileID",
+                name: "IX_Blog_Images_FilesFileID",
                 table: "Blog_Images",
-                column: "FileID");
+                column: "FilesFileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blog_Images_Modifier",
@@ -1484,9 +1513,14 @@ namespace Lab_Shopping_WebSite.Migrations
                 column: "Modifier");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sizes_CommodityID",
+                name: "IX_Sizes_CommoditiesCommodityID",
                 table: "Sizes",
-                column: "CommodityID");
+                column: "CommoditiesCommodityID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sizes_Commodity_KindsID",
+                table: "Sizes",
+                column: "Commodity_KindsID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sizes_Creator",
@@ -1616,12 +1650,11 @@ namespace Lab_Shopping_WebSite.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Blog_Images_Files_FileID",
+                name: "FK_Blog_Images_Files_FilesFileID",
                 table: "Blog_Images",
-                column: "FileID",
+                column: "FilesFileID",
                 principalTable: "Files",
-                principalColumn: "FileID",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "FileID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Blog_Images_Members_Creator",
@@ -2052,9 +2085,6 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "Status");
 
             migrationBuilder.DropTable(
-                name: "Commodity_Kinds");
-
-            migrationBuilder.DropTable(
                 name: "Colors");
 
             migrationBuilder.DropTable(
@@ -2071,6 +2101,9 @@ namespace Lab_Shopping_WebSite.Migrations
 
             migrationBuilder.DropTable(
                 name: "Commodities");
+
+            migrationBuilder.DropTable(
+                name: "Commodity_Kinds");
 
             migrationBuilder.DropTable(
                 name: "Delivery_Places");

@@ -35,7 +35,7 @@ namespace Lab_Shopping_WebSite.Apis
                     }
                     else
                         return Results.BadRequest("Insert Error.");
-                }             
+                }
                 else
                     return Results.BadRequest("Email Used.");
             }
@@ -57,7 +57,7 @@ namespace Lab_Shopping_WebSite.Apis
                 if (query.Item2.Password == signin.Password.ToMD5())
                 {
                     StringBuilder sbuild = new StringBuilder("Bearer ");
-                    var token = jwt.GenerateToken(query.Item2.Name , query.Item2.RoleID , query.Item2.MemberID);       
+                    var token = jwt.GenerateToken(query.Item2.Name, query.Item2.RoleID, query.Item2.MemberID);
                     string result = sbuild.Append(token).ToString();
                     return Results.Ok(new { result });
                 }
@@ -76,22 +76,23 @@ namespace Lab_Shopping_WebSite.Apis
             [FromServices] Jwt jwt,
             int MemberID)
         {
-            var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();        
+            var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();
             return Results.Ok(result);
         }
-        
+
         async Task<IResult> UpdMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
+            HttpContext context,
             [FromBody] UpdMemberDto dto)
         {
             MemberService ms = (MemberService)service;
-
-            var query = await ms.GetMembers(dto.MemberID);
+            int MemberID = Convert.ToInt16(context.User.FindFirst("Sid"));
+            var query = await ms.GetMembers(MemberID);
 
             if (query.Item1)
             {
-                var result = await ms.UpdateMember(dto , query.Item2);
+                var result = await ms.UpdateMember(dto, query.Item2);
                 if (result.Item1)
                 {
                     return Results.Ok();
@@ -110,26 +111,26 @@ namespace Lab_Shopping_WebSite.Apis
                int count)
         {
             List<MemberDto> results = (from members in _db.Members
-                                        join roles in _db.Roles
-                                        on members.RoleID equals roles.RoleID
-                                        orderby members.CreateTime descending
-                                        select new MemberDto()
-                                        {
-                                            MemberID = members.MemberID,
-                                            Email_Address = members.Email_Address,
-                                            Name = members.Name,
-                                            Address = members.Address,
-                                            Phone_Number = members.Phone_Number,
-                                            Gender = ((members.Gender == true) ? Gender.Male.ToString() : Gender.Female.ToString()),
-                                            Role = roles.RoleName,
-                                            BirthDay = members.BirthDay.ToString(),
-                                            CreateTime = members.CreateTime.ToString("yyyy/MM/dd HH:mm:ss"),
-                                            ModifyTime = members.ModifyTime.ToString("yyyy/MM/dd HH:mm:ss"),
-                                        }).Take(count).ToList();
+                                       join roles in _db.Roles
+                                       on members.RoleID equals roles.RoleID
+                                       orderby members.CreateTime descending
+                                       select new MemberDto()
+                                       {
+                                           MemberID = members.MemberID,
+                                           Email_Address = members.Email_Address,
+                                           Name = members.Name,
+                                           Address = members.Address,
+                                           Phone_Number = members.Phone_Number,
+                                           Gender = ((members.Gender == true) ? Gender.Male.ToString() : Gender.Female.ToString()),
+                                           Role = roles.RoleName,
+                                           BirthDay = members.BirthDay.ToString(),
+                                           CreateTime = members.CreateTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                                           ModifyTime = members.ModifyTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                                       }).Take(count).ToList();
 
             return Results.Ok(results);
         }
-        
+
         async Task<IResult> UpPassword(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -151,7 +152,7 @@ namespace Lab_Shopping_WebSite.Apis
                         return Results.Ok();
                     else
                         return Results.BadRequest("New Password Update Failed.");
-                }      
+                }
                 else
                     return Results.BadRequest("Old Password InCorrect.");
             }

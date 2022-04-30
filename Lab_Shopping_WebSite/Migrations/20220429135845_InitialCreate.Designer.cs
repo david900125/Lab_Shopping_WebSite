@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Shopping_WebSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220428143448_InitialCreate")]
+    [Migration("20220429135845_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,16 +146,22 @@ namespace Lab_Shopping_WebSite.Migrations
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Blog_Images", b =>
                 {
-                    b.Property<int>("BlogID")
+                    b.Property<int>("Blog_Images_ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("FileID")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Blog_Images_ID"), 1L, 1);
+
+                    b.Property<int>("BlogID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Creator")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FilesFileID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Modifier")
@@ -167,11 +173,17 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.HasKey("BlogID", "FileID");
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Blog_Images_ID");
+
+                    b.HasIndex("BlogID");
 
                     b.HasIndex("Creator");
 
-                    b.HasIndex("FileID");
+                    b.HasIndex("FilesFileID");
 
                     b.HasIndex("Modifier");
 
@@ -220,8 +232,9 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ColorID"), 1L, 1);
 
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
@@ -234,6 +247,10 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.Property<DateTime>("ModifyTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ColorID");
 
@@ -251,6 +268,10 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommodityID"), 1L, 1);
+
+                    b.Property<string>("CommodityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
@@ -381,14 +402,23 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int?>("Creator")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("date");
+
                     b.Property<int?>("Modifier")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifyTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("PriceID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Commodity_PriceID");
 
@@ -922,6 +952,7 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -948,11 +979,11 @@ namespace Lab_Shopping_WebSite.Migrations
                         new
                         {
                             MemberID = 1,
-                            CreateTime = new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7634),
+                            CreateTime = new DateTime(2022, 4, 29, 21, 58, 44, 544, DateTimeKind.Local).AddTicks(863),
                             Creator = 1,
                             Email_Address = "root@gmail.com",
                             Modifier = 1,
-                            ModifyTime = new DateTime(2022, 4, 28, 22, 34, 47, 500, DateTimeKind.Local).AddTicks(7624),
+                            ModifyTime = new DateTime(2022, 4, 29, 21, 58, 44, 544, DateTimeKind.Local).AddTicks(854),
                             Name = "administrator",
                             Password = "63A9F0EA7BB98050796B649E85481845",
                             RoleID = 1
@@ -1099,6 +1130,29 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.HasIndex("Modifier");
 
                     b.ToTable("Prices");
+
+                    b.HasData(
+                        new
+                        {
+                            PriceID = 1,
+                            CreateTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6221),
+                            ModifyTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6228),
+                            Price = "優惠價"
+                        },
+                        new
+                        {
+                            PriceID = 2,
+                            CreateTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6230),
+                            ModifyTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6231),
+                            Price = "標價"
+                        },
+                        new
+                        {
+                            PriceID = 3,
+                            CreateTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6231),
+                            ModifyTime = new DateTime(2022, 4, 29, 21, 58, 44, 566, DateTimeKind.Local).AddTicks(6232),
+                            Price = "單價"
+                        });
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Received_Coupons", b =>
@@ -1207,8 +1261,8 @@ namespace Lab_Shopping_WebSite.Migrations
                         new
                         {
                             RoleID = 1,
-                            CreateTime = new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4517),
-                            ModifyTime = new DateTime(2022, 4, 28, 22, 34, 47, 560, DateTimeKind.Local).AddTicks(4528),
+                            CreateTime = new DateTime(2022, 4, 29, 21, 58, 44, 583, DateTimeKind.Local).AddTicks(8633),
+                            ModifyTime = new DateTime(2022, 4, 29, 21, 58, 44, 583, DateTimeKind.Local).AddTicks(8639),
                             RoleName = "管理者"
                         });
                 });
@@ -1422,7 +1476,10 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SizeID"), 1L, 1);
 
-                    b.Property<int>("CommodityID")
+                    b.Property<int?>("CommoditiesCommodityID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Commodity_KindsID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
@@ -1444,7 +1501,9 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasKey("SizeID");
 
-                    b.HasIndex("CommodityID");
+                    b.HasIndex("CommoditiesCommodityID");
+
+                    b.HasIndex("Commodity_KindsID");
 
                     b.HasIndex("Creator");
 
@@ -1657,11 +1716,9 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasForeignKey("Creator")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Lab_Shopping_WebSite.Models.Files", "File")
+                    b.HasOne("Lab_Shopping_WebSite.Models.Files", null)
                         .WithMany("Blog_Images")
-                        .HasForeignKey("FileID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FilesFileID");
 
                     b.HasOne("Lab_Shopping_WebSite.Models.Members", "ModifyMember")
                         .WithMany("Blog_ImagesModifer")
@@ -1671,8 +1728,6 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Navigation("Blog");
 
                     b.Navigation("CreateMember");
-
-                    b.Navigation("File");
 
                     b.Navigation("ModifyMember");
                 });
@@ -1792,7 +1847,7 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasForeignKey("Modifier")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Lab_Shopping_WebSite.Models.Prices", "Price")
+                    b.HasOne("Lab_Shopping_WebSite.Models.Prices", "PriceTag")
                         .WithMany("Commodity_Prices")
                         .HasForeignKey("PriceID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1802,7 +1857,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.Navigation("ModifyMember");
 
-                    b.Navigation("Price");
+                    b.Navigation("PriceTag");
 
                     b.Navigation("commodity");
                 });
@@ -2414,9 +2469,13 @@ namespace Lab_Shopping_WebSite.Migrations
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Sizes", b =>
                 {
-                    b.HasOne("Lab_Shopping_WebSite.Models.Commodities", "Commodity")
+                    b.HasOne("Lab_Shopping_WebSite.Models.Commodities", null)
                         .WithMany("Sizes")
-                        .HasForeignKey("CommodityID")
+                        .HasForeignKey("CommoditiesCommodityID");
+
+                    b.HasOne("Lab_Shopping_WebSite.Models.Commodity_Kinds", "Commodity_Kinds")
+                        .WithMany("Sizes")
+                        .HasForeignKey("Commodity_KindsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2430,7 +2489,7 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasForeignKey("Modifier")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Commodity");
+                    b.Navigation("Commodity_Kinds");
 
                     b.Navigation("CreateMember");
 
@@ -2532,6 +2591,8 @@ namespace Lab_Shopping_WebSite.Migrations
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Kinds", b =>
                 {
+                    b.Navigation("Sizes");
+
                     b.Navigation("Tags");
                 });
 

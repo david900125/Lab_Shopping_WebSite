@@ -14,20 +14,15 @@ namespace Lab_Shopping_WebSite.DTO
 
     public class SigninDto
     {
-        public SigninDto()
-        {
-        }
-
         public string Email_Address { get; set; }
         public string Password { get; set; }
     }
 
     public class UpdMemberDto
     {
-        public int MemberID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public string PhoneNumber { get;set; }
+        public string PhoneNumber { get; set; }
         public int Gender { get; set; }
         public string Birthday { get; set; }
     }

@@ -17,12 +17,13 @@ namespace Lab_Shopping_WebSite.Models
         [Key]
         [Required(ErrorMessage = "Commodity_PriceID is required")]
         public int Commodity_PriceID { get; set; }
-
         [Required]
         public int CommodityID { get; set; }
-
         [Required]
         public int PriceID { get; set; }
+        public decimal Price { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly? EndDate { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
 
@@ -36,7 +37,7 @@ namespace Lab_Shopping_WebSite.Models
         public virtual Commodities? commodity { get; set; }
 
         [ForeignKey("PriceID"), InverseProperty("Commodity_Prices")]
-        public virtual Prices? Price { get; set; }
+        public virtual Prices? PriceTag { get; set; }
         #endregion
     }
 }

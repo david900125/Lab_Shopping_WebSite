@@ -15,15 +15,15 @@ namespace Lab_Shopping_WebSite.Models
         }
 
         #region 屬性
+        [Required]
+        [Key]
+        public int Blog_Images_ID { get; set; }
 
         [Required(ErrorMessage = "BlogID is required")]
         [ForeignKey("Blog")]
         public int BlogID { get; set; }
-
         [Required]
-        [ForeignKey("Commodity")]
-        public int FileID { get; set; }
-
+        public string Url { get; set; }
         [Required]
         public int Order { get; set; }
         public int? Modifier { get; set; }
@@ -31,9 +31,6 @@ namespace Lab_Shopping_WebSite.Models
 
         [InverseProperty("Images")]
         public virtual Blogs? Blog { get; set; }
-
-        [InverseProperty("Blog_Images")]
-        public virtual Files? File { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("Blog_ImagesCreator")]
         public virtual Members? CreateMember { get; set; }
