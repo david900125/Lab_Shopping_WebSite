@@ -41,7 +41,7 @@ namespace Lab_Shopping_WebSite.Apis
             )
         {
             CommodityService cs = (CommodityService)service;
-            List<Commodity_Simple_Dto> results = await cs.Get_Commodities_Simple();
+            List<CommodityDto> results = await cs.Get_Commodities_Simple();
             return Results.Ok(results);
         }
 

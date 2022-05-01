@@ -22,24 +22,13 @@ namespace Lab_Shopping_WebSite.Services
             else
                 return Tuple.Create(true, result);
         }
-        public async Task<List<Commodity_Simple_Dto>> Get_Commodities_Simple()
+        public async Task<List<CommodityDto>> Get_Commodities_Simple()
         {
-            List<Commodity_Simple_Dto> result = new List<Commodity_Simple_Dto>();
+            List<CommodityDto> result = new List<CommodityDto>();
             foreach(var item in _db.Commodities)
             {
-                CommodityDto dto = await GetFullCommodity(item.CommodityID);
-                result.Add(new Commodity_Simple_Dto
-                {
-                    CommodityID = dto.CommodityId,
-                    CommodityKinds = dto.CommodityKinds,
-                    CommodityPrice = dto.Price,
-                    SpecialPrice = dto.S_Price,
-                    CommodityName = dto.CommodityName,
-                    CommodityTags = dto.CommodityTags,
-                    CommodityUrl = dto.CommodityImages.FirstOrDefault()
-                });            
+                result.Add(await GetFullCommodity(item.CommodityID));
             }
-
             return result;
         }
         public async Task<CommodityDto> GetFullCommodity(int CommodityID)
