@@ -14,8 +14,8 @@ namespace Lab_Shopping_WebSite.Models
         }
 
         #region 屬性
+
         [Key]
-        [Required(ErrorMessage = "Commodity_SizesID is required.")]
         public int Commodity_SizesID { get; set; }
 
         [Required(ErrorMessage = "CommodityID is required.")]
@@ -30,19 +30,22 @@ namespace Lab_Shopping_WebSite.Models
         public int? Creator { get; set; }
 
         [ForeignKey("CommodityID"), InverseProperty("Commodity_Sizes")]
-        public Commodities? Commodity { get; set; }
+        public virtual Commodities? Commodity { get; set; }
 
         [ForeignKey("ColorID"), InverseProperty("Commodity_Sizes")]
-        public Colors? Color { get; set; }
+        public virtual Colors? Color { get; set; }
 
         [ForeignKey("SizeID"), InverseProperty("Commodity_Sizes")]
-        public Sizes? Size { get; set; }
+        public virtual Sizes? Size { get; set; }
+
         [ForeignKey("Creator"), InverseProperty("CommoditySizesCreator")]
         public virtual Members? CreateMember { get; set; }
 
         [ForeignKey("Modifier"), InverseProperty("CommoditySizesModifer")]
         public virtual Members? ModifyMember { get; set; }
+
         public ICollection<Inventories>? inventories { get; set; }
+        public ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
         #endregion
     }
 }

@@ -14,7 +14,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapPost("/api/Member/signin", Signin).AllowAnonymous();
 
             app.MapPost("/api/Member/update", UpdMember);
-            app.MapGet("/api/Member/getMember/{MemberID:int}", GetMember);
+            app.MapGet("/api/Member/getMember", GetMember);
             app.MapGet("/api/Member/GetTopMember/{count:int}", GetTopMember);
         }
     }

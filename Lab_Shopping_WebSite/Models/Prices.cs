@@ -18,8 +18,6 @@ namespace Lab_Shopping_WebSite.Models
         [Key]
         [Required(ErrorMessage = "PriceID is required.")]
         public int PriceID { get; set; }
-
-        [Required(ErrorMessage = "CommodityID is required.")]
         public string? Price { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }

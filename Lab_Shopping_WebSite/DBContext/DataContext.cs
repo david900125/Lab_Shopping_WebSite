@@ -50,42 +50,50 @@ namespace Lab_Shopping_WebSite.DBContext
         #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new RolesConfiguration());
+            modelBuilder.ApplyConfiguration(new MembersConfiguration());           
+            modelBuilder.ApplyConfiguration(new PricesConfiguration());
+            modelBuilder.ApplyConfiguration(new CommodityKindsConfiguration());
+            modelBuilder.ApplyConfiguration(new TagsConfiguration());
+            modelBuilder.ApplyConfiguration(new SizesConfiguration());
+            modelBuilder.ApplyConfiguration(new ColorsConfiguration());
+
+            modelBuilder.ApplyConfiguration(new BlogsConfiguration());
             modelBuilder.ApplyConfiguration(new BlogHrefsConfiguration());
             modelBuilder.ApplyConfiguration(new BlogImagesConfiguration());
             modelBuilder.ApplyConfiguration(new BlogContentsConfiguration());
-            modelBuilder.ApplyConfiguration(new BlogsConfiguration());
-            modelBuilder.ApplyConfiguration(new ColorsConfiguration());
+            
             modelBuilder.ApplyConfiguration(new CommoditiesConfiguration());
-            modelBuilder.ApplyConfiguration(new CommodityKindsConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityImagesConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityTagsConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityPricesConfiguration());
             modelBuilder.ApplyConfiguration(new CommoditySizesConfiguration());
-            modelBuilder.ApplyConfiguration(new CouponUsesConfiguration());
-            modelBuilder.ApplyConfiguration(new CouponsWaysConfigurations());
-            modelBuilder.ApplyConfiguration(new CouponsConfigurations());
-            modelBuilder.ApplyConfiguration(new DeliveryOptionsConfiguration());
-            modelBuilder.ApplyConfiguration(new DeliveryPlacesConfiguration());
+
             modelBuilder.ApplyConfiguration(new FilesConfiguration());
-            modelBuilder.ApplyConfiguration(new HrefCoordinationsConfiguration());
-            modelBuilder.ApplyConfiguration(new InventoriesConfiguration());
-            modelBuilder.ApplyConfiguration(new LikeCommoditiesConfiguration());
-            modelBuilder.ApplyConfiguration(new MembersConfiguration());
-            modelBuilder.ApplyConfiguration(new MenusConfiguration());
-            modelBuilder.ApplyConfiguration(new PagesConfiguration());
+
+            modelBuilder.ApplyConfiguration(new DeliveryPlacesConfiguration());
+            modelBuilder.ApplyConfiguration(new DeliveryOptionsConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentsConfiguration());
-            modelBuilder.ApplyConfiguration(new PricesConfiguration());
-            modelBuilder.ApplyConfiguration(new ReceivedCouponsConfiguration());
-            modelBuilder.ApplyConfiguration(new ReceivedViewedConfiguration());
-            modelBuilder.ApplyConfiguration(new RolesConfiguration());
+            modelBuilder.ApplyConfiguration(new StatusConfiguration());
             modelBuilder.ApplyConfiguration(new SalesConfiguration());
             modelBuilder.ApplyConfiguration(new SalesitemConfiguration());
-            modelBuilder.ApplyConfiguration(new ShopsConfiguration());
+         
             modelBuilder.ApplyConfiguration(new ShoppingCartsConfiguration());
-            modelBuilder.ApplyConfiguration(new SizesConfiguration());
-            modelBuilder.ApplyConfiguration(new StatusConfiguration());
+           
+            modelBuilder.ApplyConfiguration(new InventoriesConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CouponsWaysConfigurations());
+            modelBuilder.ApplyConfiguration(new CouponsConfigurations());
+            modelBuilder.ApplyConfiguration(new CouponUsesConfiguration());
+
+            modelBuilder.ApplyConfiguration(new LikeCommoditiesConfiguration());
+            modelBuilder.ApplyConfiguration(new MenusConfiguration());
+            modelBuilder.ApplyConfiguration(new PagesConfiguration());
             modelBuilder.ApplyConfiguration(new SubscribesConfiguration());
-            modelBuilder.ApplyConfiguration(new TagsConfiguration());
+            modelBuilder.ApplyConfiguration(new HrefCoordinationsConfiguration());
+            modelBuilder.ApplyConfiguration(new ShopsConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceivedCouponsConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceivedViewedConfiguration());
         }
         #endregion
 

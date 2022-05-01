@@ -73,9 +73,9 @@ namespace Lab_Shopping_WebSite.Apis
         async Task<IResult> GetMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
-            [FromServices] Jwt jwt,
-            int MemberID)
+            HttpContext http)
         {
+            int MemberID = Convert.ToInt16(http.User.FindFirst("Sid").Value);
             var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();
             return Results.Ok(result);
         }
@@ -83,11 +83,11 @@ namespace Lab_Shopping_WebSite.Apis
         async Task<IResult> UpdMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
-            HttpContext context,
+            HttpContext http,
             [FromBody] UpdMemberDto dto)
         {
             MemberService ms = (MemberService)service;
-            int MemberID = Convert.ToInt16(context.User.FindFirst("Sid"));
+            int MemberID = Convert.ToInt16(http.User.FindFirst("Sid").Value);
             var query = await ms.GetMembers(MemberID);
 
             if (query.Item1)
