@@ -6,13 +6,13 @@ using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-
+using Lab_Shopping_WebSite.DBContext;
 
 namespace Lab_Shopping_WebSite.Apis
 {
     public partial class CommodityApi
     {
-        [Authorize]
+        //[Authorize]
         async Task<IResult> Add_Shopping_Cart(
                 [FromServices] IService<CommodityService> service,
                 HttpContext http,
@@ -20,7 +20,7 @@ namespace Lab_Shopping_WebSite.Apis
         {
             CommodityService cs = (CommodityService)service;
 
-            var Sid = Convert.ToInt16(http.User.FindFirst("Sid"));
+            var Sid = Convert.ToInt16(http.User.FindFirst("Sid").Value);
             Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
             if (query.Item1)
             {
@@ -42,18 +42,58 @@ namespace Lab_Shopping_WebSite.Apis
             )
         {
             CommodityService cs = (CommodityService)service;
-            List<Commodity_Simple_Dto> results = await cs.Get_Commodities_Simple(count);
+            List<Commodity_Simple_Dto> results = await cs.Get_Commodities_Simple();
             return Results.Ok(results);
         }
 
-
         async Task<IResult> SelectionCommodity(
             [FromServices] IService<CommodityService> service,
-            Commodity_Selection_Dto dto
-        )
+            Commodity_Selection_Dto dto)
         {
             CommodityService cs = (CommodityService)service;
+            
             return Results.Ok();
         }
+
+        //[Authorize]
+        async Task<IResult> AddNewCommodity(
+            [FromServices] IService<CommodityService> service,
+            [FromBody] NewCommodityDto dto,
+            HttpContext http)
+        {
+            CommodityService cs = (CommodityService)service;
+            var Sid = Convert.ToInt16(http.User.FindFirst("Sid").Value);
+            var insert1 = await cs.Insert_Commodities(dto, Sid);
+            if (insert1.Item1)
+            {
+                var insert2 = await cs.Insert_Prices(insert1.Item3 , dto.Price , Sid);
+                if (insert2.Item1)
+                {
+                    var insert3 = await cs.Insert_Images(insert1.Item3, dto.CommodityImages, Sid);
+                    if (insert3.Item1)
+                    {
+                        var insert4 = await cs.Insert_Tags(insert1.Item3, dto.CommodityTags, Sid);
+                        if (insert4.Item1)
+                        {
+                            var insert5 = await cs.Insert_Sizes(insert1.Item3, dto.CommoditySizes , dto.CommodityColors, Sid);
+                            if (insert5.Item1)
+                                return Results.Ok();
+                        }
+                    }
+                }
+            }
+
+            return Results.BadRequest("Commodity Insert Error.");
+        }
+
+
+        async Task<IResult> Get_full_Commodity_info(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID)
+        {
+            CommodityService cs = (CommodityService)service;
+            return Results.Ok(await cs.GetFullCommodity(CommodityID));
+        }
+    
     }
 }

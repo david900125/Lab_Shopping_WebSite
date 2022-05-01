@@ -24,6 +24,7 @@ namespace Lab_Shopping_WebSite.Models
         public string? Size { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
+
         [ForeignKey("Commodity_KindsID"), InverseProperty("Sizes")]
         public virtual Commodity_Kinds? Commodity_Kinds { get; set; }
 
@@ -32,7 +33,6 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("SizesModifer")]
         public virtual Members? ModifyMember { get; set; }
-
         public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
         #endregion
     }

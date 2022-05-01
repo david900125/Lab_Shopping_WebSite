@@ -3,8 +3,6 @@ using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.DTO;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Lab_Shopping_WebSite.Services
 {
@@ -79,6 +77,7 @@ namespace Lab_Shopping_WebSite.Services
             member.Gender = Convert.ToBoolean(dto.Gender);
             member.BirthDay = DateOnly.Parse(dto.Birthday);
             member.Phone_Number = dto.PhoneNumber;
+            member.Email_Address = dto.Email_Address;
 
             var result = await Updater<Members>(member);
             return result;

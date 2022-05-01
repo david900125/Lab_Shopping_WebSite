@@ -43,10 +43,8 @@ namespace Lab_Shopping_WebSite.Models
         public ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
         public ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
         public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
-        public ICollection<Sizes>? Sizes { get; set; }
         public ICollection<Like_Commodities>? Like_Commodities { get; set; }
         public ICollection<Recently_Viewed>? Recently_Viewed { get; set; }
-        public ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
         #endregion
     }
 }

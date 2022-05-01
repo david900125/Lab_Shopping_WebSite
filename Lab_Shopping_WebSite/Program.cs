@@ -15,6 +15,7 @@ using Lab_Shopping_WebSite.Map;
 using Lab_Shopping_WebSite.Extension;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 
 // .NET 6 IConfiguration
 var builder = WebApplication.CreateBuilder(args);
@@ -109,7 +110,12 @@ else
 // HTTP 要求重新導向至 HTTPS
 app.UseHttpsRedirection();
 //啟用靜態檔案
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "Upload")),
+    RequestPath = "/api/file"
+});
 // 認證中介軟體
 app.UseAuthentication();
 // 授權中介軟體
@@ -140,10 +146,16 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IApi, ArticleApi>();
     svcs.AddTransient<IApi, MemberApi>();
     svcs.AddTransient<IApi, CommodityApi>();
+    svcs.AddTransient<IApi, FileApi>();
+    svcs.AddTransient<IApi, SalesApi>();
+    svcs.AddTransient<IApi, CouponApi>();
     // Add Sevices
     svcs.AddTransient<IService<BlogService>, BlogService>();
     svcs.AddTransient<IService<MemberService>, MemberService>();
     svcs.AddTransient<IService<CommodityService>, CommodityService>();
+    svcs.AddTransient<IService<FileServices>, FileServices>();
+    svcs.AddTransient<IService<SalesService>, SalesService>();
+    svcs.AddTransient<IService<CouponServices>, CouponServices>();
 
 
     var mapperConfig = new MapperConfiguration(mc =>

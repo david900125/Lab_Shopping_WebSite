@@ -28,8 +28,8 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("MemberID"), InverseProperty("Shopping_Carts")]
         public virtual Members? Member { get; set; }
-        [ForeignKey("CommodityID"), InverseProperty("Shopping_Carts")]
-        public virtual Commodities? Commodity { get; set; }
+        [ForeignKey("Commodity_SizeID"), InverseProperty("Shopping_Carts")]
+        public virtual Commodity_Sizes? Commodity_Sizes { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("ShoppingCartsCreator")]
         public virtual Members? CreateMember { get; set; }

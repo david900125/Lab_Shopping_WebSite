@@ -23,4 +23,34 @@ namespace Lab_Shopping_WebSite.DTO
         public List<int>? Commodity_Kinds { get; set; }
         public List<int>? Commodity_Colors { get; set; }
     }
+
+    public class NewCommodityDto
+    {
+        public string CommodityName { get; set; }
+        public string Description { get; set; }
+        public string Material { get; set; }
+        public bool isReleased { get; set; }
+        public decimal Price { get; set; }
+        public int CommodityKinds { get; set; }
+        public int CommodityTags { get; set; }
+        public List<int> CommoditySizes { get; set; }
+        public List<int> CommodityColors { get; set; }
+        public List<string> CommodityImages { get; set; }
+    }
+
+    public class CommodityDto
+    {
+        public int CommodityId { get; set; }
+        public string CommodityName { get; set; }
+        public string Description { get; set; }
+        public string Material { get; set; }
+        public decimal Price { get; set; }
+        public decimal S_Price { get; set; }
+        public List<decimal> Amount { get; set; }
+        public string CommodityKinds { get; set; }
+        public string CommodityTags { get; set; }
+        public List<string> CommoditySizes { get; set; }
+        public List<string> CommodityColors { get; set; }
+        public List<string> CommodityImages { get; set; }
+    }
 }
