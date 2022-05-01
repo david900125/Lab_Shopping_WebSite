@@ -19,14 +19,14 @@ namespace Lab_Shopping_WebSite.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "欄位長度不可大於50個字元")]
-        public int FileType { get; set; }
+        public string FileType { get; set; }
 
         [Required(ErrorMessage = "FileName is required.")]
         [StringLength(50, ErrorMessage = "欄位長度不可大於50個字元")]
         public string? FileName { get; set; }
 
         [Required]
-        public int FileSize { get; set; }
+        public Int64 FileSize { get; set; }
 
         [Required]
         [StringLength(250, ErrorMessage = "欄位長度不可大於250個字元")]
@@ -41,7 +41,6 @@ namespace Lab_Shopping_WebSite.Models
         public virtual Members? ModifyMember { get; set; }
 
         public ICollection<Blog_Images>? Blog_Images { get; set; }
-        public ICollection<Commodity_Images>? Commodity_Images { get; set; }
         public ICollection<Href_Coordinations>? Href_Coordinations { get; set; }
         #endregion
     }

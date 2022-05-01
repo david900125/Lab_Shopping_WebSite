@@ -28,7 +28,7 @@ namespace Lab_Shopping_WebSite.Models
         public string? Coupon_Title { get; set; }
 
         [MaxLength(255)]
-        public string? Coupons_Content { get; set; }
+        public string? Coupon_Content { get; set; }
 
         [Required(ErrorMessage = "Coupon_WayID is required.")]
         public int Coupon_WayID { get; set; }

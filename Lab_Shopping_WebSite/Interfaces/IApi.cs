@@ -66,5 +66,27 @@ namespace Lab_Shopping_WebSite.Interfaces
                 return new Tuple<bool, string>(false, ErrorMsg);
             }
         }
+
+        public async Task<Tuple<bool, string>> Deleter<M>(M model)
+            where M : class, new()
+        {
+            string ErrorMsg = "";
+            Type type = typeof(M);
+            using var transaction = _db.Database.BeginTransaction();
+            try
+            {
+                _db.Remove(model);
+                await _db.SaveChangesAsync();
+                transaction.Commit();
+                return new Tuple<bool, string>(true, ErrorMsg);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                transaction.Rollback();
+                ex.Entries.Single().Reload();
+                ErrorMsg = ex.Message.ToString();
+                return new Tuple<bool, string>(false, ErrorMsg);
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [Precision(10, 2)]
         [Required(ErrorMessage = "Total_Price is required")]
-        public int Total_Price { get; set; }
+        public decimal Total_Price { get; set; }
 
         [MaxLength(35)]
         [Required(ErrorMessage = "Total_Price is required")]
@@ -51,7 +51,7 @@ namespace Lab_Shopping_WebSite.Models
         [Required(ErrorMessage = "InVoice is required.")]
         public DateTime Established { get; set; }
 
-        public DateTime SendDate { get; set; }
+        public DateTime? SendDate { get; set; }
 
         [Required(ErrorMessage = "isChecked is required")]
         public bool isChecked { get; set; }

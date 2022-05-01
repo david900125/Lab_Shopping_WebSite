@@ -18,7 +18,7 @@ namespace Lab_Shopping_WebSite.Models
         #region 屬性
         [Required]
         [MaxLength(12)]
-        public int SaleID { get; set; }
+        public string SaleID { get; set; }
 
         [Required]
         public int Commodity_SizeID { get; set; }
