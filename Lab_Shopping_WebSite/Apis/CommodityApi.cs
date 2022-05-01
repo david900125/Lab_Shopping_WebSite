@@ -12,6 +12,7 @@ namespace Lab_Shopping_WebSite.Apis
         {
             app.MapPost("/api/Commodity/addshoppingcart", Add_Shopping_Cart);
             app.MapGet("/api/Commodity/GetTopCommodity", GetCommodities);
+            app.MapPost("/api/Commodity/Search", SelectCommodity);
             app.MapPost("/api/Commodity/GetCommodity/full_info/{CommodityID:int}", Get_full_Commodity_info);
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity);
         }

@@ -22,8 +22,7 @@ namespace Lab_Shopping_WebSite.DTO
 
     public class Commodity_Selection_Dto
     {
-        public List<int>? Commodity_Kinds { get; set; }
-        public List<int>? Commodity_Colors { get; set; }
+        public string Selection { get; set; }
     }
 
     public class NewCommodityDto
@@ -47,6 +46,7 @@ namespace Lab_Shopping_WebSite.DTO
         public string CommodityName { get; set; }
         public string Description { get; set; }
         public string Material { get; set; }
+        public bool isReleased { get; set; }
         public decimal Price { get; set; }
         public decimal S_Price { get; set; }
         public List<decimal> Amount { get; set; }

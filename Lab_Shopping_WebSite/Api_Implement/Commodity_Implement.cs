@@ -45,16 +45,15 @@ namespace Lab_Shopping_WebSite.Apis
             return Results.Ok(results);
         }
 
-        async Task<IResult> SelectionCommodity(
+        async Task<IResult> SelectCommodity(
             [FromServices] IService<CommodityService> service,
             Commodity_Selection_Dto dto)
         {
             CommodityService cs = (CommodityService)service;
-            
-            return Results.Ok();
+            var result = await cs.SelectByName(dto);
+            return Results.Ok(result);
         }
 
-        //[Authorize]
         async Task<IResult> AddNewCommodity(
             [FromServices] IService<CommodityService> service,
             [FromBody] NewCommodityDto dto,

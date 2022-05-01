@@ -14,7 +14,7 @@
             this.Configuration = configuration;
         }
 
-        public string GenerateToken(string userName, int role ,int memberID,int expireMinutes = 30)
+        public string GenerateToken(string userName, int role ,int memberID,int expireMinutes = 3000)
         {
             var issuer = Configuration.GetValue<string>("JwtSettings:Issuer");
             var signKey = Configuration.GetValue<string>("JwtSettings:SignKey");

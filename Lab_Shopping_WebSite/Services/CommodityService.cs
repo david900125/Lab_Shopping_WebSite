@@ -50,6 +50,7 @@ namespace Lab_Shopping_WebSite.Services
             result.CommodityName = item.CommodityName;
             result.Description = item.Description;
             result.Material = item.Material;
+            result.isReleased = item.isReleased;
             result.Price = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 2).FirstOrDefault().Price;
             Commodity_Prices SP =  _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 1).FirstOrDefault();
             result.S_Price = (SP != null) ?  SP.Price : 0;
@@ -100,6 +101,7 @@ namespace Lab_Shopping_WebSite.Services
 
             return result;
         }
+
         public async Task<Tuple<bool , string>> Insert_Shopping_Cart(int MemberID , Commodity_Sizes sizes , int Amount)
         {
             return await
@@ -121,6 +123,7 @@ namespace Lab_Shopping_WebSite.Services
                 CommodityName = dto.CommodityName,
                 Description = dto.Description,
                 Material = dto.Material,
+                isReleased = dto.isReleased,
                 Creator = Sid,
                 CreateTime = DateTime.Now,
                 Modifier = Sid,
@@ -227,6 +230,17 @@ namespace Lab_Shopping_WebSite.Services
             }
 
             return mast;
+        }
+
+        public async Task<List<CommodityDto>> SelectByName(Commodity_Selection_Dto dto)
+        {
+            List<Commodities> commodities = _db.Commodities.Where(n => n.CommodityName.Contains(dto.Selection)).ToList();
+            List<CommodityDto> result = new List<CommodityDto>();
+            foreach (var commodity in commodities)
+            {
+                result.Add(await Inject(commodity));
+            }
+            return result;
         }
     }
 }
