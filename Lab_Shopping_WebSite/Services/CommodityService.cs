@@ -25,9 +25,9 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<List<CommodityDto>> Get_Commodities_Simple()
         {
             List<CommodityDto> result = new List<CommodityDto>();
-            foreach(var item in _db.Commodities)
+            foreach(var item in _db.Commodities.ToList())
             {
-                result.Add(await GetFullCommodity(item.CommodityID));
+                result.Add(await Inject(item));
             }
             return result;
         }
@@ -37,57 +37,67 @@ namespace Lab_Shopping_WebSite.Services
             Commodities item = _db.Commodities.Where(n=> n.CommodityID == CommodityID).FirstOrDefault();
             if (item != null)
             {
-                result.CommodityId = item.CommodityID;
-                result.CommodityName = item.CommodityName;
-                result.Description = item.Description;
-                result.Material = item.Material;
-                result.Price = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 2).FirstOrDefault().Price;
-                result.S_Price = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 1).FirstOrDefault().Price;
-                result.CommodityTags = (from tmp in _db.Commodity_Tags
-                                       join tags in _db.Tags
-                                         on tmp.TagID equals tags.TagID
-                                       select tags.Tag).ToList();
-                 result.CommodityKinds = (from tmp in _db.Commodity_Tags
-                                          join tags in _db.Tags
-                                            on tmp.TagID equals tags.TagID
-                                          join kinds in _db.Commodity_Kinds
-                                            on tags.Commodity_KindsID equals kinds.Commodity_KindID
-                                          where tmp.CommodityID == CommodityID
-                                          select kinds.Description).ToList();
-                result.CommodityImages = _db.Commodity_Images.Where(n => n.CommodityID == CommodityID).Select(n => n.Url).ToList();
-                result.CommoditySizes = (from tmp in _db.Commodity_Sizes
-                                         join sizes in _db.Sizes
-                                            on tmp.SizeID equals sizes.SizeID
-                                         where tmp.CommodityID == CommodityID
-                                         select sizes.Size).ToList();
-                var color_collections = (from tmp in _db.Commodity_Sizes
-                                          join colors in _db.Colors
-                                             on tmp.ColorID equals colors.ColorID
-                                          where tmp.CommodityID == CommodityID
-                                          select new {colors.Url,colors.Color}).ToList();
-
-                result.CommodityColors = new List<string>();
-                foreach (var color in color_collections)
-                {
-                    result.CommodityColors.Add(color.Color);
-                    result.CommodityColors.Add(color.Url);
-                }
-
-                var amount_col = (from tmp in _db.Commodity_Sizes
-                                where tmp.CommodityID == CommodityID
-                                select new
-                                {
-                                    Amount = _db.Inventories.OrderByDescending(n=>n.InventoryID)
-                                            .Where(n=>n.Commodity_SizeID == tmp.Commodity_SizesID)
-                                            .Select(n => n.Amount).Take(1).FirstOrDefault()
-                                }).ToList();
-
-                result.Amount = new List<decimal>();
-                foreach (var amount in amount_col)
-                {
-                    result.Amount.Add(amount.Amount);
-                }
+                result = await Inject(item);
             } 
+            return result;
+        }
+        public async Task<CommodityDto> Inject(Commodities item)
+        {
+            CommodityDto result = new CommodityDto();
+            int CommodityID = item.CommodityID;
+
+            result.CommodityId = item.CommodityID;
+            result.CommodityName = item.CommodityName;
+            result.Description = item.Description;
+            result.Material = item.Material;
+            result.Price = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 2).FirstOrDefault().Price;
+            Commodity_Prices SP =  _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 1).FirstOrDefault();
+            result.S_Price = (SP != null) ?  SP.Price : 0;
+            result.CommodityTags = (from tmp in _db.Commodity_Tags
+                                    join tags in _db.Tags
+                                      on tmp.TagID equals tags.TagID
+                                    select tags.Tag).Distinct().ToList();
+            result.CommodityKinds = (from tmp in _db.Commodity_Tags
+                                     join tags in _db.Tags
+                                       on tmp.TagID equals tags.TagID
+                                     join kinds in _db.Commodity_Kinds
+                                       on tags.Commodity_KindsID equals kinds.Commodity_KindID
+                                     where tmp.CommodityID == CommodityID
+                                     select kinds.Description).Distinct().ToList();
+            result.CommodityImages = _db.Commodity_Images.Where(n => n.CommodityID == CommodityID).Select(n => n.Url).ToList();
+            result.CommoditySizes = (from tmp in _db.Commodity_Sizes
+                                     join sizes in _db.Sizes
+                                        on tmp.SizeID equals sizes.SizeID
+                                     where tmp.CommodityID == CommodityID
+                                     select sizes.Size).ToList();
+            var color_collections = (from tmp in _db.Commodity_Sizes
+                                     join colors in _db.Colors
+                                        on tmp.ColorID equals colors.ColorID
+                                     where tmp.CommodityID == CommodityID
+                                     select new { colors.Url, colors.Color }).ToList();
+
+            result.CommodityColors = new List<string>();
+            foreach (var color in color_collections)
+            {
+                result.CommodityColors.Add(color.Color);
+                result.CommodityColors.Add(color.Url);
+            }
+
+            var amount_col = (from tmp in _db.Commodity_Sizes
+                              where tmp.CommodityID == CommodityID
+                              select new
+                              {
+                                  Amount = _db.Inventories.OrderByDescending(n => n.InventoryID)
+                                          .Where(n => n.Commodity_SizeID == tmp.Commodity_SizesID)
+                                          .Select(n => n.Amount).Take(1).FirstOrDefault()
+                              }).ToList();
+
+            result.Amount = new List<decimal>();
+            foreach (var amount in amount_col)
+            {
+                result.Amount.Add(amount.Amount);
+            }
+
             return result;
         }
         public async Task<Tuple<bool , string>> Insert_Shopping_Cart(int MemberID , Commodity_Sizes sizes , int Amount)
@@ -148,7 +158,7 @@ namespace Lab_Shopping_WebSite.Services
                     Modifier = Sid,
                     ModifyTime = DateTime.Now
                 };
-                result = await Creater(mast);
+                result = await Creater(mast2);
             }
 
             return result;
@@ -193,7 +203,7 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> Insert_Sizes(Commodities commodity, List<int> sizes , List<int> colors, int Sid)
         {
-            Tuple<bool, string> mast = null;
+            Tuple<bool, string> mast = Tuple.Create(true , "");
             foreach (var size in sizes)
             {
                 foreach(var color in colors)
