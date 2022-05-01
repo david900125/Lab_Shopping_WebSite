@@ -37,8 +37,7 @@ namespace Lab_Shopping_WebSite.Apis
         }
 
         async Task<IResult> GetCommodities(
-            [FromServices] IService<CommodityService> service,
-            int count
+            [FromServices] IService<CommodityService> service
             )
         {
             CommodityService cs = (CommodityService)service;
@@ -66,7 +65,7 @@ namespace Lab_Shopping_WebSite.Apis
             var insert1 = await cs.Insert_Commodities(dto, Sid);
             if (insert1.Item1)
             {
-                var insert2 = await cs.Insert_Prices(insert1.Item3 , dto.Price , Sid);
+                var insert2 = await cs.Insert_Prices(insert1.Item3 , dto.Price, dto.S_Price , Sid);
                 if (insert2.Item1)
                 {
                     var insert3 = await cs.Insert_Images(insert1.Item3, dto.CommodityImages, Sid);

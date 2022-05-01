@@ -11,8 +11,8 @@ namespace Lab_Shopping_WebSite.Apis
         public void Register(WebApplication app)
         {
             app.MapPost("/api/Commodity/addshoppingcart", Add_Shopping_Cart);
-            app.MapGet("/api/Commodity/GetTopCommodity/{count:int}", GetCommodities);
-            app.MapPost("/api/Commodity/GetCommodity", SelectionCommodity);
+            app.MapGet("/api/Commodity/GetTopCommodity", GetCommodities);
+            //app.MapPost("/api/Commodity/GetCommodity", SelectionCommodity);
             app.MapPost("/api/Commodity/GetCommodity/full_info/{CommodityID:int}", Get_full_Commodity_info);
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity);
         }

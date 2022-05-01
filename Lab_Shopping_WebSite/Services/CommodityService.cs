@@ -24,35 +24,23 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<List<Commodity_Simple_Dto>> Get_Commodities_Simple()
         {
-            var s_prices = (from prices in _db.Commodity_Prices
-                            where prices.Commodity_PriceID == 1
-                            select (new { prices.CommodityID, prices.Price }));
+            List<Commodity_Simple_Dto> result = new List<Commodity_Simple_Dto>();
+            foreach(var item in _db.Commodities)
+            {
+                CommodityDto dto = await GetFullCommodity(item.CommodityID);
+                result.Add(new Commodity_Simple_Dto
+                {
+                    CommodityID = dto.CommodityId,
+                    CommodityKinds = dto.CommodityKinds,
+                    CommodityPrice = dto.Price,
+                    SpecialPrice = dto.S_Price,
+                    CommodityName = dto.CommodityName,
+                    CommodityTags = dto.CommodityTags,
+                    CommodityUrl = dto.CommodityImages.FirstOrDefault()
+                });            
+            }
 
-            var c_price = (from prices in _db.Commodity_Prices
-                          where prices.Commodity_PriceID == 2
-                          select (new { prices.CommodityID, prices.Price }));
-
-            var query = (from Commodities in _db.Commodities
-                         join sprice in s_prices
-                             on Commodities.CommodityID equals sprice.CommodityID into sprices
-                         from spr in sprices.DefaultIfEmpty()
-                         join cprice in c_price
-                             on Commodities.CommodityID equals cprice.CommodityID into cprices
-                         from cpr in cprices.DefaultIfEmpty()
-                         join image in (from imgs in _db.Commodity_Images where imgs.Order == 1 select imgs)
-                             on Commodities.CommodityID equals image.CommodityID into images
-                         from img in images.DefaultIfEmpty()
-                         select new Commodity_Simple_Dto
-                         {
-                             CommodityID = Commodities.CommodityID,
-                             CommodityName = Commodities.CommodityName,
-                             CommodityPrice = cpr.Price,
-                             SpecialPrice = spr.Price,
-                             CommodityUrl = img.Url ?? string.Empty
-                         }).ToList();
-
-
-            return query;
+            return result;
         }
         public async Task<CommodityDto> GetFullCommodity(int CommodityID)
         {
@@ -69,14 +57,14 @@ namespace Lab_Shopping_WebSite.Services
                 result.CommodityTags = (from tmp in _db.Commodity_Tags
                                        join tags in _db.Tags
                                          on tmp.TagID equals tags.TagID
-                                       select tags.Tag).First();
+                                       select tags.Tag).ToList();
                  result.CommodityKinds = (from tmp in _db.Commodity_Tags
                                           join tags in _db.Tags
                                             on tmp.TagID equals tags.TagID
                                           join kinds in _db.Commodity_Kinds
                                             on tags.Commodity_KindsID equals kinds.Commodity_KindID
                                           where tmp.CommodityID == CommodityID
-                                          select kinds.Description).First();
+                                          select kinds.Description).ToList();
                 result.CommodityImages = _db.Commodity_Images.Where(n => n.CommodityID == CommodityID).Select(n => n.Url).ToList();
                 result.CommoditySizes = (from tmp in _db.Commodity_Sizes
                                          join sizes in _db.Sizes
@@ -144,7 +132,7 @@ namespace Lab_Shopping_WebSite.Services
 
             return Tuple.Create(result.Item1, result.Item2, mast);
         }
-        public async Task<Tuple<bool, string>> Insert_Prices(Commodities commodity,decimal Price , int Sid)
+        public async Task<Tuple<bool, string>> Insert_Prices(Commodities commodity,decimal Price , decimal S_Price , int Sid)
         {
            var mast = new Commodity_Prices
             {
@@ -157,8 +145,24 @@ namespace Lab_Shopping_WebSite.Services
                 Modifier = Sid,
                 ModifyTime = DateTime.Now
            };
+            var result = await Creater(mast);
+            if (result.Item1)
+            {
+                var mast2 = new Commodity_Prices
+                {
+                    CommodityID = commodity.CommodityID,
+                    PriceID = 1,    // 優惠價
+                    Price = S_Price,
+                    StartDate = DateOnly.FromDateTime(DateTime.Now),
+                    Creator = Sid,
+                    CreateTime = DateTime.Now,
+                    Modifier = Sid,
+                    ModifyTime = DateTime.Now
+                };
+                result = await Creater(mast);
+            }
 
-            return await Creater(mast);
+            return result;
         }
         public async Task<Tuple<bool, string>> Insert_Images(Commodities commodity, List<string> images , int Sid)
         {
