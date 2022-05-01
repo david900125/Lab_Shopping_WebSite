@@ -46,6 +46,7 @@ namespace Lab_Shopping_WebSite.Models
 
         public ICollection<Inventories>? inventories { get; set; }
         public ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
+        public ICollection<Sales_items>? Sales_Items { get; set; }
         #endregion
     }
 }

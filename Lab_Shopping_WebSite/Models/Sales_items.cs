@@ -45,8 +45,12 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("SalesitemsModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        [ForeignKey("CouponID"), InverseProperty("Sales_items")]
+        [ForeignKey("SaleID"), InverseProperty("Sales_items")]
         public virtual Sales? Sale { get; set; }
+
+        [ForeignKey("Commodity_SizeID"), InverseProperty("Sales_Items")]
+        public virtual Commodity_Sizes? Commodity_Size { get; set; }
+
         [ForeignKey("StatusID"), InverseProperty("Sales_items")]
         public virtual Status? Status { get; set; }
         #endregion
