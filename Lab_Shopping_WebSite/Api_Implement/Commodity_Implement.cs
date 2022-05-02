@@ -111,5 +111,14 @@ namespace Lab_Shopping_WebSite.Apis
             CommodityService cs = (CommodityService)service;
             return Results.Ok(await cs.SalectByKinds(KindID));
         }
+
+        async Task<IResult> Get_Random_Commodity(
+            [FromServices] IService<CommodityService> service,
+            int Count
+            )
+        {
+            CommodityService cs = (CommodityService)service;
+            return Results.Ok(await cs.GetRandom(Count));
+        }
     }
 }

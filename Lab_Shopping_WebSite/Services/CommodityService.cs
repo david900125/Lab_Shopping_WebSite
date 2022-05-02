@@ -269,5 +269,19 @@ namespace Lab_Shopping_WebSite.Services
 
             return result;
         }
+        public async Task<List<CommodityDto>> GetRandom(int Count)
+        {
+            Random random = new Random();
+            List<CommodityDto> results = new List<CommodityDto>();
+            List<Commodities> items = (from item in _db.Commodities
+                                        orderby random.Next()
+                                        select item).Take(Count).ToList();
+            foreach(var item in items)
+            {
+                results.Add(await Inject(item));
+            }
+
+            return results;
+        }
     }
 }

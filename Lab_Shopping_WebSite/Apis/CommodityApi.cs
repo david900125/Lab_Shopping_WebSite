@@ -16,6 +16,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapGet("/api/Commodity/GetCommodity/full_info/{CommodityID:int}", Get_full_Commodity_info);
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity);
             app.MapGet("/api/Commodity/GetByKinds/{KindID:int}", Get_Commodity_By_Kinds);
+            app.MapGet("/api/Commodity/GetRandom/{Count:int}", Get_Random_Commodity);
         }
     }
 }
