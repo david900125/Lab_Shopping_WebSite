@@ -43,6 +43,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [Required]
         public DateTime Issued_Date { get; set; }
+        public DateTime End_Date { get; set; }
 
         [Required]
         public bool isIssued { get; set; }
