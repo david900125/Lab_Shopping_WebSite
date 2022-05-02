@@ -273,10 +273,8 @@ namespace Lab_Shopping_WebSite.Services
         {
             Random random = new Random();
             List<CommodityDto> results = new List<CommodityDto>();
-            List<Commodities> items = (from item in _db.Commodities
-                                        orderby random.Next()
-                                        select item).Take(Count).ToList();
-            foreach(var item in items)
+            List<Commodities> items = _db.Commodities.OrderBy(x => Guid.NewGuid()).Take(Count).ToList();
+            foreach (var item in items)
             {
                 results.Add(await Inject(item));
             }
