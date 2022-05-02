@@ -113,7 +113,7 @@ namespace Lab_Shopping_WebSite.Apis
             List<MemberDto> results = (from members in _db.Members
                                        join roles in _db.Roles
                                        on members.RoleID equals roles.RoleID
-                                       orderby members.CreateTime descending
+                                       //orderby members.CreateTime descending
                                        select new MemberDto()
                                        {
                                            MemberID = members.MemberID,

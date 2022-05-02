@@ -33,5 +33,13 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Create Failed.");
             }
         }
+
+        async Task<IResult> GetAllCoupon(
+            [FromServices] IService<CouponServices> service
+            )
+        {
+            CouponServices cs = (CouponServices)service;
+            return Results.Ok(await cs.GetCoupons());
+        }
     }
 }

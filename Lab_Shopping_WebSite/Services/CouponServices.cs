@@ -33,5 +33,9 @@ namespace Lab_Shopping_WebSite.Services
             return await Creater(coupon);
         }
 
+        public async Task<List<Coupons>> GetCoupons()
+        {
+            return _db.Coupons.ToList();
+        }
     }
 }

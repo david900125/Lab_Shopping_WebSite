@@ -6,7 +6,8 @@ namespace Lab_Shopping_WebSite.Apis
     {
         public void Register(WebApplication app)
         {
-            app.Map("/api/Coupon/Create", Create_Coupon);
+            app.MapPost("/api/Coupon/Create", Create_Coupon);
+            app.MapGet("/api/Coupon/GetAll" , GetAllCoupon);
         }
     }
 }
