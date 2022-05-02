@@ -131,5 +131,22 @@ namespace Lab_Shopping_WebSite.Services
                     where kinds.Commodity_SizesID == Commodity_SizeID
                     select price.Price).First();
         }
+        public async Task<List<SaleDto>> GetAllSales()
+        {
+            List<SaleDto> result = (from sales in _db.Sales
+                                   join delivery in _db.Delivery_Options
+                                     on sales.Delivery_optionID equals delivery.Delivery_PlaceID
+                                   select new SaleDto
+                                   {
+                                       SaleID = sales.SaleID,
+                                       Address = sales.Address,
+                                       Delivery = delivery.Delivery_Option,
+                                       SendDate = sales.SendDate != null ? sales.SendDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                                       Established = sales.Established.ToString("yyyy-MM-dd HH:mm:ss"),
+                                       Total_Price = sales.Total_Price,
+                                       isChecked = sales.isChecked
+                                   }).ToList();
+            return result;
+        }
     }
 }

@@ -108,7 +108,7 @@ namespace Lab_Shopping_WebSite.Services
             Creater<Shopping_Carts>(new Shopping_Carts
             {
                 MemberID = MemberID,
-                Commodity_SizeID = sizes.SizeID,
+                Commodity_SizeID = sizes.Commodity_SizesID,
                 Amount = Convert.ToDecimal(Amount),
                 Creator = MemberID,
                 CreateTime = DateTime.Now,
@@ -231,7 +231,20 @@ namespace Lab_Shopping_WebSite.Services
 
             return mast;
         }
-
+        public async Task<Tuple<bool,string>> Insert_Viewed(int CommodityID , int MemberID)
+        {
+            return await Creater
+            (new Recently_Viewed
+            {
+                CommodityID = CommodityID,
+                MemberID = MemberID,
+                Viewed_Date = DateTime.Now,
+                Modifier = MemberID,
+                Creator = MemberID,
+                ModifyTime = DateTime.Now,
+                CreateTime = DateTime.Now
+            });
+        }
         public async Task<List<CommodityDto>> SelectByName(Commodity_Selection_Dto dto)
         {
             List<Commodities> commodities = _db.Commodities.Where(n => n.CommodityName.Contains(dto.Selection)).ToList();
@@ -240,6 +253,20 @@ namespace Lab_Shopping_WebSite.Services
             {
                 result.Add(await Inject(commodity));
             }
+            return result;
+        }
+        public async Task<List<CommodityDto>> SalectByKinds(int KindID)
+        {
+            List<CommodityDto> result = new List<CommodityDto>();   
+            var kinds = _db.Commodity_Kinds.Where(n => n.Commodity_KindID == KindID).Select(n=>n.Commodity_KindID).ToList();
+            var sizes = _db.Sizes.Where(n => kinds.Contains(n.Commodity_KindsID)).Select(n=>n.SizeID).ToList();
+            var commotdity_size = _db.Commodity_Sizes.Where(n=>sizes.Contains(n.Commodity_SizesID)).Select(n=>n.CommodityID).ToList();
+            List<Commodities> tmps = _db.Commodities.Where(n => commotdity_size.Contains(n.CommodityID)).ToList();
+            foreach(var tmp in tmps)
+            {
+                result.Add(await Inject(tmp));
+            }
+
             return result;
         }
     }

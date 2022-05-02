@@ -65,6 +65,12 @@ namespace Lab_Shopping_WebSite.Apis
             return Results.BadRequest();
         }
 
+        async Task<IResult> GetAllSales(
+            [FromServices] IService<SalesService> service)
+        {
+            SalesService ss = (SalesService)service;
+            return Results.Ok(await ss.GetAllSales());
+        }
 
     }
 }

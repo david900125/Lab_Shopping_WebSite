@@ -87,11 +87,29 @@ namespace Lab_Shopping_WebSite.Apis
 
         async Task<IResult> Get_full_Commodity_info(
             [FromServices] IService<CommodityService> service,
-            int CommodityID)
+            int CommodityID , HttpContext http)
         {
             CommodityService cs = (CommodityService)service;
-            return Results.Ok(await cs.GetFullCommodity(CommodityID));
+            var req = http.User.FindFirst("Sid");
+            if (req == null)
+                return Results.Unauthorized();
+
+            int MemberID = Convert.ToInt16(req.Value);
+            var result = await cs.GetFullCommodity(CommodityID);
+            if(result!= null)
+            {
+               await cs.Insert_Viewed(CommodityID , MemberID);
+            }
+            return Results.Ok(result);
         }
     
+        async Task<IResult> Get_Commodity_By_Kinds(
+            [FromServices] IService<CommodityService> service,
+            int KindID
+            )
+        {
+            CommodityService cs = (CommodityService)service;
+            return Results.Ok(await cs.SalectByKinds(KindID));
+        }
     }
 }

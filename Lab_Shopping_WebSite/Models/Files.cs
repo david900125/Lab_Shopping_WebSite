@@ -39,8 +39,6 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("FilesModifer")]
         public virtual Members? ModifyMember { get; set; }
-
-        public ICollection<Blog_Images>? Blog_Images { get; set; }
         public ICollection<Href_Coordinations>? Href_Coordinations { get; set; }
         #endregion
     }

@@ -13,6 +13,7 @@ namespace Lab_Shopping_WebSite.Apis
         {
             app.MapPost("/api/Sales/checkout",CheckOut);
             app.MapPost("/api/Sales/Update", UpdSales);
+            app.MapGet("/api/Sales/GetAll", GetAllSales);
         }
     }
 }
