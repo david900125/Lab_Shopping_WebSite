@@ -1,15 +1,27 @@
+using AutoMapper;
+using Lab_Shopping_WebSite.Models;
+using Lab_Shopping_WebSite.Interfaces;
+
 namespace Lab_Shopping_WebSite.DTO
 {
-    public class RegisteDto
+    public class RegisteDto:IMapFrom<Members>
     {
-        public RegisteDto()
-        {
-        }
-
         public string Email_Address { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
         public string second_verify { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            var c = profile.CreateMap<RegisteDto, Members>()
+                           .ForMember(d => d.MemberID , opt => opt.Ignore())
+                           .ForMember(d => d.Email_Address, opt => opt.MapFrom(s => s.Email_Address))
+                           .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
+                           .ForMember(d => d.Password, opt => opt.MapFrom(s => s.Password.ToMD5()))
+                           .ForMember(d => d.RoleID, opt => opt.Ignore())
+                           .ForMember(d => d.CreateTime, opt => opt.MapFrom(src => DateTime.Now))
+                           .ForMember(d => d.ModifyTime, opt => opt.MapFrom(src => DateTime.Now));
+        }
     }
 
     public class SigninDto

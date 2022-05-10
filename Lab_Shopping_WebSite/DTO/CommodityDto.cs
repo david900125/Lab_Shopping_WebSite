@@ -1,4 +1,7 @@
-﻿
+﻿using Lab_Shopping_WebSite.Models;
+using Lab_Shopping_WebSite.Interfaces;
+using AutoMapper;
+
 namespace Lab_Shopping_WebSite.DTO
 {
     public class CartDto

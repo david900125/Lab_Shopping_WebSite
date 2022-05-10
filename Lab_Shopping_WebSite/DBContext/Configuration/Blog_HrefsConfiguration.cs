@@ -48,6 +48,63 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityTagsModifer).HasForeignKey(n => n.Modifier);
         }
     }
+    public class CommoditiesConfiguration : IEntityTypeConfiguration<Commodities>
+    {
+        public void Configure(EntityTypeBuilder<Commodities> builder)
+        {
+            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditiesCreator).HasForeignKey(n => n.Creator);
+            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditiesModifer).HasForeignKey(n => n.Modifier);
+        }
+    }
+    public class CommodityKindsConfiguration : IEntityTypeConfiguration<Commodity_Kinds>
+    {
+        public void Configure(EntityTypeBuilder<Commodity_Kinds> builder)
+        {
+            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityKindsCreator).HasForeignKey(n => n.Creator);
+            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityKindsModifer).HasForeignKey(n => n.Modifier);
+            builder.HasData(
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 1,
+                    Description = "短袖",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 2,
+                    Description = "外套",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 3,
+                    Description = "長褲",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Commodity_Kinds
+                {
+                    Commodity_KindID = 4,
+                    Description = "短褲",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                });
+        }
+    }
     public class CouponUsesConfiguration : IEntityTypeConfiguration<Coupon_Uses>
     {
         public void Configure(EntityTypeBuilder<Coupon_Uses> builder)
@@ -129,23 +186,23 @@ namespace Lab_Shopping_WebSite.DBContext
                     ModifyTime = DateTime.Now
                 },
                 new Prices
-                 {
-                     PriceID = 2,
-                     Price = "標價",
-                     Creator = 1,
-                     Modifier = 1,
-                     CreateTime = DateTime.Now,
-                     ModifyTime = DateTime.Now
-                 },
+                {
+                    PriceID = 2,
+                    Price = "標價",
+                    Creator = 1,
+                    Modifier = 1,
+                    CreateTime = DateTime.Now,
+                    ModifyTime = DateTime.Now
+                },
                 new Prices
-                  {
-                      PriceID = 3,
-                      Price = "單價",
-                      Creator = 1,
-                      Modifier = 1,
-                      CreateTime = DateTime.Now,
-                      ModifyTime = DateTime.Now
-                  }
+                {
+                    PriceID = 3,
+                    Price = "單價",
+                    Creator = 1,
+                    Modifier = 1,
+                    CreateTime = DateTime.Now,
+                    ModifyTime = DateTime.Now
+                }
             );
         }
     }
@@ -162,6 +219,10 @@ namespace Lab_Shopping_WebSite.DBContext
     }
     public class RolesConfiguration : IEntityTypeConfiguration<Roles>
     {
+        public RolesConfiguration()
+        {
+        }
+
         public void Configure(EntityTypeBuilder<Roles> builder)
         {
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
@@ -548,76 +609,91 @@ namespace Lab_Shopping_WebSite.DBContext
                     ModifyTime = DateTime.Now,
                     Creator = 1,
                     CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 6,
+                    Color = "可可",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_06.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 7,
+                    Color = "灰藍",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 8,
+                    Color = "杏灰",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 9,
+                    Color = "麻灰",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln3305-221_3_01.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 10,
+                    Color = "卡其",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/cop1676_3_02.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 11,
+                    Color = "紫",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_04.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 12,
+                    Color = "橘色",
+                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_02.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Colors
+                {
+                    ColorID = 13,
+                    Color = "藍",
+                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_01.jpg",
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
                 }
             );
         }
     }
-    public class CommoditiesConfiguration : IEntityTypeConfiguration<Commodities>
-    {
-        public void Configure(EntityTypeBuilder<Commodities> builder)
-        {
-            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditiesCreator).HasForeignKey(n => n.Creator);
-            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditiesModifer).HasForeignKey(n => n.Modifier);
-        }
-    }
-    public class CommodityKindsConfiguration : IEntityTypeConfiguration<Commodity_Kinds>
-    {
-        public void Configure(EntityTypeBuilder<Commodity_Kinds> builder)
-        {
-            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityKindsCreator).HasForeignKey(n => n.Creator);
-            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityKindsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 1,
-                    Description = "短褲",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 2,
-                    Description = "外套",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 3,
-                    Description = "長褲",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 4,
-                    Description = "SHOES",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                 new Commodity_Kinds
-                 {
-                     Commodity_KindID = 5,
-                     Description = "配件",
-                     Modifier = 1,
-                     ModifyTime = DateTime.Now,
-                     Creator = 1,
-                     CreateTime = DateTime.Now
-                 });
-        }
-    }
+
     public class MembersConfiguration : IEntityTypeConfiguration<Members>
     {
         public void Configure(EntityTypeBuilder<Members> builder)
@@ -634,6 +710,18 @@ namespace Lab_Shopping_WebSite.DBContext
                     Name = "administrator",
                     Email_Address = "root@gmail.com",
                     Password = "63A9F0EA7BB98050796B649E85481845",
+                    RoleID = 1,
+                    Modifier = 1,
+                    ModifyTime = DateTime.Now,
+                    Creator = 1,
+                    CreateTime = DateTime.Now
+                },
+                new Members
+                {
+                    MemberID = 2,
+                    Name = "eeeee",
+                    Email_Address = "ioioio@gmail.com",
+                    Password = "76D80224611FC919A5D54F0FF9FBA446",
                     RoleID = 1,
                     Modifier = 1,
                     ModifyTime = DateTime.Now,
@@ -689,7 +777,7 @@ namespace Lab_Shopping_WebSite.DBContext
                  Creator = 1,
                  CreateTime = DateTime.Now,
                  Modifier = 1,
-                 ModifyTime  =  DateTime.Now
+                 ModifyTime = DateTime.Now
              },
               new Delivery_Places
               {

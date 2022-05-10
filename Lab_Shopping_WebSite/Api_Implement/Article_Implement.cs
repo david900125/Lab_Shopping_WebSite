@@ -63,5 +63,15 @@ namespace Lab_Shopping_WebSite.Apis
             else
                 return Results.BadRequest();
         }
+
+        async Task<IResult> GetArticle(
+            [FromServices] IService<BlogService> service
+            )
+        {
+            BlogService bs = (BlogService)service;
+            bs.GetArticle();
+            return Results.Ok();
+            
+        }
     }
 }

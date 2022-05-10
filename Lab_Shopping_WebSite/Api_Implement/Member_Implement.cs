@@ -59,7 +59,8 @@ namespace Lab_Shopping_WebSite.Apis
                     StringBuilder sbuild = new StringBuilder("Bearer ");
                     var token = jwt.GenerateToken(query.Item2.Name, query.Item2.RoleID, query.Item2.MemberID);
                     string result = sbuild.Append(token).ToString();
-                    return Results.Ok(new { result });
+                    string Role = query.Item2.RoleID == 1 ? "Admin" : "User";
+                    return Results.Ok(new { result , Role});
                 }
                 else
                     return Results.BadRequest("Password inCorrect");
@@ -83,20 +84,17 @@ namespace Lab_Shopping_WebSite.Apis
         async Task<IResult> UpdMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
-            HttpContext http,
+            [FromServices] AuthDto _auth,
             [FromBody] UpdMemberDto dto)
         {
             MemberService ms = (MemberService)service;
-            int MemberID = Convert.ToInt16(http.User.FindFirst("Sid").Value);
-            var query = await ms.GetMembers(MemberID);
-
+            var query = await ms.GetMembers(_auth.UserID);
+            
             if (query.Item1)
             {
                 var result = await ms.UpdateMember(dto, query.Item2);
                 if (result.Item1)
-                {
                     return Results.Ok();
-                }
                 else
                     return Results.BadRequest("Update Error.");
             }

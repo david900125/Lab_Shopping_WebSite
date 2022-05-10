@@ -1,30 +1,58 @@
 using System.Text;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using AutoMapper;
+using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Apis;
 using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.DBContext;
-using Lab_Shopping_WebSite.Interfaces;
-using Lab_Shopping_WebSite.Map;
 using Lab_Shopping_WebSite.Extension;
-using Microsoft.Extensions.ObjectPool;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
+
 
 // .NET 6 IConfiguration
 var builder = WebApplication.CreateBuilder(args);
 
 // Register Services
 RegisterServices(builder.Services);
+
 // Swagger 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer",
+        new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization"
+        });
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        });
+});
 builder.Services.AddControllers();
 
 // Configure JSON options.
@@ -38,8 +66,7 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 
 // AutoMapper
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Cors
 builder.Services.AddCors(option => option.AddPolicy("Policy", builder =>
 {
@@ -75,11 +102,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization(options =>
 {
     var PolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme, "Admin");
-    //var PolicyBuilder2 = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme, "Users");
     PolicyBuilder = PolicyBuilder.RequireAuthenticatedUser();
-    //PolicyBuilder2 = PolicyBuilder2.RequireAuthenticatedUser();
     options.DefaultPolicy = PolicyBuilder.Build();
-    //options.DefaultPolicy = PolicyBuilder2.Build();
 });
 
 var app = builder.Build();
@@ -122,6 +146,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 // CORS 
 app.UseCors("Policy");
+// Auth
+app.UseAuthMiddleware();
 
 // Get Apis By Injected
 var apis = app.Services.GetServices<IApi>();
@@ -134,7 +160,6 @@ foreach (var api in apis)
 }
 
 app.Run();
-
 
 void RegisterServices(IServiceCollection svcs)
 {
@@ -149,6 +174,7 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IApi, FileApi>();
     svcs.AddTransient<IApi, SalesApi>();
     svcs.AddTransient<IApi, CouponApi>();
+    svcs.AddTransient<IApi, ColorApi>();
     // Add Sevices
     svcs.AddTransient<IService<BlogService>, BlogService>();
     svcs.AddTransient<IService<MemberService>, MemberService>();
@@ -156,14 +182,7 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IService<FileServices>, FileServices>();
     svcs.AddTransient<IService<SalesService>, SalesService>();
     svcs.AddTransient<IService<CouponServices>, CouponServices>();
-
-
-    var mapperConfig = new MapperConfiguration(mc =>
-    {
-        mc.AddProfile(new MappingProfile());
-    });
-    
-    IMapper mapper = mapperConfig.CreateMapper();
-    //mapper.ConfigurationProvider.AssertConfigurationIsValid();
-    svcs.AddSingleton(mapper);
+    svcs.AddTransient<IService<ColorServices>, ColorServices>();
+    // authdto
+    svcs.AddScoped<AuthDto>();
 }

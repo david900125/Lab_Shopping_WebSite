@@ -1,4 +1,5 @@
 using Lab_Shopping_WebSite.DBContext;
+using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Models;
 
@@ -58,6 +59,34 @@ namespace Lab_Shopping_WebSite.Services
                 }
             }
             return true;
+        }
+        public async Task<List<BlogDto>> GetArticle()
+        {
+            var query = (from blogs in _db.Blogs
+                         select new BlogDto
+                         {
+                             BlogID = blogs.BlogID,
+                             Blog_Title=blogs.Blog_Title
+                         }).ToList();
+            foreach (var blog in query)
+            {
+                blog.Contents = _db.Blog_Contents.Where(n=>n.BlogID == blog.BlogID).OrderBy(n=> n.Order)
+                                .Select(n=> new BlogContentDto { 
+                                    Blog_ContentID = n.Blog_ContentID,
+                                    Blog_Content = n.Blog_Content,
+                                    Order = n.Order
+                                }).ToList();
+                blog.Images = _db.Blog_Images.Where(n => n.BlogID == blog.BlogID).OrderBy(n => n.Order)
+                                .Select(n => new BlogImageDto
+                                {
+                                   BlogID = n.BlogID,
+                                   Order = n.Order,
+                                   Url = n.Url
+                                }).ToList();
+            }
+
+
+            return new List<BlogDto>();
         }
     }
 }

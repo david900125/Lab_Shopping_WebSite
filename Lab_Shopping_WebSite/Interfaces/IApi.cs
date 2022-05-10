@@ -1,4 +1,5 @@
-﻿using Lab_Shopping_WebSite.DBContext;
+﻿using AutoMapper;
+using Lab_Shopping_WebSite.DBContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Shopping_WebSite.Interfaces
@@ -7,7 +8,18 @@ namespace Lab_Shopping_WebSite.Interfaces
     public interface IApi
     {
         abstract public void Register(WebApplication app);
+    }
 
+    public class Implement<T>
+    {
+        private readonly DataContext _db;
+        private readonly IMapper _mapper;
+        private readonly IService<T> _service;
+        public Implement (DataContext db, IMapper mapper)
+        {
+            _db = db;
+            _mapper = mapper;
+        }
     }
 
     public class IService<T>

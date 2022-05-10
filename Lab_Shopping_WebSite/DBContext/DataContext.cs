@@ -47,7 +47,6 @@ namespace Lab_Shopping_WebSite.DBContext
         public DbSet<Subscribes>? Subscribes { get; set; }
         public DbSet<Tags>? Tags { get; set; }
 
-        #region Required
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RolesConfiguration());
@@ -57,35 +56,27 @@ namespace Lab_Shopping_WebSite.DBContext
             modelBuilder.ApplyConfiguration(new TagsConfiguration());
             modelBuilder.ApplyConfiguration(new SizesConfiguration());
             modelBuilder.ApplyConfiguration(new ColorsConfiguration());
-
             modelBuilder.ApplyConfiguration(new BlogsConfiguration());
             modelBuilder.ApplyConfiguration(new BlogHrefsConfiguration());
             modelBuilder.ApplyConfiguration(new BlogImagesConfiguration());
-            modelBuilder.ApplyConfiguration(new BlogContentsConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new BlogContentsConfiguration());            
             modelBuilder.ApplyConfiguration(new CommoditiesConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityImagesConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityTagsConfiguration());
             modelBuilder.ApplyConfiguration(new CommodityPricesConfiguration());
             modelBuilder.ApplyConfiguration(new CommoditySizesConfiguration());
-
             modelBuilder.ApplyConfiguration(new FilesConfiguration());
-
             modelBuilder.ApplyConfiguration(new DeliveryPlacesConfiguration());
             modelBuilder.ApplyConfiguration(new DeliveryOptionsConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentsConfiguration());
             modelBuilder.ApplyConfiguration(new StatusConfiguration());
             modelBuilder.ApplyConfiguration(new SalesConfiguration());
-            modelBuilder.ApplyConfiguration(new SalesitemConfiguration());
-         
-            modelBuilder.ApplyConfiguration(new ShoppingCartsConfiguration());
-           
+            modelBuilder.ApplyConfiguration(new SalesitemConfiguration());        
+            modelBuilder.ApplyConfiguration(new ShoppingCartsConfiguration());         
             modelBuilder.ApplyConfiguration(new InventoriesConfiguration());
-
             modelBuilder.ApplyConfiguration(new CouponsWaysConfigurations());
             modelBuilder.ApplyConfiguration(new CouponsConfigurations());
             modelBuilder.ApplyConfiguration(new CouponUsesConfiguration());
-
             modelBuilder.ApplyConfiguration(new LikeCommoditiesConfiguration());
             modelBuilder.ApplyConfiguration(new MenusConfiguration());
             modelBuilder.ApplyConfiguration(new PagesConfiguration());
@@ -95,8 +86,6 @@ namespace Lab_Shopping_WebSite.DBContext
             modelBuilder.ApplyConfiguration(new ReceivedCouponsConfiguration());
             modelBuilder.ApplyConfiguration(new ReceivedViewedConfiguration());
         }
-        #endregion
-
         protected override void ConfigureConventions(ModelConfigurationBuilder builder)
         {
             builder.Properties<DateOnly>()

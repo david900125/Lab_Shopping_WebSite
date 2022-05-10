@@ -98,7 +98,7 @@ namespace Lab_Shopping_WebSite.Apis
             var result = await cs.GetFullCommodity(CommodityID);
             if(result!= null)
             {
-               await cs.Insert_Viewed(CommodityID , MemberID);
+               //await cs.Insert_Viewed(CommodityID , MemberID);
             }
             return Results.Ok(result);
         }
@@ -119,6 +119,20 @@ namespace Lab_Shopping_WebSite.Apis
         {
             CommodityService cs = (CommodityService)service;
             return Results.Ok(await cs.GetRandom(Count));
+        }
+
+        async Task<IResult> Delete_Commodity(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID
+            )
+        {
+            CommodityService cs = (CommodityService)service;
+            var result = await cs.DeleteCommodity(CommodityID);
+            if (result.Item1)
+            {
+                return Results.Ok();
+            }
+            return Results.BadRequest(result.Item2);
         }
     }
 }

@@ -70,12 +70,12 @@ namespace Lab_Shopping_WebSite.Services
                                      join sizes in _db.Sizes
                                         on tmp.SizeID equals sizes.SizeID
                                      where tmp.CommodityID == CommodityID
-                                     select sizes.Size).ToList();
+                                     select sizes.Size).Distinct().ToList();
             var color_collections = (from tmp in _db.Commodity_Sizes
                                      join colors in _db.Colors
                                         on tmp.ColorID equals colors.ColorID
                                      where tmp.CommodityID == CommodityID
-                                     select new { colors.Url, colors.Color }).ToList();
+                                     select new { colors.Url, colors.Color }).Distinct().ToList();
 
             result.CommodityColors = new List<string>();
             foreach (var color in color_collections)
@@ -169,7 +169,7 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<Tuple<bool, string>> Insert_Images(Commodities commodity, List<string> images , int Sid)
         {
             int Counter = 1;
-            Tuple<bool,string> mast = null;
+            Tuple<bool,string> mast = Tuple.Create(true,"");
             foreach(var img in images)
             {
                 mast = await Creater(new Commodity_Images
@@ -281,5 +281,68 @@ namespace Lab_Shopping_WebSite.Services
 
             return results;
         }
+
+        public async Task<Tuple<bool,string>> DeleteCommodity(int CommodityID)
+        {
+            var d1 = await Deleter(_db.Commodities.Where(n => n.CommodityID == CommodityID).First());
+            if (d1.Item1)
+            {
+                var d2 = await DeleteImg(CommodityID);
+                if (d2.Item1)
+                {
+                    var d3 = await DeletePrice(CommodityID);
+                    if (d3.Item1)
+                    {
+                        var d4 = await DeletePrice(CommodityID);
+                        if (d4.Item1)
+                        {
+                            var d5 = await DeleteTag(CommodityID);
+                            return d5;
+                        }
+                        return d4;
+                    }
+                    return d3;
+                }
+                return d2;
+            }
+            return d1;
+        }
+        public async Task<Tuple<bool,string>> DeleteImg(int CommodityID)
+        {
+            var query = _db.Commodity_Images.Where(n => n.CommodityID == CommodityID).ToList();
+            if (query.Count > 0)
+            {
+               return await Deleter(query);
+            }
+            return Tuple.Create(true, "NotFound.");
+        }
+        public async Task<Tuple<bool, string>> DeleteSize(int CommodityID)
+        {
+            var query = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).ToList();
+            if (query.Count > 0)
+            {
+                return await Deleter(query);
+            }
+            return Tuple.Create(true, "NotFound.");
+        }
+        public async Task<Tuple<bool, string>> DeletePrice(int CommodityID)
+        {
+            var query = _db.Commodity_Sizes.Where(n => n.CommodityID == CommodityID).ToList();
+            if (query.Count > 0)
+            {
+                return await Deleter(query);
+            }
+            return Tuple.Create(true, "NotFound.");
+        }
+        public async Task<Tuple<bool, string>> DeleteTag(int CommodityID)
+        {
+            var query = _db.Commodity_Tags.Where(n => n.CommodityID == CommodityID).ToList();
+            if (query.Count > 0)
+            {
+                return await Deleter(query);
+            }
+            return Tuple.Create(true, "NotFound.");
+        }
+
     }
 }
