@@ -1,20 +1,19 @@
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Extension;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-using System.Security.Claims;
-using System.Text;
 
 namespace Lab_Shopping_WebSite.Apis
 {
     public partial class MemberApi
     {
+        [AllowAnonymous]
         async Task<IResult> InsertMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -43,7 +42,8 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Second verification Error.");
 
         }
-
+        
+        [AllowAnonymous]
         async Task<IResult> Signin(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -60,7 +60,7 @@ namespace Lab_Shopping_WebSite.Apis
                     var token = jwt.GenerateToken(query.Item2.Name, query.Item2.RoleID, query.Item2.MemberID);
                     string result = sbuild.Append(token).ToString();
                     string Role = query.Item2.RoleID == 1 ? "Admin" : "User";
-                    return Results.Ok(new { result , Role});
+                    return Results.Ok(new { result, Role });
                 }
                 else
                     return Results.BadRequest("Password inCorrect");
@@ -70,7 +70,7 @@ namespace Lab_Shopping_WebSite.Apis
 
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(Policy = "AdminRole")]
         async Task<IResult> GetMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -80,7 +80,8 @@ namespace Lab_Shopping_WebSite.Apis
             var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();
             return Results.Ok(result);
         }
-
+        
+        [Authorize]
         async Task<IResult> UpdMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -88,8 +89,8 @@ namespace Lab_Shopping_WebSite.Apis
             [FromBody] UpdMemberDto dto)
         {
             MemberService ms = (MemberService)service;
-            var query = await ms.GetMembers(_auth.UserID);
-            
+            var query = await ms.GetMembers(_auth.UserID.MemberID);
+
             if (query.Item1)
             {
                 var result = await ms.UpdateMember(dto, query.Item2);
@@ -102,7 +103,7 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Member not found.");
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize]
         async Task<IResult> GetTopMember(
                [FromServices] DataContext _db,
                [FromServices] IService<MemberService> service,
@@ -122,13 +123,14 @@ namespace Lab_Shopping_WebSite.Apis
                                            Gender = ((members.Gender == true) ? Gender.Male.ToString() : Gender.Female.ToString()),
                                            Role = roles.RoleName,
                                            BirthDay = members.BirthDay.ToString(),
-                                           CreateTime = members.CreateTime.ToString("yyyy/MM/dd HH:mm:ss"),
-                                           ModifyTime = members.ModifyTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                                           CreateTime = members.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                                           ModifyTime = members.ModifyTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
                                        }).Take(count).ToList();
 
             return Results.Ok(results);
         }
 
+        [Authorize]
         async Task<IResult> UpPassword(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,

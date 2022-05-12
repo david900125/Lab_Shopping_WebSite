@@ -8,7 +8,7 @@ namespace Lab_Shopping_WebSite.Services
     public class BlogService : IService<BlogService>
     {
 
-        public BlogService(DataContext db):base(db)
+        public BlogService(DataContext db , AuthDto auth):base(db , auth)
         {
         }
 

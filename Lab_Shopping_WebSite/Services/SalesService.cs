@@ -8,7 +8,7 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class SalesService: IService<SalesService>
     {
-        public SalesService(DataContext db) : base(db)
+        public SalesService(DataContext db , AuthDto auth) : base(db , auth)
         {
         }
 

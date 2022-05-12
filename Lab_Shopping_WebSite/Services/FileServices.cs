@@ -1,4 +1,5 @@
 ﻿using Lab_Shopping_WebSite.DBContext;
+using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class FileServices : IService<FileServices>
     {
-        public FileServices(DataContext db , IWebHostEnvironment _environment) : base(db)
+        public FileServices(DataContext db, AuthDto auth , IWebHostEnvironment _environment) : base(db , auth)
         {
            this.Environment = _environment;
         }

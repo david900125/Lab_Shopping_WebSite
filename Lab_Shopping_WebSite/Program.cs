@@ -4,7 +4,6 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Apis;
@@ -80,10 +79,15 @@ builder.Services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // JwtBareer
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        // 設定 JWT Bearer Token 的檢查選項
-        .AddJwtBearer(options =>
+builder.Services.AddAuthentication(o =>
+{
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
         {
+            // 設定 JWT Bearer Token 的檢查選項
             options.IncludeErrorDetails = true;
             options.TokenValidationParameters = new TokenValidationParameters
             {
@@ -99,18 +103,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         });
 
 // Authorization
-builder.Services.AddAuthorization(options =>
+builder.Services.AddAuthorization(o =>
 {
-    var PolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme, "Admin");
-    PolicyBuilder = PolicyBuilder.RequireAuthenticatedUser();
-    options.DefaultPolicy = PolicyBuilder.Build();
+    o.AddPolicy("OnlyAdminRole", p => p.RequireRole("Admin"));
+    o.AddPolicy("AdminRole", p => p.RequireRole("Admin", "User"));
+    o.AddPolicy("UserRole", p => p.RequireRole("User"));
 });
+
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
 {
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
     dbContext.Database.EnsureCreated();
+   // DataInitializer.SeedData(dbContext, builder.Environment).Wait();
 }
 
 // Configure the HTTP request pipeline.
@@ -155,7 +162,6 @@ var apis = app.Services.GetServices<IApi>();
 foreach (var api in apis)
 {
     if (api is null) throw new InvalidProgramException("Api is not found");
-
     api.Register(app);
 }
 

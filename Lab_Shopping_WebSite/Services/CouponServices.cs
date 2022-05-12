@@ -5,20 +5,20 @@ using Lab_Shopping_WebSite.Models;
 
 namespace Lab_Shopping_WebSite.Services
 {
-    public class CouponServices:IService<CouponServices>
+    public class CouponServices : IService<CouponServices>
     {
-        public CouponServices(DataContext db) : base(db)
+        public CouponServices(DataContext db, AuthDto auth) : base(db, auth)
         {
         }
 
-        public async Task<Tuple<bool,string>> CreateCoupon(CraeteCouponDto dto , int MemberID)
+        public async Task<Tuple<bool, string>> CreateCoupon(CraeteCouponDto dto, int MemberID)
         {
-            Coupons coupon = new Coupons() 
-            { 
+            Coupons coupon = new Coupons()
+            {
                 Coupon_Title = dto.Coupon_Title,
                 Coupon_Key = dto.Coupon_Key,
                 Coupon_Content = dto.Coupon_Content,
-                Coupon_WayID = dto.Coupon_WayID, 
+                Coupon_WayID = dto.Coupon_WayID,
                 Amount_Achieved = 0, // 達成量
                 Discount = dto.DisCount,
                 Issued_Amount = dto.Issued_Amount,
@@ -36,10 +36,10 @@ namespace Lab_Shopping_WebSite.Services
 
         public async Task<List<CouponDto>> GetCoupons()
         {
-            var quey= (from coupon in _db.Coupons
+            var quey = (from coupon in _db.Coupons
                         join ways in _db.Coupon_Ways
                             on coupon.Coupon_WayID equals ways.Coupon_WayID
-                        select ( 
+                        select (
                         new CouponDto
                         {
                             CouponID = coupon.CouponID,

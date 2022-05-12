@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using Lab_Shopping_WebSite.DBContext;
 using Microsoft.EntityFrameworkCore;
+using Lab_Shopping_WebSite.DBContext;
+using Lab_Shopping_WebSite.DTO;
+using System.Reflection;
 
 namespace Lab_Shopping_WebSite.Interfaces
 
@@ -10,27 +12,19 @@ namespace Lab_Shopping_WebSite.Interfaces
         abstract public void Register(WebApplication app);
     }
 
-    public class Implement<T>
-    {
-        private readonly DataContext _db;
-        private readonly IMapper _mapper;
-        private readonly IService<T> _service;
-        public Implement (DataContext db, IMapper mapper)
-        {
-            _db = db;
-            _mapper = mapper;
-        }
-    }
-
     public class IService<T>
     {
         public readonly DataContext _db;
-
-        public IService(DataContext db)
+        public readonly AuthDto _auth;
+        public IService(DataContext db , AuthDto auth)
         {
             if (db == null)
                 throw new ArgumentNullException("db");
             this._db = db;
+
+            if (auth == null)
+                throw new ArgumentException("authdto");
+            this._auth = auth;
         }
 
         public async Task<Tuple<bool, string>> Updater<M>(M model)
@@ -39,6 +33,19 @@ namespace Lab_Shopping_WebSite.Interfaces
             string ErrorMsg = "";
 
             Type type = typeof(M);
+
+            // set update time and updater
+            PropertyInfo propInfo = model.GetType().GetProperty("ModifyTime");
+            if (propInfo != null)
+            {
+                propInfo.SetValue(model, DateTime.Now, null);
+            }
+            propInfo = model.GetType().GetProperty("Modifier");
+            if (propInfo != null)
+            {
+                propInfo.SetValue(model, _auth.UserID.MemberID, null);
+            }
+            
 
             using var transaction = _db.Database.BeginTransaction();
             try
@@ -58,10 +65,18 @@ namespace Lab_Shopping_WebSite.Interfaces
         }
 
         public async Task<Tuple<bool, string>> Creater<M>(M model)
-            where M: class, new()
+            where M : class, new()
         {
             string ErrorMsg = "";
             Type type = typeof(M);
+
+            // set creater
+            PropertyInfo propInfo = model.GetType().GetProperty("Creator");
+            if (propInfo != null && propInfo.GetValue(model) != null)
+            {
+                propInfo.SetValue(model, _auth.UserID.MemberID, null);
+            }
+
             using var transaction = _db.Database.BeginTransaction();
             try
             {

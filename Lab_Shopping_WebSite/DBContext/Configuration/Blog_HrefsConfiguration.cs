@@ -1,3 +1,4 @@
+using Lab_Shopping_WebSite.Extension;
 using Lab_Shopping_WebSite.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -29,7 +30,6 @@ namespace Lab_Shopping_WebSite.DBContext
     {
         public void Configure(EntityTypeBuilder<Commodity_Images> builder)
         {
-            //builder.HasKey(n => new { n.CommodityID, n.FileID });
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityImagesCreator).HasForeignKey(n => n.Creator);
@@ -229,22 +229,18 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.RolesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.RolesModifer).HasForeignKey(n => n.Modifier);
-
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
             builder.HasData(
-                new Roles
-                {
-                    RoleID = 1,
-                    RoleName = "管理者",
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                },
-                new Roles
-                {
-                    RoleID = 2,
-                    RoleName = "使用者",
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                });
+            new Roles
+            {
+                RoleID = 1,
+                RoleName = "管理者"
+            },
+            new Roles
+            {
+                RoleID = 2,
+                RoleName = "使用者"
+            });
         }
     }
     public class ReceivedCouponsConfiguration : IEntityTypeConfiguration<Received_Coupons>
@@ -690,10 +686,9 @@ namespace Lab_Shopping_WebSite.DBContext
                     Creator = 1,
                     CreateTime = DateTime.Now
                 }
-            );
+             );
         }
     }
-
     public class MembersConfiguration : IEntityTypeConfiguration<Members>
     {
         public void Configure(EntityTypeBuilder<Members> builder)
@@ -716,13 +711,14 @@ namespace Lab_Shopping_WebSite.DBContext
                     Creator = 1,
                     CreateTime = DateTime.Now
                 },
+                // User
                 new Members
                 {
                     MemberID = 2,
                     Name = "eeeee",
                     Email_Address = "ioioio@gmail.com",
                     Password = "76D80224611FC919A5D54F0FF9FBA446",
-                    RoleID = 1,
+                    RoleID = 2,
                     Modifier = 1,
                     ModifyTime = DateTime.Now,
                     Creator = 1,

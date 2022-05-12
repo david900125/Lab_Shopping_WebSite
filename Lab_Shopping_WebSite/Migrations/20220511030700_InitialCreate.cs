@@ -75,7 +75,6 @@ namespace Lab_Shopping_WebSite.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    FilesFileID = table.Column<int>(type: "int", nullable: true),
                     ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -311,6 +310,7 @@ namespace Lab_Shopping_WebSite.Migrations
                     Discount = table.Column<decimal>(type: "decimal(7,2)", precision: 7, scale: 2, nullable: false),
                     Issued_Amount = table.Column<int>(type: "int", nullable: true),
                     Issued_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     isIssued = table.Column<bool>(type: "bit", nullable: false),
                     Received_Amount = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
@@ -665,8 +665,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -1011,29 +1011,37 @@ namespace Lab_Shopping_WebSite.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "RoleID", "CreateTime", "Creator", "Modifier", "ModifyTime", "RoleName" },
-                values: new object[] { 1, new DateTime(2022, 5, 1, 10, 47, 38, 277, DateTimeKind.Local).AddTicks(80), null, null, new DateTime(2022, 5, 1, 10, 47, 38, 277, DateTimeKind.Local).AddTicks(92), "管理者" });
+                columns: new[] { "RoleID", "Creator", "Modifier", "RoleName" },
+                values: new object[] { 1, null, null, "管理者" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "RoleID", "CreateTime", "Creator", "Modifier", "ModifyTime", "RoleName" },
-                values: new object[] { 2, new DateTime(2022, 5, 1, 10, 47, 38, 277, DateTimeKind.Local).AddTicks(94), null, null, new DateTime(2022, 5, 1, 10, 47, 38, 277, DateTimeKind.Local).AddTicks(95), "使用者" });
+                columns: new[] { "RoleID", "Creator", "Modifier", "RoleName" },
+                values: new object[] { 2, null, null, "使用者" });
 
             migrationBuilder.InsertData(
                 table: "Members",
                 columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
-                values: new object[] { 1, null, null, new DateTime(2022, 5, 1, 10, 47, 38, 288, DateTimeKind.Local).AddTicks(1142), 1, "root@gmail.com", null, 1, new DateTime(2022, 5, 1, 10, 47, 38, 288, DateTimeKind.Local).AddTicks(1130), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
+                values: new object[] { 1, null, null, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6628), 1, "root@gmail.com", null, 1, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6610), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Colors",
                 columns: new[] { "ColorID", "Color", "CreateTime", "Creator", "Modifier", "ModifyTime", "Url" },
                 values: new object[,]
                 {
-                    { 1, "黑色", new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4781), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4773), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg" },
-                    { 2, "白色", new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4785), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4784), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/FSV0001_3_01.jpg" },
-                    { 3, "咖啡", new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4787), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4786), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_01.jpg" },
-                    { 4, "黃色", new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4789), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4788), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/crv0307_3_01.jpg" },
-                    { 5, "灰色", new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4790), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 338, DateTimeKind.Local).AddTicks(4790), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_03.jpg" }
+                    { 1, "黑色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2346), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2319), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg" },
+                    { 2, "白色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2351), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2349), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/FSV0001_3_01.jpg" },
+                    { 3, "咖啡", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2354), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2353), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_01.jpg" },
+                    { 4, "黃色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2358), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2356), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/crv0307_3_01.jpg" },
+                    { 5, "灰色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2361), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2359), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_03.jpg" },
+                    { 6, "可可", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2364), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2362), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_06.jpg" },
+                    { 7, "灰藍", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2367), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2365), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg" },
+                    { 8, "杏灰", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2370), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2369), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg" },
+                    { 9, "麻灰", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2373), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2372), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln3305-221_3_01.jpg" },
+                    { 10, "卡其", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2376), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2374), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/cop1676_3_02.jpg" },
+                    { 11, "紫", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2379), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2378), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_04.jpg" },
+                    { 12, "橘色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2383), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2381), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_02.jpg" },
+                    { 13, "藍", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2386), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2384), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_01.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -1041,11 +1049,10 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "Commodity_KindID", "CreateTime", "Creator", "Description", "Modifier", "ModifyTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1557), 1, "短褲", 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1548) },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1560), 1, "外套", 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1559) },
-                    { 3, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1562), 1, "長褲", 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1561) },
-                    { 4, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1563), 1, "SHOES", 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1562) },
-                    { 5, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1565), 1, "配件", 1, new DateTime(2022, 5, 1, 10, 47, 38, 312, DateTimeKind.Local).AddTicks(1564) }
+                    { 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5831), 1, "短袖", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5719) },
+                    { 2, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5836), 1, "外套", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5835) },
+                    { 3, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5837), 1, "長褲", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5837) },
+                    { 4, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5839), 1, "短褲", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5838) }
                 });
 
             migrationBuilder.InsertData(
@@ -1053,8 +1060,8 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "Coupon_WayID", "Coupon_Way", "CreateTime", "Creator", "Modifier", "ModifyTime" },
                 values: new object[,]
                 {
-                    { 1, "折價券", new DateTime(2022, 5, 1, 10, 47, 38, 490, DateTimeKind.Local).AddTicks(2859), 1, null, new DateTime(2022, 5, 1, 10, 47, 38, 490, DateTimeKind.Local).AddTicks(2872) },
-                    { 2, "免運費", new DateTime(2022, 5, 1, 10, 47, 38, 490, DateTimeKind.Local).AddTicks(2874), 1, null, new DateTime(2022, 5, 1, 10, 47, 38, 490, DateTimeKind.Local).AddTicks(2875) }
+                    { 1, "折價券", new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7457), 1, null, new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7469) },
+                    { 2, "免運費", new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7472), 1, null, new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7472) }
                 });
 
             migrationBuilder.InsertData(
@@ -1062,18 +1069,23 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "Delivery_PlaceID", "CreateTime", "Creator", "Delivery_Place", "Modifier", "ModifyTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1437), 1, "本島", 1, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1452) },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1454), 1, "外島", 1, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1454) },
-                    { 3, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1455), 1, "外國", 1, new DateTime(2022, 5, 1, 10, 47, 38, 426, DateTimeKind.Local).AddTicks(1456) }
+                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5325), 1, "本島", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5340) },
+                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5342), 1, "外島", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5343) },
+                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5344), 1, "外國", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5345) }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Members",
+                columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
+                values: new object[] { 2, null, null, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6640), 1, "ioioio@gmail.com", null, 1, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6630), "eeeee", "76D80224611FC919A5D54F0FF9FBA446", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Payments",
                 columns: new[] { "PaymentID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Payment" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 441, DateTimeKind.Local).AddTicks(7331), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 441, DateTimeKind.Local).AddTicks(7342), "現金" },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 441, DateTimeKind.Local).AddTicks(7345), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 441, DateTimeKind.Local).AddTicks(7346), "信用卡" }
+                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(418), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(426), "現金" },
+                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(428), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(429), "信用卡" }
                 });
 
             migrationBuilder.InsertData(
@@ -1081,9 +1093,9 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "PriceID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Price" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2953), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2964), "優惠價" },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2969), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2970), "標價" },
-                    { 3, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2971), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 304, DateTimeKind.Local).AddTicks(2971), "單價" }
+                    { 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1448), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1459), "優惠價" },
+                    { 2, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1462), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1462), "標價" },
+                    { 3, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1463), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1464), "單價" }
                 });
 
             migrationBuilder.InsertData(
@@ -1091,9 +1103,9 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "StatusID", "CreateTime", "Creator", "Modifier", "ModifyTime", "State" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6350), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6342), "已寄送" },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6353), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6352), "退貨" },
-                    { 3, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6354), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 449, DateTimeKind.Local).AddTicks(6354), "準備中" }
+                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3610), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3596), "已寄送" },
+                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3613), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3613), "退貨" },
+                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3615), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3614), "準備中" }
                 });
 
             migrationBuilder.InsertData(
@@ -1101,9 +1113,9 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "Delivery_OptionsID", "CreateTime", "Creator", "Delivery_Cost", "Delivery_Option", "Delivery_PlaceID", "Modifier", "ModifyTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(344), 1, 30m, "快遞", 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(354) },
-                    { 2, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(356), 1, 100m, "快遞", 2, 1, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(357) },
-                    { 3, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(358), 1, 300m, "快遞", 3, 1, new DateTime(2022, 5, 1, 10, 47, 38, 434, DateTimeKind.Local).AddTicks(358) }
+                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3119), 1, 30m, "快遞", 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3135) },
+                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3139), 1, 100m, "快遞", 2, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3139) },
+                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3140), 1, 300m, "快遞", 3, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3141) }
                 });
 
             migrationBuilder.InsertData(
@@ -1111,15 +1123,15 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "SizeID", "Commodity_KindsID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Size" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8521), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8528), "S" },
-                    { 2, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8532), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8532), "M" },
-                    { 3, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8533), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8534), "L" },
-                    { 4, 2, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8534), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8535), "S" },
-                    { 5, 2, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8536), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8536), "M" },
-                    { 6, 2, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8537), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8538), "L" },
-                    { 7, 3, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8539), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8539), "S" },
-                    { 8, 3, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8540), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8540), "M" },
-                    { 9, 3, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8541), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 329, DateTimeKind.Local).AddTicks(8542), "L" }
+                    { 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6092), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6103), "S" },
+                    { 2, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6106), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6106), "M" },
+                    { 3, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6108), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6108), "L" },
+                    { 4, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6109), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6110), "S" },
+                    { 5, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6111), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6112), "M" },
+                    { 6, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6113), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6114), "L" },
+                    { 7, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6115), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6115), "S" },
+                    { 8, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6117), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6117), "M" },
+                    { 9, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6118), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6119), "L" }
                 });
 
             migrationBuilder.InsertData(
@@ -1127,12 +1139,12 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: new[] { "TagID", "Commodity_KindsID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Tag" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7318), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7331), "男裝" },
-                    { 2, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7333), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7334), "女裝" },
-                    { 3, 2, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7335), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7335), "男裝" },
-                    { 4, 2, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7336), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7347), "女裝" },
-                    { 5, 3, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7357), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7358), "男裝" },
-                    { 6, 3, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7359), 1, 1, new DateTime(2022, 5, 1, 10, 47, 38, 321, DateTimeKind.Local).AddTicks(7359), "女裝" }
+                    { 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(493), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(506), "男裝" },
+                    { 2, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(509), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(510), "女裝" },
+                    { 3, 2, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(511), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(512), "男裝" },
+                    { 4, 2, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(513), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(514), "女裝" },
+                    { 5, 3, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(515), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(516), "男裝" },
+                    { 6, 3, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(517), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(518), "女裝" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1189,11 +1201,6 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "IX_Blog_Images_Creator",
                 table: "Blog_Images",
                 column: "Creator");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Blog_Images_FilesFileID",
-                table: "Blog_Images",
-                column: "FilesFileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blog_Images_Modifier",
@@ -1736,13 +1743,6 @@ namespace Lab_Shopping_WebSite.Migrations
                 principalTable: "Blogs",
                 principalColumn: "BlogID",
                 onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Blog_Images_Files_FilesFileID",
-                table: "Blog_Images",
-                column: "FilesFileID",
-                principalTable: "Files",
-                principalColumn: "FileID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Blog_Images_Members_Creator",

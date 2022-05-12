@@ -10,14 +10,11 @@ namespace Lab_Shopping_WebSite.Services
     public class MemberService : IService<MemberService>
     {
         private IMapper _mapper;
-        private readonly AuthDto _auth;
 
-        public MemberService(DataContext db , IMapper mapper , AuthDto auth) : base(db)
+        public MemberService(DataContext db , IMapper mapper , AuthDto auth) : base(db , auth)
         {
             _mapper = mapper;
-            _auth = auth;
         }
-
         public async Task<Tuple<bool, Members>> GetMembers(string EmailAddress)
         {
             var result = await _db.Members.Where
@@ -71,7 +68,7 @@ namespace Lab_Shopping_WebSite.Services
             member.BirthDay = DateOnly.Parse(dto.Birthday);
             member.Phone_Number = (dto.PhoneNumber ??= member.Phone_Number);
             member.Email_Address = (dto.Email_Address ??= member.Email_Address);
-            member.Modifier = _auth.UserID;
+            member.Modifier = _auth.UserID.MemberID;
             member.ModifyTime = DateTime.Now;
 
             var result = await Updater<Members>(member);
@@ -80,7 +77,7 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<Tuple<bool, string>> UpdatePassword(Members member, string newPsd)
         {
             member.Password = newPsd.ToMD5();
-            member.Modifier = _auth.UserID;
+            member.Modifier = _auth.UserID.MemberID;
 
             return await Updater<Members>(member);
         }
