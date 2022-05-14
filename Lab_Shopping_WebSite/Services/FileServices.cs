@@ -3,12 +3,13 @@ using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using System.Text;
+using AutoMapper;
 
 namespace Lab_Shopping_WebSite.Services
 {
     public class FileServices : IService<FileServices>
     {
-        public FileServices(DataContext db, AuthDto auth , IWebHostEnvironment _environment) : base(db , auth)
+        public FileServices(DataContext db, AuthDto auth , IWebHostEnvironment _environment , IMapper mapper) : base(db , auth ,mapper)
         {
            this.Environment = _environment;
         }

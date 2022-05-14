@@ -115,9 +115,47 @@ namespace Lab_Shopping_WebSite.Apis
 
         [AllowAnonymous]
         async Task<IResult> GetAllTags(
-            [FromServices] IService<ColorServices> service)
+            [FromServices] IService<TagsService> service)
+        {
+            TagsService ts = (TagsService)service;
+            return Results.Ok(await ts.GetTagsDto());
+        }
+
+        [Authorize(Policy = "OnlyAdminRole")]
+        async Task<IResult> InsertTag(
+            [FromServices] IService<TagsService> service,
+            [FromServices] AuthDto auth,
+            NewTagDto dto)
+        {
+            TagsService ts = (TagsService)service;
+            Tuple<bool, string> result = await ts.InsertTags(dto);
+
+            if (!auth.IsAuth)
+            {
+                return Results.Unauthorized();
+            }
+
+            if (result.Item1)
+            {
+                return Results.Ok();
+            }
+
+            return Results.BadRequest(new ErrorDto
+            {
+                Code = "400",
+                ErrorMsg = result.Item2,
+                Type = "Bad Request"
+            });
+        }
+
+        [Authorize(Policy ="OnlyAdminRole")]
+        async Task<IResult> UpdateTag(
+            [FromServices] IService<TagsService> service,
+            [FromServices] AuthDto auth,
+            NewTagDto dto)
         {
 
+            return Results.Ok();
         }
     }
 }

@@ -10,11 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Seed\Commodities.json" />
-    <Content Remove="Seed\Roles.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Dockerfile" />
     <None Remove="Dockerfile.original" />
   </ItemGroup>

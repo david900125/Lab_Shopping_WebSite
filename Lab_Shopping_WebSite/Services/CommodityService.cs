@@ -2,13 +2,13 @@
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Interfaces;
-
+using AutoMapper;
 
 namespace Lab_Shopping_WebSite.Services
 {
     public class CommodityService : IService<CommodityService>
     {
-        public CommodityService(DataContext db, AuthDto auth) : base(db, auth) { }
+        public CommodityService(DataContext db, AuthDto auth, IMapper mapper) : base(db, auth, mapper) { }
 
         public async Task<Tuple<bool, Commodity_Sizes>> Get_Commodity_Size(CartDto dto)
         {

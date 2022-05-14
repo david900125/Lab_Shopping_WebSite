@@ -115,10 +115,16 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
 {
+    /*
+     * Use Dependency Injection in SeedHelper , But will be  "Object reference not set to an instance of an object" Error
+     * so Change into in line 71 : Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)
+     * SeedHelper.HelperInject(app.Services.GetService<IWebHostEnvironment>());
+     */
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
     dbContext.Database.EnsureCreated();
-   // DataInitializer.SeedData(dbContext, builder.Environment).Wait();
 }
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -183,12 +189,13 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IApi, ColorApi>();
     // Add Sevices
     svcs.AddTransient<IService<BlogService>, BlogService>();
-    svcs.AddTransient<IService<MemberService>, MemberService>();
-    svcs.AddTransient<IService<CommodityService>, CommodityService>();
+    svcs.AddTransient<IService<TagsService>, TagsService>();
     svcs.AddTransient<IService<FileServices>, FileServices>();
     svcs.AddTransient<IService<SalesService>, SalesService>();
-    svcs.AddTransient<IService<CouponServices>, CouponServices>();
     svcs.AddTransient<IService<ColorServices>, ColorServices>();
+    svcs.AddTransient<IService<MemberService>, MemberService>();
+    svcs.AddTransient<IService<CouponServices>, CouponServices>();
+    svcs.AddTransient<IService<CommodityService>, CommodityService>();
     // authdto
     svcs.AddScoped<AuthDto>();
 }

@@ -9,11 +9,8 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class MemberService : IService<MemberService>
     {
-        private IMapper _mapper;
-
-        public MemberService(DataContext db , IMapper mapper , AuthDto auth) : base(db , auth)
+        public MemberService(DataContext db , IMapper mapper , AuthDto auth) : base(db , auth , mapper)
         {
-            _mapper = mapper;
         }
         public async Task<Tuple<bool, Members>> GetMembers(string EmailAddress)
         {
@@ -78,6 +75,13 @@ namespace Lab_Shopping_WebSite.Services
         {
             member.Password = newPsd.ToMD5();
             member.Modifier = _auth.UserID.MemberID;
+
+            return await Updater<Members>(member);
+        }
+        public async Task<Tuple<bool , string>> UpdateSinginTime(Members member)
+        {
+            member.LastSignin = DateTime.Now;
+            member.Modifier = member.MemberID;
 
             return await Updater<Members>(member);
         }

@@ -16,7 +16,8 @@ namespace Lab_Shopping_WebSite.Interfaces
     {
         public readonly DataContext _db;
         public readonly AuthDto _auth;
-        public IService(DataContext db , AuthDto auth)
+        public readonly IMapper _mapper;
+        public IService(DataContext db , AuthDto auth , IMapper mapper)
         {
             if (db == null)
                 throw new ArgumentNullException("db");
@@ -25,6 +26,10 @@ namespace Lab_Shopping_WebSite.Interfaces
             if (auth == null)
                 throw new ArgumentException("authdto");
             this._auth = auth;
+
+            if (mapper == null)
+                throw new ArgumentException("mapper");
+            this._mapper = mapper;
         }
 
         public async Task<Tuple<bool, string>> Updater<M>(M model)

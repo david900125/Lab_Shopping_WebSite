@@ -56,6 +56,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditiesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditiesModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Commodities>();
         }
     }
     public class CommodityKindsConfiguration : IEntityTypeConfiguration<Commodity_Kinds>
@@ -103,6 +104,26 @@ namespace Lab_Shopping_WebSite.DBContext
                     Creator = 1,
                     CreateTime = DateTime.Now
                 });
+        }
+    }
+    public class CommodityPricesConfiguration : IEntityTypeConfiguration<Commodity_Prices>
+    {
+        public void Configure(EntityTypeBuilder<Commodity_Prices> builder)
+        {
+            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityPricesCreator).HasForeignKey(n => n.Creator);
+            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityPricesModifer).HasForeignKey(n => n.Modifier);
+        }
+    }
+    public class CommoditySizesConfiguration : IEntityTypeConfiguration<Commodity_Sizes>
+    {
+        public void Configure(EntityTypeBuilder<Commodity_Sizes> builder)
+        {
+            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditySizesCreator).HasForeignKey(n => n.Creator);
+            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditySizesModifer).HasForeignKey(n => n.Modifier);
         }
     }
     public class CouponUsesConfiguration : IEntityTypeConfiguration<Coupon_Uses>
@@ -555,138 +576,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ColorsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ColorsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Colors
-                {
-                    ColorID = 1,
-                    Color = "黑色",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 2,
-                    Color = "白色",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/FSV0001_3_01.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 3,
-                    Color = "咖啡",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_01.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 4,
-                    Color = "黃色",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/crv0307_3_01.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 5,
-                    Color = "灰色",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_03.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 6,
-                    Color = "可可",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_06.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 7,
-                    Color = "灰藍",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 8,
-                    Color = "杏灰",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 9,
-                    Color = "麻灰",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln3305-221_3_01.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 10,
-                    Color = "卡其",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/cop1676_3_02.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 11,
-                    Color = "紫",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_04.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 12,
-                    Color = "橘色",
-                    Url = "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_02.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Colors
-                {
-                    ColorID = 13,
-                    Color = "藍",
-                    Url = "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_01.jpg",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                }
-             );
+            builder.Seed<Colors>();
         }
     }
     public class MembersConfiguration : IEntityTypeConfiguration<Members>
@@ -886,24 +776,5 @@ namespace Lab_Shopping_WebSite.DBContext
             });
         }
     }
-    public class CommodityPricesConfiguration : IEntityTypeConfiguration<Commodity_Prices>
-    {
-        public void Configure(EntityTypeBuilder<Commodity_Prices> builder)
-        {
-            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityPricesCreator).HasForeignKey(n => n.Creator);
-            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityPricesModifer).HasForeignKey(n => n.Modifier);
-        }
-    }
-    public class CommoditySizesConfiguration : IEntityTypeConfiguration<Commodity_Sizes>
-    {
-        public void Configure(EntityTypeBuilder<Commodity_Sizes> builder)
-        {
-            builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditySizesCreator).HasForeignKey(n => n.Creator);
-            builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditySizesModifer).HasForeignKey(n => n.Modifier);
-        }
-    }
+
 }

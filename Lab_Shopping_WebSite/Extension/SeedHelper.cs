@@ -1,6 +1,7 @@
 ﻿using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
 using System.Reflection;
 
@@ -21,7 +22,7 @@ namespace Lab_Shopping_WebSite.Extension
                     Type type = dbset.PropertyType.GetGenericArguments()[0];
                     string fullPath = Path.Combine(host.ContentRootPath, "Seed", type.Name + ".json");
                     if (File.Exists(fullPath))
-                        {
+                    {
                         using (StreamReader reader = new StreamReader(fullPath))
                         {
                             json = reader.ReadToEnd();
@@ -49,56 +50,53 @@ namespace Lab_Shopping_WebSite.Extension
             }
         }
     }
+
+
+    public static class SeedHelper
+    {
+        private static IWebHostEnvironment host;
+
+        public static void HelperInject(IWebHostEnvironment _host)
+        {
+            if (_host == null)
+                throw new ArgumentNullException("_context");
+            host = _host;
+        }
+
+        public static void Seed<T>(this EntityTypeBuilder<T> builder)
+            where T : class
+        {
+
+            Type type = typeof(T);
+            string json = "";
+            string rootpath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string fullPath = Path.Combine(rootpath, "Seed", type.Name + ".json");
+            //string fullPath = Path.Combine(host.ContentRootPath, "Seed", type.Name + ".json");
+            if (File.Exists(fullPath))
+            {
+                using (StreamReader reader = new StreamReader(fullPath))
+                {
+                    json = reader.ReadToEnd();
+                    List<T> jobject = JsonConvert.DeserializeObject<List<T>>(json);
+                    jobject.ForEach(t => 
+                    {
+                        PropertyInfo info = t.GetType().GetProperty("CreateTime");
+                        if (info != null)
+                        {
+                            info.SetValue(t, DateTime.Now, null);
+                        }
+
+                        info = t.GetType().GetProperty("Creator");
+                        if (info != null)
+                        {
+                            info.SetValue(t, 1, null);
+                        }
+                    });
+                    builder.HasData(jobject);
+                }
+            }
+        }
+    }
 }
 
 
-
-
-//var types = typeof(IModel).Assembly.GetTypes().Where(type => type.IsClass && type.IsSubclassOf(typeof(IModel)));
-
-//foreach (var type in types)
-//{
-//    var DbsetMyType = typeof(DbSet<>).MakeGenericType(type);
-//    PropertyInfo info = typeof(DataContext).GetProperty(type.Name, DbsetMyType);
-//    if (info != null)
-//    {
-//        var dbSet = (IEnumerable<dynamic>)info.GetValue(_db);
-//        if (!dbSet.Any())
-//        {
-//            string fullPath = Path.Combine(host.ContentRootPath, "Seed", type.Name + ".json");
-//            if (File.Exists(fullPath))
-//            {
-//                using (StreamReader reader = new StreamReader(fullPath))
-//                {
-//                    json = reader.ReadToEnd();
-//                    // reflection JsonConvert.Deserialize<T>( string json );
-//                    var deserializer = typeof(JsonConvert).GetMethods(BindingFlags.Public | BindingFlags.Static)
-//                        .Where(i => i.Name.Equals("DeserializeObject", StringComparison.InvariantCulture))
-//                        .Where(i => i.IsGenericMethod)
-//                        .Where(i => i.GetParameters().Select(a => a.ParameterType).SequenceEqual(new[] { typeof(string) }))
-//                        .Single();
-//                    // reflection  List<type> 
-//                    var ListMyType = typeof(List<>).MakeGenericType(type);
-//                    // set reflection JsonConvert.Deserialize< List<type>  >( string json );
-//                    deserializer = deserializer.MakeGenericMethod(ListMyType);
-//                    var results = deserializer.Invoke(null, new object[] { json });
-//                    if (results != null)
-//                    {
-//                        MethodInfo methodAdd = typeof(DbSet<>).GetMethods()
-//                                               .Single(m => m.Name == "AddRange" && m.GetParameters().Count() == 1);
-//                        methodAdd.Invoke(dbSet, new[] { results });
-//                        await _db.SaveChangesAsync();
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                //do nothing
-//            }
-//        }
-//    }
-//    else
-//    {
-//        //do nothing
-//    }
-//}

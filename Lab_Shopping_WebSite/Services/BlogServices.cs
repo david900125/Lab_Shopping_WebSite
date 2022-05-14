@@ -1,3 +1,4 @@
+using AutoMapper;
 using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Interfaces;
@@ -8,7 +9,7 @@ namespace Lab_Shopping_WebSite.Services
     public class BlogService : IService<BlogService>
     {
 
-        public BlogService(DataContext db , AuthDto auth):base(db , auth)
+        public BlogService(DataContext db, AuthDto auth, IMapper mapper) : base(db, auth, mapper)
         {
         }
 

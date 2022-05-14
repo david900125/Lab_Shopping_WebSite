@@ -56,6 +56,9 @@ namespace Lab_Shopping_WebSite.Apis
             {
                 if (query.Item2.Password == signin.Password.ToMD5())
                 {
+                    // update sigin time
+                    ms.UpdateSinginTime(query.Item2);
+                    // make token
                     StringBuilder sbuild = new StringBuilder("Bearer ");
                     var token = jwt.GenerateToken(query.Item2.Name, query.Item2.RoleID, query.Item2.MemberID);
                     string result = sbuild.Append(token).ToString();

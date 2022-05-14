@@ -11,10 +11,8 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class ColorServices : IService<ColorServices>
     {
-        private IMapper _mapper;
-        public ColorServices(DataContext db, IMapper mapper , AuthDto auth) : base(db , auth)
+        public ColorServices(DataContext db, IMapper mapper , AuthDto auth) : base(db , auth,mapper)
         {
-            _mapper = mapper;
         }
         // Get Colors
         public async Task<Colors> GetColors(int colorid)

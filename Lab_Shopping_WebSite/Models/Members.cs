@@ -32,6 +32,7 @@ namespace Lab_Shopping_WebSite.Models
         public int RoleID { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
+        public DateTime? LastSignin { get; set; }
 
         [ForeignKey("RoleID"), InverseProperty("Members")]
         public virtual Roles? Role { get; set; }

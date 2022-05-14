@@ -3,12 +3,13 @@ using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.DTO;
+using AutoMapper;
 
 namespace Lab_Shopping_WebSite.Services
 {
     public class SalesService: IService<SalesService>
     {
-        public SalesService(DataContext db , AuthDto auth) : base(db , auth)
+        public SalesService(DataContext db , AuthDto auth , IMapper mapper) : base(db , auth , mapper)
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using Lab_Shopping_WebSite.DBContext;
+﻿using AutoMapper;
+using Lab_Shopping_WebSite.DBContext;
 using Lab_Shopping_WebSite.Interfaces;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Models;
@@ -7,7 +8,7 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class CouponServices : IService<CouponServices>
     {
-        public CouponServices(DataContext db, AuthDto auth) : base(db, auth)
+        public CouponServices(DataContext db, AuthDto auth, IMapper mapper) : base(db, auth, mapper)
         {
         }
 
