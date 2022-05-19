@@ -20,8 +20,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Action = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,8 +39,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     BlogID = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -56,8 +56,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,8 +75,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,8 +92,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Blog_Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -110,8 +110,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -130,8 +130,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     isReleased = table.Column<bool>(type: "bit", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -149,8 +149,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -172,8 +172,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Description = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,8 +193,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     EndDate = table.Column<DateTime>(type: "date", nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,8 +218,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     SizeID = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,8 +246,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     TagID = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -271,8 +271,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Use_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -288,8 +288,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Coupon_Way = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -315,8 +315,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Received_Amount = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,8 +340,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Delivery_Cost = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -357,8 +357,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Delivery_Place = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -377,8 +377,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     FilePath = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -398,8 +398,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Left = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true, comment: "CSS:Position Left"),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -425,8 +425,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Total_Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -448,8 +448,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Add_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -476,10 +476,11 @@ namespace Lab_Shopping_WebSite.Migrations
                     Gender = table.Column<bool>(type: "bit", nullable: true),
                     BirthDay = table.Column<DateTime>(type: "date", nullable: true),
                     RoleID = table.Column<int>(type: "int", nullable: false),
+                    LastSignin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -505,8 +506,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     MenuUrl = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -532,8 +533,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Payment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -559,8 +560,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Price = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -587,8 +588,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Received_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -621,20 +622,22 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "Recently_Viewed",
                 columns: table => new
                 {
-                    MemberID = table.Column<int>(type: "int", nullable: false),
+                    Recently_ViewedID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CommodityID = table.Column<int>(type: "int", nullable: false),
-                    Viewed_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MemberID = table.Column<int>(type: "int", nullable: true),
+                    Viewed_Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recently_Viewed", x => new { x.MemberID, x.CommodityID });
+                    table.PrimaryKey("PK_Recently_Viewed", x => x.Recently_ViewedID);
                     table.ForeignKey(
-                        name: "FK_Recently_Viewed_Commodities_MemberID",
-                        column: x => x.MemberID,
+                        name: "FK_Recently_Viewed_Commodities_CommodityID",
+                        column: x => x.CommodityID,
                         principalTable: "Commodities",
                         principalColumn: "CommodityID",
                         onDelete: ReferentialAction.Cascade);
@@ -647,8 +650,7 @@ namespace Lab_Shopping_WebSite.Migrations
                         name: "FK_Recently_Viewed_Members_MemberID",
                         column: x => x.MemberID,
                         principalTable: "Members",
-                        principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "MemberID");
                     table.ForeignKey(
                         name: "FK_Recently_Viewed_Members_Modifier",
                         column: x => x.Modifier,
@@ -665,8 +667,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -692,8 +694,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -732,8 +734,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Shop_Info = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -760,8 +762,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Size = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -793,8 +795,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     State = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -821,8 +823,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Sub_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -849,8 +851,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Creator = table.Column<int>(type: "int", nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -883,8 +885,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     PageUrl = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -925,8 +927,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     isChecked = table.Column<bool>(type: "bit", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -973,8 +975,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     StatusID = table.Column<int>(type: "int", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
-                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ModifyTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -1011,141 +1013,13 @@ namespace Lab_Shopping_WebSite.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "RoleID", "Creator", "Modifier", "RoleName" },
-                values: new object[] { 1, null, null, "管理者" });
+                columns: new[] { "RoleID", "Creator", "Modifier", "ModifyTime", "RoleName" },
+                values: new object[] { 1, null, null, null, "管理者" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "RoleID", "Creator", "Modifier", "RoleName" },
-                values: new object[] { 2, null, null, "使用者" });
-
-            migrationBuilder.InsertData(
-                table: "Members",
-                columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
-                values: new object[] { 1, null, null, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6628), 1, "root@gmail.com", null, 1, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6610), "administrator", "63A9F0EA7BB98050796B649E85481845", null, 1 });
-
-            migrationBuilder.InsertData(
-                table: "Colors",
-                columns: new[] { "ColorID", "Color", "CreateTime", "Creator", "Modifier", "ModifyTime", "Url" },
-                values: new object[,]
-                {
-                    { 1, "黑色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2346), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2319), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg" },
-                    { 2, "白色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2351), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2349), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/FSV0001_3_01.jpg" },
-                    { 3, "咖啡", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2354), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2353), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_01.jpg" },
-                    { 4, "黃色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2358), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2356), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/crv0307_3_01.jpg" },
-                    { 5, "灰色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2361), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2359), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_03.jpg" },
-                    { 6, "可可", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2364), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2362), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_06.jpg" },
-                    { 7, "灰藍", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2367), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2365), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/cop3563_3_02.jpg" },
-                    { 8, "杏灰", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2370), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2369), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg" },
-                    { 9, "麻灰", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2373), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2372), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln3305-221_3_01.jpg" },
-                    { 10, "卡其", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2376), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2374), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/cop1676_3_02.jpg" },
-                    { 11, "紫", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2379), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2378), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_04.jpg" },
-                    { 12, "橘色", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2383), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2381), "https://cdn-plain-me.fonlego.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_02.jpg" },
-                    { 13, "藍", new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2386), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 8, DateTimeKind.Local).AddTicks(2384), "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_01.jpg" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Commodity_Kinds",
-                columns: new[] { "Commodity_KindID", "CreateTime", "Creator", "Description", "Modifier", "ModifyTime" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5831), 1, "短袖", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5719) },
-                    { 2, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5836), 1, "外套", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5835) },
-                    { 3, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5837), 1, "長褲", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5837) },
-                    { 4, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5839), 1, "短褲", 1, new DateTime(2022, 5, 11, 11, 6, 59, 974, DateTimeKind.Local).AddTicks(5838) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Coupon_Ways",
-                columns: new[] { "Coupon_WayID", "Coupon_Way", "CreateTime", "Creator", "Modifier", "ModifyTime" },
-                values: new object[,]
-                {
-                    { 1, "折價券", new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7457), 1, null, new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7469) },
-                    { 2, "免運費", new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7472), 1, null, new DateTime(2022, 5, 11, 11, 7, 0, 201, DateTimeKind.Local).AddTicks(7472) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Delivery_Places",
-                columns: new[] { "Delivery_PlaceID", "CreateTime", "Creator", "Delivery_Place", "Modifier", "ModifyTime" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5325), 1, "本島", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5340) },
-                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5342), 1, "外島", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5343) },
-                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5344), 1, "外國", 1, new DateTime(2022, 5, 11, 11, 7, 0, 127, DateTimeKind.Local).AddTicks(5345) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Members",
-                columns: new[] { "MemberID", "Address", "BirthDay", "CreateTime", "Creator", "Email_Address", "Gender", "Modifier", "ModifyTime", "Name", "Password", "Phone_Number", "RoleID" },
-                values: new object[] { 2, null, null, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6640), 1, "ioioio@gmail.com", null, 1, new DateTime(2022, 5, 11, 11, 6, 59, 955, DateTimeKind.Local).AddTicks(6630), "eeeee", "76D80224611FC919A5D54F0FF9FBA446", null, 1 });
-
-            migrationBuilder.InsertData(
-                table: "Payments",
-                columns: new[] { "PaymentID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Payment" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(418), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(426), "現金" },
-                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(428), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 144, DateTimeKind.Local).AddTicks(429), "信用卡" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Prices",
-                columns: new[] { "PriceID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Price" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1448), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1459), "優惠價" },
-                    { 2, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1462), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1462), "標價" },
-                    { 3, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1463), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 965, DateTimeKind.Local).AddTicks(1464), "單價" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Status",
-                columns: new[] { "StatusID", "CreateTime", "Creator", "Modifier", "ModifyTime", "State" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3610), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3596), "已寄送" },
-                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3613), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3613), "退貨" },
-                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3615), 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 153, DateTimeKind.Local).AddTicks(3614), "準備中" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Delivery_Options",
-                columns: new[] { "Delivery_OptionsID", "CreateTime", "Creator", "Delivery_Cost", "Delivery_Option", "Delivery_PlaceID", "Modifier", "ModifyTime" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3119), 1, 30m, "快遞", 1, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3135) },
-                    { 2, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3139), 1, 100m, "快遞", 2, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3139) },
-                    { 3, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3140), 1, 300m, "快遞", 3, 1, new DateTime(2022, 5, 11, 11, 7, 0, 136, DateTimeKind.Local).AddTicks(3141) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Sizes",
-                columns: new[] { "SizeID", "Commodity_KindsID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Size" },
-                values: new object[,]
-                {
-                    { 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6092), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6103), "S" },
-                    { 2, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6106), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6106), "M" },
-                    { 3, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6108), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6108), "L" },
-                    { 4, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6109), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6110), "S" },
-                    { 5, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6111), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6112), "M" },
-                    { 6, 2, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6113), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6114), "L" },
-                    { 7, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6115), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6115), "S" },
-                    { 8, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6117), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6117), "M" },
-                    { 9, 3, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6118), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 995, DateTimeKind.Local).AddTicks(6119), "L" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Tags",
-                columns: new[] { "TagID", "Commodity_KindsID", "CreateTime", "Creator", "Modifier", "ModifyTime", "Tag" },
-                values: new object[,]
-                {
-                    { 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(493), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(506), "男裝" },
-                    { 2, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(509), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(510), "女裝" },
-                    { 3, 2, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(511), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(512), "男裝" },
-                    { 4, 2, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(513), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(514), "女裝" },
-                    { 5, 3, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(515), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(516), "男裝" },
-                    { 6, 3, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(517), 1, 1, new DateTime(2022, 5, 11, 11, 6, 59, 986, DateTimeKind.Local).AddTicks(518), "女裝" }
-                });
+                columns: new[] { "RoleID", "Creator", "Modifier", "ModifyTime", "RoleName" },
+                values: new object[] { 2, null, null, null, "使用者" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Action_Auths_Creator",
@@ -1523,9 +1397,19 @@ namespace Lab_Shopping_WebSite.Migrations
                 column: "Modifier");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Recently_Viewed_CommodityID",
+                table: "Recently_Viewed",
+                column: "CommodityID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Recently_Viewed_Creator",
                 table: "Recently_Viewed",
                 column: "Creator");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recently_Viewed_MemberID",
+                table: "Recently_Viewed",
+                column: "MemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recently_Viewed_Modifier",

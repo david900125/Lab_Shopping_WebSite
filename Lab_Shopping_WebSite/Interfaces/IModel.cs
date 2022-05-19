@@ -2,6 +2,7 @@ using AutoMapper;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Lab_Shopping_WebSite.Interfaces
 {
@@ -10,8 +11,9 @@ namespace Lab_Shopping_WebSite.Interfaces
         public IModel()
         {
         }
-
+        [JsonIgnore]
         public DateTime? ModifyTime { get; set; }
+        [JsonIgnore]
 
         public DateTime? CreateTime { get; set; }
     }

@@ -37,7 +37,7 @@ namespace Lab_Shopping_WebSite.DTO
         public decimal Price { get; set; }
         public decimal S_Price { get; set; }
         public int CommodityKinds { get; set; }
-        public int CommodityTags { get; set; }
+        public List<int> CommodityTags { get; set; }
         public List<int> CommoditySizes { get; set; }
         public List<int> CommodityColors { get; set; }
         public List<string> CommodityImages { get; set; }

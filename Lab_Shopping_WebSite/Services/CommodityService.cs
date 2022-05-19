@@ -3,6 +3,7 @@ using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Interfaces;
 using AutoMapper;
+using System.Runtime.InteropServices;
 
 namespace Lab_Shopping_WebSite.Services
 {
@@ -51,7 +52,7 @@ namespace Lab_Shopping_WebSite.Services
             result.Description = item.Description;
             result.Material = item.Material;
             result.isReleased = item.isReleased;
-            result.Price = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 2).FirstOrDefault().Price;
+            result.Price = item.Commodity_Prices.Where(s => s.Commodity_PriceID == 2).Select(s => s.Price).FirstOrDefault();
             Commodity_Prices SP = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).Where(n => n.PriceID == 1).FirstOrDefault();
             result.S_Price = (SP != null) ? SP.Price : 0;
             result.CommodityTags = (from tmp in _db.Commodity_Tags
@@ -101,6 +102,7 @@ namespace Lab_Shopping_WebSite.Services
 
             return result;
         }
+
 
         public async Task<Tuple<bool, string>> Insert_Shopping_Cart(int MemberID, Commodity_Sizes sizes, int Amount)
         {
@@ -192,17 +194,24 @@ namespace Lab_Shopping_WebSite.Services
 
             return mast;
         }
-        public async Task<Tuple<bool, string>> Insert_Tags(Commodities commodity, int tag, int Sid)
+        public async Task<Tuple<bool, string>> Insert_Tags(Commodities commodity, List<int> tags, int Sid)
         {
-            return await Creater(new Commodity_Tags
+            Tuple<bool, string> tuple;
+            foreach (int tag in tags)
             {
-                CommodityID = commodity.CommodityID,
-                TagID = tag,
-                Creator = Sid,
-                CreateTime = DateTime.Now,
-                Modifier = Sid,
-                ModifyTime = DateTime.Now
-            });
+                tuple = await Creater(new Commodity_Tags
+                {
+                    CommodityID = commodity.CommodityID,
+                    TagID = tag,
+                    Creator = Sid,
+                    CreateTime = DateTime.Now,
+                    Modifier = Sid,
+                    ModifyTime = DateTime.Now
+                });
+                if (!tuple.Item1)
+                    return tuple;
+            }
+            return Tuple.Create(true , "");
         }
         public async Task<Tuple<bool, string>> Insert_Sizes(Commodities commodity, List<int> sizes, List<int> colors, int Sid)
         {
@@ -231,18 +240,13 @@ namespace Lab_Shopping_WebSite.Services
 
             return mast;
         }
-        public async Task<Tuple<bool, string>> Insert_Viewed(int CommodityID, int MemberID)
+        public async Task<Tuple<bool, string>> Insert_Viewed(int CommodityID)
         {
             return await Creater
             (new Recently_Viewed
             {
                 CommodityID = CommodityID,
-                MemberID = MemberID,
-                Viewed_Date = DateTime.Now,
-                Modifier = MemberID,
-                Creator = MemberID,
-                ModifyTime = DateTime.Now,
-                CreateTime = DateTime.Now
+                MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null
             });
         }
         public async Task<List<CommodityDto>> SelectByName(Commodity_Selection_Dto dto)
@@ -343,6 +347,8 @@ namespace Lab_Shopping_WebSite.Services
             }
             return Tuple.Create(true, "NotFound.");
         }
+
+
 
     }
 }

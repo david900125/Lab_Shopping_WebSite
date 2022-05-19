@@ -20,6 +20,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register Services
 RegisterServices(builder.Services);
+// System.Text.Json 
+builder.Services.Configure<JsonOptions>(options => 
+{
+    options.SerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 // Swagger 
 builder.Services.AddEndpointsApiExplorer();
@@ -123,8 +129,6 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.Creat
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
     dbContext.Database.EnsureCreated();
 }
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

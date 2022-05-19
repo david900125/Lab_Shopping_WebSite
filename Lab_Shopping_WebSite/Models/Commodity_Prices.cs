@@ -1,7 +1,9 @@
 // 商品價格
+using Lab_Shopping_WebSite.Extension;
 using Lab_Shopping_WebSite.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Lab_Shopping_WebSite.Models
 {
@@ -22,7 +24,11 @@ namespace Lab_Shopping_WebSite.Models
         [Required]
         public int PriceID { get; set; }
         public decimal Price { get; set; }
-        public DateOnly StartDate { get; set; }
+
+        [JsonConverter(typeof(DateOnlyJsonConverter))]
+        public DateOnly? StartDate { get; set; }
+
+        [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly? EndDate { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }

@@ -12,33 +12,31 @@ namespace Lab_Shopping_WebSite.Apis
 {
     public partial class CommodityApi
     {
-        //[Authorize]
+        [Authorize]
         async Task<IResult> Add_Shopping_Cart(
                 [FromServices] IService<CommodityService> service,
-                HttpContext http,
+                [FromServices] AuthDto auth,
                 CartDto dto)
         {
             CommodityService cs = (CommodityService)service;
+            if (!auth.IsAuth)
+                return Results.Unauthorized();
 
-            var Sid = Convert.ToInt16(http.User.FindFirst("Sid").Value);
             Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
             if (query.Item1)
             {
-                var result = await cs.Insert_Shopping_Cart(Sid, query.Item2, dto.Amount);
+                var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID , query.Item2, dto.Amount);
                 if (result.Item1)
                     return Results.Ok();
                 else
-                {
                     return Results.BadRequest("Insert Error.");
-                }
             }
             else
                 return Results.BadRequest("Commodity Detail Error.");
         }
 
         async Task<IResult> GetCommodities(
-            [FromServices] IService<CommodityService> service
-            )
+            [FromServices] IService<CommodityService> service)
         {
             CommodityService cs = (CommodityService)service;
             List<CommodityDto> results = await cs.Get_Commodities_Simple();
@@ -56,15 +54,18 @@ namespace Lab_Shopping_WebSite.Apis
 
         async Task<IResult> AddNewCommodity(
             [FromServices] IService<CommodityService> service,
-            [FromBody] NewCommodityDto dto,
-            HttpContext http)
+            [FromServices] AuthDto auth,
+            [FromBody] NewCommodityDto dto)
         {
             CommodityService cs = (CommodityService)service;
-            var Sid = Convert.ToInt16(http.User.FindFirst("Sid").Value);
+            if (!auth.IsAuth)
+                return Results.Unauthorized();
+
+            var Sid = auth.UserID.MemberID;
             var insert1 = await cs.Insert_Commodities(dto, Sid);
             if (insert1.Item1)
             {
-                var insert2 = await cs.Insert_Prices(insert1.Item3 , dto.Price, dto.S_Price , Sid);
+                var insert2 = await cs.Insert_Prices(insert1.Item3, dto.Price, dto.S_Price, Sid);
                 if (insert2.Item1)
                 {
                     var insert3 = await cs.Insert_Images(insert1.Item3, dto.CommodityImages, Sid);
@@ -73,7 +74,7 @@ namespace Lab_Shopping_WebSite.Apis
                         var insert4 = await cs.Insert_Tags(insert1.Item3, dto.CommodityTags, Sid);
                         if (insert4.Item1)
                         {
-                            var insert5 = await cs.Insert_Sizes(insert1.Item3, dto.CommoditySizes , dto.CommodityColors, Sid);
+                            var insert5 = await cs.Insert_Sizes(insert1.Item3, dto.CommoditySizes, dto.CommodityColors, Sid);
                             if (insert5.Item1)
                                 return Results.Ok();
                         }
@@ -84,25 +85,23 @@ namespace Lab_Shopping_WebSite.Apis
             return Results.BadRequest("Commodity Insert Error.");
         }
 
-
         async Task<IResult> Get_full_Commodity_info(
             [FromServices] IService<CommodityService> service,
-            int CommodityID , HttpContext http)
+            [FromServices] AuthDto auth,
+            int CommodityID)
         {
             CommodityService cs = (CommodityService)service;
-            var req = http.User.FindFirst("Sid");
-            if (req == null)
-                return Results.Unauthorized();
-
-            int MemberID = Convert.ToInt16(req.Value);
             var result = await cs.GetFullCommodity(CommodityID);
-            if(result!= null)
+            if (result != null)
             {
-               //await cs.Insert_Viewed(CommodityID , MemberID);
+                if (auth.IsAuth)
+                    await cs.Insert_Viewed(CommodityID);
+                else
+                    await cs.Insert_Viewed(CommodityID);
             }
             return Results.Ok(result);
         }
-    
+
         async Task<IResult> Get_Commodity_By_Kinds(
             [FromServices] IService<CommodityService> service,
             int KindID
@@ -114,17 +113,16 @@ namespace Lab_Shopping_WebSite.Apis
 
         async Task<IResult> Get_Random_Commodity(
             [FromServices] IService<CommodityService> service,
-            int Count
-            )
+            int Count)
         {
             CommodityService cs = (CommodityService)service;
             return Results.Ok(await cs.GetRandom(Count));
         }
 
+        [Authorize(Policy = "OnlyAdminRole")]
         async Task<IResult> Delete_Commodity(
             [FromServices] IService<CommodityService> service,
-            int CommodityID
-            )
+            int CommodityID)
         {
             CommodityService cs = (CommodityService)service;
             var result = await cs.DeleteCommodity(CommodityID);
@@ -133,6 +131,19 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.Ok();
             }
             return Results.BadRequest(result.Item2);
+        }
+
+        [Authorize]
+        async Task<IResult> GetShoppingCart(
+            [FromServices] IService<CommodityService> service,
+            [FromServices] AuthDto auth)
+        {
+            CommodityService cs = (CommodityService)service;
+            if(!auth.IsAuth)
+                return Results.Unauthorized();
+
+            return Results.Ok();
+
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityImagesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityImagesModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Commodity_Images>();
         }
-
     }
     public class CommodityTagsConfiguration : IEntityTypeConfiguration<Commodity_Tags>
     {
@@ -67,43 +67,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityKindsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityKindsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 1,
-                    Description = "短袖",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 2,
-                    Description = "外套",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 3,
-                    Description = "長褲",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                new Commodity_Kinds
-                {
-                    Commodity_KindID = 4,
-                    Description = "短褲",
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                });
+            builder.Seed<Commodity_Kinds>();
         }
     }
     public class CommodityPricesConfiguration : IEntityTypeConfiguration<Commodity_Prices>
@@ -114,6 +78,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityPricesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityPricesModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Commodity_Prices>();
         }
     }
     public class CommoditySizesConfiguration : IEntityTypeConfiguration<Commodity_Sizes>
@@ -136,7 +101,6 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CouponUsesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CouponUsesModifer).HasForeignKey(n => n.Modifier);
         }
-
     }
     public class LikeCommoditiesConfiguration : IEntityTypeConfiguration<Like_Commodities>
     {
@@ -167,25 +131,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.PaymentsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.PaymentsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Payments
-                {
-                    PaymentID = 1,
-                    Payment = "現金",
-                    Creator = 1,
-                    Modifier = 1,
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                },
-                new Payments
-                {
-                    PaymentID = 2,
-                    Payment = "信用卡",
-                    Creator = 1,
-                    Modifier = 1,
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                });
+            builder.Seed<Payments>();
         }
     }
     public class PricesConfiguration : IEntityTypeConfiguration<Prices>
@@ -196,35 +142,8 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.PricesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.PricesModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Prices
-                {
-                    PriceID = 1,
-                    Price = "優惠價",
-                    Creator = 1,
-                    Modifier = 1,
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                },
-                new Prices
-                {
-                    PriceID = 2,
-                    Price = "標價",
-                    Creator = 1,
-                    Modifier = 1,
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                },
-                new Prices
-                {
-                    PriceID = 3,
-                    Price = "單價",
-                    Creator = 1,
-                    Modifier = 1,
-                    CreateTime = DateTime.Now,
-                    ModifyTime = DateTime.Now
-                }
-            );
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
+            builder.Seed<Prices>();
         }
     }
     public class PagesConfiguration : IEntityTypeConfiguration<Pages>
@@ -240,10 +159,6 @@ namespace Lab_Shopping_WebSite.DBContext
     }
     public class RolesConfiguration : IEntityTypeConfiguration<Roles>
     {
-        public RolesConfiguration()
-        {
-        }
-
         public void Configure(EntityTypeBuilder<Roles> builder)
         {
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
@@ -273,17 +188,19 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ReceivedCouponsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ReceivedCouponsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class ReceivedViewedConfiguration : IEntityTypeConfiguration<Recently_Viewed>
     {
         public void Configure(EntityTypeBuilder<Recently_Viewed> builder)
         {
-            builder.HasKey(n => new { n.MemberID, n.CommodityID });
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.RecentlyViewedCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.RecentlyViewedModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
+            builder.Property(n => n.Viewed_Date).HasDefaultValueSql("GETDATE()");
         }
     }
     public class ShoppingCartsConfiguration : IEntityTypeConfiguration<Shopping_Carts>
@@ -295,6 +212,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ShoppingCartsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ShoppingCartsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class SalesitemConfiguration : IEntityTypeConfiguration<Sales_items>
@@ -306,6 +224,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.SalesitemsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.SalesitemsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class ShopsConfiguration : IEntityTypeConfiguration<Shops>
@@ -316,6 +235,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ShopsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ShopsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class SizesConfiguration : IEntityTypeConfiguration<Sizes>
@@ -326,97 +246,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.SizesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.SizesModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-            new Sizes
-            {
-                SizeID = 1,
-                Commodity_KindsID = 1,
-                Size = "S",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 2,
-                Commodity_KindsID = 1,
-                Size = "M",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 3,
-                Commodity_KindsID = 1,
-                Size = "L",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 4,
-                Commodity_KindsID = 2,
-                Size = "S",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 5,
-                Commodity_KindsID = 2,
-                Size = "M",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 6,
-                Commodity_KindsID = 2,
-                Size = "L",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 7,
-                Commodity_KindsID = 3,
-                Size = "S",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 8,
-                Commodity_KindsID = 3,
-                Size = "M",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Sizes
-            {
-                SizeID = 9,
-                Commodity_KindsID = 3,
-                Size = "L",
-                Creator = 1,
-                Modifier = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            });
+            builder.Seed<Sizes>();
         }
     }
     public class StatusConfiguration : IEntityTypeConfiguration<Status>
@@ -427,34 +257,8 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.StatusCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.StatusModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-             new Status
-             {
-                 StatusID = 1,
-                 State = "已寄送",
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now,
-                 Creator = 1,
-                 CreateTime = DateTime.Now
-             },
-             new Status
-             {
-                 StatusID = 2,
-                 State = "退貨",
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now,
-                 Creator = 1,
-                 CreateTime = DateTime.Now
-             },
-             new Status
-             {
-                 StatusID = 3,
-                 State = "準備中",
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now,
-                 Creator = 1,
-                 CreateTime = DateTime.Now
-             });
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
+            builder.Seed<Status>();
         }
     }
     public class SubscribesConfiguration : IEntityTypeConfiguration<Subscribes>
@@ -475,67 +279,8 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.TagsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.TagsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-                new Tags
-                {
-                    TagID = 1,
-                    Commodity_KindsID = 1,
-                    Tag = "男裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                },
-                new Tags
-                {
-                    TagID = 2,
-                    Commodity_KindsID = 1,
-                    Tag = "女裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                },
-                new Tags
-                {
-                    TagID = 3,
-                    Commodity_KindsID = 2,
-                    Tag = "男裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                },
-                new Tags
-                {
-                    TagID = 4,
-                    Commodity_KindsID = 2,
-                    Tag = "女裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                },
-                new Tags
-                {
-                    TagID = 5,
-                    Commodity_KindsID = 3,
-                    Tag = "男裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                },
-                new Tags
-                {
-                    TagID = 6,
-                    Commodity_KindsID = 3,
-                    Tag = "女裝",
-                    Creator = 1,
-                    CreateTime = DateTime.Now,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now
-                });
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
+            builder.Seed<Tags>();
         }
     }
     public class SalesConfiguration : IEntityTypeConfiguration<Sales>
@@ -546,6 +291,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.SalesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.SalesModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class BlogContentsConfiguration : IEntityTypeConfiguration<Blog_Contents>
@@ -556,6 +302,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.Blog_ContentsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.Blog_ContentsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class BlogsConfiguration : IEntityTypeConfiguration<Blogs>
@@ -566,6 +313,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.BlogsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.BlogsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
         }
     }
     public class ColorsConfiguration : IEntityTypeConfiguration<Colors>
@@ -576,6 +324,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.ColorsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.ColorsModifer).HasForeignKey(n => n.Modifier);
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
             builder.Seed<Colors>();
         }
     }
@@ -587,34 +336,8 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.MembersCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.MembersModifer).HasForeignKey(n => n.Modifier);
-            // seeds
-            builder.HasData(
-                new Members
-                {
-                    MemberID = 1,
-                    Name = "administrator",
-                    Email_Address = "root@gmail.com",
-                    Password = "63A9F0EA7BB98050796B649E85481845",
-                    RoleID = 1,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                },
-                // User
-                new Members
-                {
-                    MemberID = 2,
-                    Name = "eeeee",
-                    Email_Address = "ioioio@gmail.com",
-                    Password = "76D80224611FC919A5D54F0FF9FBA446",
-                    RoleID = 2,
-                    Modifier = 1,
-                    ModifyTime = DateTime.Now,
-                    Creator = 1,
-                    CreateTime = DateTime.Now
-                }
-            );
+            builder.Property(n => n.CreateTime).HasDefaultValueSql("GETDATE()");
+            builder.Seed<Members>();
         }
     }
     public class InventoriesConfiguration : IEntityTypeConfiguration<Inventories>
@@ -655,34 +378,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.DeliveryPlacesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.DeliveryPlacesModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-             new Delivery_Places
-             {
-                 Delivery_PlaceID = 1,
-                 Delivery_Place = "本島",
-                 Creator = 1,
-                 CreateTime = DateTime.Now,
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now
-             },
-              new Delivery_Places
-              {
-                  Delivery_PlaceID = 2,
-                  Delivery_Place = "外島",
-                  Creator = 1,
-                  CreateTime = DateTime.Now,
-                  Modifier = 1,
-                  ModifyTime = DateTime.Now
-              },
-               new Delivery_Places
-               {
-                   Delivery_PlaceID = 3,
-                   Delivery_Place = "外國",
-                   Creator = 1,
-                   CreateTime = DateTime.Now,
-                   Modifier = 1,
-                   ModifyTime = DateTime.Now
-               });
+            builder.Seed<Delivery_Places>();
         }
     }
     public class DeliveryOptionsConfiguration : IEntityTypeConfiguration<Delivery_Options>
@@ -693,40 +389,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.DeliveryOptionsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.DeliveryOptionsModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-             new Delivery_Options
-             {
-                 Delivery_OptionsID = 1,
-                 Delivery_Option = "快遞",
-                 Delivery_PlaceID = 1,
-                 Delivery_Cost = 30,
-                 Creator = 1,
-                 CreateTime = DateTime.Now,
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now
-             },
-             new Delivery_Options
-             {
-                 Delivery_OptionsID = 2,
-                 Delivery_Option = "快遞",
-                 Delivery_PlaceID = 2,
-                 Delivery_Cost = 100,
-                 Creator = 1,
-                 CreateTime = DateTime.Now,
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now
-             },
-             new Delivery_Options
-             {
-                 Delivery_OptionsID = 3,
-                 Delivery_Option = "快遞",
-                 Delivery_PlaceID = 3,
-                 Delivery_Cost = 300,
-                 Creator = 1,
-                 CreateTime = DateTime.Now,
-                 Modifier = 1,
-                 ModifyTime = DateTime.Now
-             });
+            builder.Seed<Delivery_Options>();
         }
     }
     public class CouponsConfigurations : IEntityTypeConfiguration<Coupons>
@@ -757,24 +420,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CouponWaysCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CouponWaysModifer).HasForeignKey(n => n.Modifier);
-            builder.HasData(
-            new Coupon_Ways
-            {
-                Coupon_WayID = 1,
-                Coupon_Way = "折價券",
-                Creator = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            },
-            new Coupon_Ways
-            {
-                Coupon_WayID = 2,
-                Coupon_Way = "免運費",
-                Creator = 1,
-                CreateTime = DateTime.Now,
-                ModifyTime = DateTime.Now
-            });
+            builder.Seed<Coupon_Ways>();
         }
     }
-
 }

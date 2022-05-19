@@ -1,6 +1,7 @@
 // Members 會員
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Lab_Shopping_WebSite.Interfaces;
 
 namespace Lab_Shopping_WebSite.Models
@@ -30,16 +31,19 @@ namespace Lab_Shopping_WebSite.Models
         public bool? Gender { get; set; }
         public DateOnly? BirthDay { get; set; }
         public int RoleID { get; set; }
-        public int? Modifier { get; set; }
-        public int? Creator { get; set; }
         public DateTime? LastSignin { get; set; }
+        [JsonIgnore]
+        public int? Modifier { get; set; }
+        [JsonIgnore]
+        public int? Creator { get; set; }
+        [JsonIgnore]
 
         [ForeignKey("RoleID"), InverseProperty("Members")]
         public virtual Roles? Role { get; set; }
-
+        [JsonIgnore]
         [ForeignKey("Creator"), InverseProperty("MembersCreator")]
         public virtual Members? CreateMember { get; set; }
-
+        [JsonIgnore]
         [ForeignKey("Modifier"), InverseProperty("MembersModifer")]
         public virtual Members? ModifyMember { get; set; }
 
@@ -48,7 +52,6 @@ namespace Lab_Shopping_WebSite.Models
         public ICollection<Received_Coupons>? Received_Coupons { get; set; }
         public ICollection<Recently_Viewed>? Recently_Viewed { get; set; }
         public ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
-
         // Creater
         public ICollection<Action_Auths>? Action_AuthCreator { get; set; }
         public ICollection<Action_Auths>? Action_AuthsModifer { get; set; }
@@ -92,7 +95,9 @@ namespace Lab_Shopping_WebSite.Models
         public ICollection<Inventories>? InventoriesModifer { get; set; }
         public ICollection<Like_Commodities>? LikeCommoditiesCreator { get; set; }
         public ICollection<Like_Commodities>? LikeCommoditiesModifer { get; set; }
+        [JsonIgnore]
         public ICollection<Members>? MembersCreator { get; set; }
+        [JsonIgnore]
         public ICollection<Members>? MembersModifer { get; set; }
         public ICollection<Menus>? MenusCreator { get; set; }
         public ICollection<Menus>? MenusModifer { get; set; }

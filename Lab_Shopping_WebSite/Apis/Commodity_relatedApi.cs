@@ -19,6 +19,7 @@ namespace Lab_Shopping_WebSite.Apis
 
             // Tags
             app.MapGet("/api/Tags/GetAll", GetAllTags).WithTags("Tags").WithName("GetAllTags");
+            app.MapGet("/api/Tags/GetAll/{CommodityKindID:int}", GetOneTag).WithTags("Tags").WithName("GetOneTags");
             app.MapPost("/api/Tags/Insert", InsertTag).WithTags("Tags").WithName("InsertTags");
             app.MapPost("/api/Tags/Update", UpdateTag).WithTags("Tags").WithName("UpdateTags");
         }

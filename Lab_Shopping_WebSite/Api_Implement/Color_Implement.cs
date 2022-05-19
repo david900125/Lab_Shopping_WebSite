@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Lab_Shopping_WebSite.DTO;
+using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -121,6 +122,15 @@ namespace Lab_Shopping_WebSite.Apis
             return Results.Ok(await ts.GetTagsDto());
         }
 
+        [AllowAnonymous]
+        async Task<IResult> GetOneTag(
+            [FromServices] IService<TagsService> service,
+            int CommodityKindID)
+        {
+            TagsService ts = (TagsService)service;
+            return Results.Ok(await ts.GetTagsDto(CommodityKindID));
+        }
+
         [Authorize(Policy = "OnlyAdminRole")]
         async Task<IResult> InsertTag(
             [FromServices] IService<TagsService> service,
@@ -148,13 +158,27 @@ namespace Lab_Shopping_WebSite.Apis
             });
         }
 
-        [Authorize(Policy ="OnlyAdminRole")]
+        [Authorize(Policy = "OnlyAdminRole")]
         async Task<IResult> UpdateTag(
             [FromServices] IService<TagsService> service,
             [FromServices] AuthDto auth,
-            NewTagDto dto)
+            List<UpdateTagDto> dtos)
         {
-
+            TagsService ts = (TagsService)service;
+            Tuple<bool, Tags> find;
+            Tuple<bool, string> result;
+            foreach (UpdateTagDto dto in dtos)
+            {
+                find = await ts.FindTags(id: dto.KindID, TagID: dto.TagID);
+                if (find.Item1)
+                {
+                    result = await ts.UpdateTags(dto , find.Item2);
+                    if (!result.Item1)
+                    {
+                        return Results.BadRequest("Update Failed. KindsID:" + dto.KindID + "TagsID :" + dto.TagID);
+                    }
+                }
+            }
             return Results.Ok();
         }
     }

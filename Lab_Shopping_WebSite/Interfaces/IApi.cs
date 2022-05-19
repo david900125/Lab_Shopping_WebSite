@@ -39,17 +39,18 @@ namespace Lab_Shopping_WebSite.Interfaces
 
             Type type = typeof(M);
 
-            // set update time and updater
+            // set update time if it's null 
             PropertyInfo propInfo = model.GetType().GetProperty("ModifyTime");
             if (propInfo != null)
-            {
-                propInfo.SetValue(model, DateTime.Now, null);
-            }
+                if(propInfo.GetValue(model) == null)
+                    propInfo.SetValue(model, DateTime.Now, null);
+
+            // set updater if is null 
             propInfo = model.GetType().GetProperty("Modifier");
             if (propInfo != null)
-            {
-                propInfo.SetValue(model, _auth.UserID.MemberID, null);
-            }
+                if (propInfo.GetValue(model) == null)
+                    propInfo.SetValue(model, _auth.UserID.MemberID, null);
+
             
 
             using var transaction = _db.Database.BeginTransaction();
@@ -77,9 +78,10 @@ namespace Lab_Shopping_WebSite.Interfaces
 
             // set creater
             PropertyInfo propInfo = model.GetType().GetProperty("Creator");
-            if (propInfo != null && propInfo.GetValue(model) != null)
+            if (propInfo != null && propInfo.GetValue(model) == null)
             {
-                propInfo.SetValue(model, _auth.UserID.MemberID, null);
+                if(_auth.IsAuth)
+                    propInfo.SetValue(model, _auth.UserID.MemberID, null);
             }
 
             using var transaction = _db.Database.BeginTransaction();

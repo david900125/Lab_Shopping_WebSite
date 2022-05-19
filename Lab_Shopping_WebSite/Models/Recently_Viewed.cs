@@ -16,12 +16,11 @@ namespace Lab_Shopping_WebSite.Models
         }
 
         #region 屬性
-        [Required]
-        public int MemberID { get; set; }
-
+        [Key]
+        public int Recently_ViewedID { get; set; }
         [Required]
         public int CommodityID { get; set; }
-
+        public int? MemberID { get; set; }
         [Required]
         public DateTime Viewed_Date { get; set; }
         public int? Modifier { get; set; }
@@ -29,7 +28,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("MemberID"), InverseProperty("Recently_Viewed")]
         public Members? Member { get; set; }
-        [ForeignKey("MemberID"), InverseProperty("Recently_Viewed")]
+        [ForeignKey("CommodityID"), InverseProperty("Recently_Viewed")]
         public Commodities? Commodity { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("RecentlyViewedCreator")]
