@@ -30,7 +30,7 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("CouponWaysModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Coupons>? Coupons { get; set; }
+        public virtual ICollection<Coupons>? Coupons { get; set; }
         #endregion
     }
 }

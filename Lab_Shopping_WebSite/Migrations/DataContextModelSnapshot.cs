@@ -63,7 +63,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("Action_Auths");
+                    b.ToTable("Action_Auths", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Blog_Contents", b =>
@@ -107,7 +107,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Blog_Contents");
+                    b.ToTable("Blog_Contents", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Blog_Hrefs", b =>
@@ -141,7 +141,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Blog_Hrefs");
+                    b.ToTable("Blog_Hrefs", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Blog_Images", b =>
@@ -182,7 +182,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Blog_Images");
+                    b.ToTable("Blog_Images", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Blogs", b =>
@@ -218,7 +218,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Colors", b =>
@@ -257,7 +257,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodities", b =>
@@ -301,7 +301,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Commodities");
+                    b.ToTable("Commodities", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Images", b =>
@@ -342,7 +342,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Commodity_Images");
+                    b.ToTable("Commodity_Images", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Kinds", b =>
@@ -376,7 +376,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Commodity_Kinds");
+                    b.ToTable("Commodity_Kinds", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Prices", b =>
@@ -424,7 +424,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("PriceID");
 
-                    b.ToTable("Commodity_Prices");
+                    b.ToTable("Commodity_Prices", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Sizes", b =>
@@ -468,7 +468,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("SizeID");
 
-                    b.ToTable("Commodity_Sizes");
+                    b.ToTable("Commodity_Sizes", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Commodity_Tags", b =>
@@ -499,7 +499,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("TagID");
 
-                    b.ToTable("Commodity_Tags");
+                    b.ToTable("Commodity_Tags", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Coupon_Uses", b =>
@@ -539,7 +539,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Coupon_Uses");
+                    b.ToTable("Coupon_Uses", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Coupon_Ways", b =>
@@ -573,7 +573,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Coupon_Ways");
+                    b.ToTable("Coupon_Ways", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Coupons", b =>
@@ -643,7 +643,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Delivery_Options", b =>
@@ -686,7 +686,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Delivery_Options");
+                    b.ToTable("Delivery_Options", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Delivery_Places", b =>
@@ -720,7 +720,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Delivery_Places");
+                    b.ToTable("Delivery_Places", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Files", b =>
@@ -767,7 +767,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Href_Coordinations", b =>
@@ -821,7 +821,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Href_Coordinations");
+                    b.ToTable("Href_Coordinations", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Inventories", b =>
@@ -872,7 +872,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("SaleID");
 
-                    b.ToTable("Inventories");
+                    b.ToTable("Inventories", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Like_Commodities", b =>
@@ -906,7 +906,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Like_Commodities");
+                    b.ToTable("Like_Commodities", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Members", b =>
@@ -970,7 +970,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Menus", b =>
@@ -1005,7 +1005,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Pages", b =>
@@ -1046,7 +1046,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Pages", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Payments", b =>
@@ -1079,7 +1079,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Prices", b =>
@@ -1113,7 +1113,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Prices");
+                    b.ToTable("Prices", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Received_Coupons", b =>
@@ -1153,7 +1153,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Received_Coupons");
+                    b.ToTable("Received_Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Recently_Viewed", b =>
@@ -1199,7 +1199,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Recently_Viewed");
+                    b.ToTable("Recently_Viewed", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Roles", b =>
@@ -1234,7 +1234,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -1320,7 +1320,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("PaymentID");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Sales", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Sales_items", b =>
@@ -1371,7 +1371,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("StatusID");
 
-                    b.ToTable("Sales_items");
+                    b.ToTable("Sales_items", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Shopping_Carts", b =>
@@ -1408,7 +1408,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Shopping_Carts");
+                    b.ToTable("Shopping_Carts", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Shops", b =>
@@ -1449,7 +1449,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Shops");
+                    b.ToTable("Shops", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Sizes", b =>
@@ -1488,7 +1488,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Sizes");
+                    b.ToTable("Sizes", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Status", b =>
@@ -1524,7 +1524,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Status");
+                    b.ToTable("Status", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Subscribes", b =>
@@ -1562,7 +1562,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Subscribes");
+                    b.ToTable("Subscribes", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Tags", b =>
@@ -1602,7 +1602,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasIndex("Modifier");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Action_Auths", b =>

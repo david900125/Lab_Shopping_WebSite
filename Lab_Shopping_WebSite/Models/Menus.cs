@@ -33,7 +33,7 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("MenusModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Pages>? Pages { get; set; }
+        public virtual ICollection<Pages>? Pages { get; set; }
         #endregion
     }
 }

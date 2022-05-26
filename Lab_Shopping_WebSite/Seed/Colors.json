@@ -37,7 +37,7 @@
   {
     "ColorID": 8,
     "Color": "杏灰",
-    "Url": "https://cdn-plain-me.fonlego.com/upload_files/fonlego-https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg"
+    "Url": "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln1108-221_3_03.jpg"
   },
   {
     "ColorID": 9,
@@ -63,5 +63,10 @@
     "ColorID": 13,
     "Color": "藍",
     "Url": "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/pln0104-221_3_01.jpg"
+  },
+  {
+    "ColorID": 14,
+    "Color": "米色",
+    "Url": "https://www.plain-me.com/upload_files/fonlego-rwd/specpic/unb1627-221_3_01.jpg"
   }
 ]

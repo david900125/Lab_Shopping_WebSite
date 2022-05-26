@@ -27,7 +27,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("PricesModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
+        public virtual ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
         #endregion
     }
 }

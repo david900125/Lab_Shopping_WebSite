@@ -42,7 +42,7 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Second verification Error.");
 
         }
-        
+
         [AllowAnonymous]
         async Task<IResult> Signin(
             [FromServices] DataContext _db,
@@ -73,7 +73,7 @@ namespace Lab_Shopping_WebSite.Apis
 
         }
 
-        [Authorize(Policy = "AdminRole")]
+        [Authorize]
         async Task<IResult> GetMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
@@ -83,7 +83,7 @@ namespace Lab_Shopping_WebSite.Apis
             var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();
             return Results.Ok(result);
         }
-        
+
         [Authorize]
         async Task<IResult> UpdMember(
             [FromServices] DataContext _db,

@@ -54,15 +54,15 @@ namespace Lab_Shopping_WebSite.Models
         public int? Creator { get; set; }
 
         [ForeignKey("Coupon_WayID"), InverseProperty("Coupons")]
-        public Coupon_Ways? Coupon_Ways { get; set; }
+        public virtual Coupon_Ways? Coupon_Ways { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("CouponsCreator")]
         public virtual Members? CreateMember { get; set; }
 
         [ForeignKey("Modifier"), InverseProperty("CouponsModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Coupon_Uses>? Coupon_Uses { get; set; }
-        public ICollection<Received_Coupons>? Received_Coupons { get; set; }
+        public virtual ICollection<Coupon_Uses>? Coupon_Uses { get; set; }
+        public virtual ICollection<Received_Coupons>? Received_Coupons { get; set; }
         #endregion
     }
 }

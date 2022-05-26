@@ -31,7 +31,7 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("DeliveryPlacesModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Delivery_Options>? Delivery_Options { get; set; }
+        public virtual ICollection<Delivery_Options>? Delivery_Options { get; set; }
         #endregion
     }
 }

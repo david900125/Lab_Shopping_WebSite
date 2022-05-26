@@ -26,6 +26,6 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("RolesModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Members>? Members { get; set; }
+        public virtual ICollection<Members>? Members { get; set; }
     }
 }

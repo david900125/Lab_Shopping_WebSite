@@ -21,7 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Register Services
 RegisterServices(builder.Services);
 // System.Text.Json 
-builder.Services.Configure<JsonOptions>(options => 
+builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.Converters.Add(new DateOnlyJsonConverter());
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
@@ -82,7 +82,9 @@ builder.Services.AddCors(option => option.AddPolicy("Policy", builder =>
 
 // 資料庫連線
 builder.Services.AddDbContext<DataContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        {
+            options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
 // JwtBareer
 builder.Services.AddAuthentication(o =>
@@ -124,6 +126,8 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.Creat
     /*
      * Use Dependency Injection in SeedHelper , But will be  "Object reference not set to an instance of an object" Error
      * so Change into in line 71 : Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)
+     * but Release (PublishSignleFile) Assembly.GetEntryAssembly().Location will point to exec-asm.dll '
+     * so Change line 71 : .Net6 new API 
      * SeedHelper.HelperInject(app.Services.GetService<IWebHostEnvironment>());
      */
     DataContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
@@ -200,6 +204,7 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IService<MemberService>, MemberService>();
     svcs.AddTransient<IService<CouponServices>, CouponServices>();
     svcs.AddTransient<IService<CommodityService>, CommodityService>();
+    svcs.AddTransient<IService<SizeServices>, SizeServices>();
     // authdto
     svcs.AddScoped<AuthDto>();
 }

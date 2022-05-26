@@ -27,9 +27,9 @@ namespace Lab_Shopping_WebSite.Models
         public int? Creator { get; set; }
 
         [ForeignKey("MemberID"), InverseProperty("Recently_Viewed")]
-        public Members? Member { get; set; }
+        public virtual Members? Member { get; set; }
         [ForeignKey("CommodityID"), InverseProperty("Recently_Viewed")]
-        public Commodities? Commodity { get; set; }
+        public virtual Commodities? Commodity { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("RecentlyViewedCreator")]
         public virtual Members? CreateMember { get; set; }

@@ -29,7 +29,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("PaymentsModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Sales>? Sales { get; set; }
+        public virtual ICollection<Sales>? Sales { get; set; }
         #endregion
     }
 }

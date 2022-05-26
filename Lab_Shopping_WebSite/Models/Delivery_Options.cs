@@ -33,14 +33,14 @@ namespace Lab_Shopping_WebSite.Models
         public int? Creator { get; set; }
 
         [ForeignKey("Delivery_PlaceID"), InverseProperty("Delivery_Options")]
-        public Delivery_Places? Delivery_Place { get; set; }
+        public virtual Delivery_Places? Delivery_Place { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("DeliveryOptionsCreator")]
         public virtual Members? CreateMember { get; set; }
 
         [ForeignKey("Modifier"), InverseProperty("DeliveryOptionsModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Sales>? Sales { get; set; }
+        public virtual ICollection<Sales>? Sales { get; set; }
         #endregion
     }
 }

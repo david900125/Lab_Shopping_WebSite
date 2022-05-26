@@ -36,7 +36,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Creator"), InverseProperty("TagsModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
+        public virtual ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
         #endregion
     }
 }

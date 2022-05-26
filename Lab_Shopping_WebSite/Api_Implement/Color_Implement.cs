@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Services;
@@ -180,6 +179,21 @@ namespace Lab_Shopping_WebSite.Apis
                 }
             }
             return Results.Ok();
+        }
+
+        [AllowAnonymous]
+        async Task<IResult> GetAllSizes ([FromServices] IService<SizeServices> service)
+        {
+            SizeServices ss = (SizeServices)service;
+            return Results.Ok(await ss.GetSizes());
+        }
+        [AllowAnonymous]
+        async Task<IResult> GetSizes(
+            [FromServices] IService<SizeServices> service,
+            int SizeID)
+        {
+            SizeServices ss = (SizeServices)service;
+            return Results.Ok(await ss.GetSizes(SizeID));
         }
     }
 }

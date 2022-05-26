@@ -63,6 +63,15 @@
     "TagID": 13,
     "Commodity_KindsID": 3,
     "Tag": "新品"
+  },
+  {
+    "TagID": 14,
+    "Commodity_KindsID": 1,
+    "Tag": "防潑水"
+  },
+  {
+    "TagID": 15,
+    "Commodity_KindsID": 1,
+    "Tag": "抗uv"
   }
-
 ]

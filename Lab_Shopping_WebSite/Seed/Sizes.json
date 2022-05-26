@@ -2,46 +2,56 @@
   {
     "SizeID": 1,
     "Commodity_KindsID": 1,
-    "Size": "S"
+    "Size": "XS"
   },
   {
     "SizeID": 2,
     "Commodity_KindsID": 1,
-    "Size": "M"
+    "Size": "S"
   },
   {
     "SizeID": 3,
     "Commodity_KindsID": 1,
-    "Size": "L"
+    "Size": "M"
   },
   {
     "SizeID": 4,
-    "Commodity_KindsID": 2,
-    "Size": "S"
+    "Commodity_KindsID": 1,
+    "Size": "L"
   },
   {
     "SizeID": 5,
-    "Commodity_KindsID": 2,
-    "Size": "M"
+    "Commodity_KindsID": 1,
+    "Size": "XL"
   },
   {
     "SizeID": 6,
     "Commodity_KindsID": 2,
-    "Size": "L"
+    "Size": "XS"
   },
   {
     "SizeID": 7,
-    "Commodity_KindsID": 3,
+    "Commodity_KindsID": 2,
     "Size": "S"
   },
   {
     "SizeID": 8,
-    "Commodity_KindsID": 3,
+    "Commodity_KindsID": 2,
     "Size": "M"
   },
   {
     "SizeID": 9,
-    "Commodity_KindsID": 3,
+    "Commodity_KindsID": 2,
     "Size": "L"
+  },
+  {
+    "SizeID": 10,
+    "Commodity_KindsID": 2,
+    "Size": "XL"
+  },
+  {
+    "SizeID": 11,
+    "Commodity_KindsID": 3,
+    "Size": "F"
   }
 ]

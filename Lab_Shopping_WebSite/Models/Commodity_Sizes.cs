@@ -44,9 +44,9 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("CommoditySizesModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Inventories>? inventories { get; set; }
-        public ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
-        public ICollection<Sales_items>? Sales_Items { get; set; }
+        public virtual ICollection<Inventories>? inventories { get; set; }
+        public virtual ICollection<Shopping_Carts>? Shopping_Carts { get; set; }
+        public virtual ICollection<Sales_items>? Sales_Items { get; set; }
         #endregion
     }
 }

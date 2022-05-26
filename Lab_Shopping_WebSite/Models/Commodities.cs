@@ -37,14 +37,13 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("CommoditiesModifer")]
         public virtual Members? ModifyMember { get; set; }
-
-        public ICollection<Blog_Hrefs>? Blog_Hrefs { get; set; }
-        public ICollection<Commodity_Images>? Images { get; set; }
-        public ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
-        public ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
-        public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
-        public ICollection<Like_Commodities>? Like_Commodities { get; set; }
-        public ICollection<Recently_Viewed>? Recently_Viewed { get; set; }
+        public virtual ICollection<Blog_Hrefs>? Blog_Hrefs { get; set; }
+        public virtual ICollection<Commodity_Images>? Images { get; set; }
+        public virtual ICollection<Commodity_Prices>? Commodity_Prices { get; set; }
+        public virtual ICollection<Commodity_Tags>? Commodity_Tags { get; set; }
+        public virtual ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
+        public virtual ICollection<Like_Commodities>? Like_Commodities { get; set; }
+        public virtual ICollection<Recently_Viewed>? Recently_Viewed { get; set; }
         #endregion
     }
 }

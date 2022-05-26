@@ -29,9 +29,9 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("BlogsModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Blog_Contents>? Contents { get; set; }
-        public ICollection<Blog_Hrefs>? Hrefs { get; set; }
-        public ICollection<Blog_Images>? Images { get; set; }
+        public virtual ICollection<Blog_Contents>? Contents { get; set; }
+        public virtual ICollection<Blog_Hrefs>? Hrefs { get; set; }
+        public virtual ICollection<Blog_Images>? Images { get; set; }
         #endregion
     }
 }

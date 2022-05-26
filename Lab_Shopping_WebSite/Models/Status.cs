@@ -30,7 +30,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("StatusModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Sales_items>? Sales_Items { get; set; }
+        public virtual ICollection<Sales_items>? Sales_Items { get; set; }
         #endregion
     }
 }

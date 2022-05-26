@@ -33,7 +33,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [ForeignKey("Modifier"), InverseProperty("SizesModifer")]
         public virtual Members? ModifyMember { get; set; }
-        public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
+        public virtual ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
         #endregion
     }
 }

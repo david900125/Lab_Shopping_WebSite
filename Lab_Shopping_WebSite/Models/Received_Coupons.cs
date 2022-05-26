@@ -25,18 +25,15 @@ namespace Lab_Shopping_WebSite.Models
         [Required]
         [Precision(5, 2)]
         public decimal Amount { get; set; }
-
         [Required]
         public DateTime Received_Date { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
-
-
         [ForeignKey("MemberID"), InverseProperty("Received_Coupons")]
-        public Members? Member { get; set; }
+        public virtual Members? Member { get; set; }
 
         [ForeignKey("CouponID"), InverseProperty("Received_Coupons")]
-        public Coupons? Coupon { get; set; }
+        public virtual Coupons? Coupon { get; set; }
 
         [ForeignKey("Creator"), InverseProperty("ReceivedCouponsCreator")]
         public virtual Members? CreateMember { get; set; }

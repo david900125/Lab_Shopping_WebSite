@@ -2,7 +2,7 @@
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-//using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Reflection;
 
@@ -16,23 +16,24 @@ namespace Lab_Shopping_WebSite.Extension
 
             Type type = typeof(T);
             string json = "";
+            //string curpath = Process.GetCurrentProcess().MainModule?.FileName;
             string rootpath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            //string rootpath = Directory.GetParent(curpath).FullName;
             string fullPath = Path.Combine(rootpath, "Seed", type.Name + ".json");
             if (File.Exists(fullPath))
             {
                 using (StreamReader reader = new StreamReader(fullPath))
                 {
                     json = reader.ReadToEnd();
-                    
-                    List<T> jobject =  JsonSerializer.Deserialize<List<T>>(json);
-                    jobject.ForEach(t => 
+
+                    List<T> jobject = JsonSerializer.Deserialize<List<T>>(json);
+                    jobject.ForEach(t =>
                     {
                         PropertyInfo info = t.GetType().GetProperty("CreateTime");
                         if (info != null)
                         {
                             info.SetValue(t, DateTime.Now, null);
                         }
-
                         info = t.GetType().GetProperty("Creator");
                         if (info != null)
                         {

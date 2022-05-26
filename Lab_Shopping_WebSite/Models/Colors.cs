@@ -32,7 +32,7 @@ namespace Lab_Shopping_WebSite.Models
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
 
-        public ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
+        public virtual ICollection<Commodity_Sizes>? Commodity_Sizes { get; set; }
         #endregion
     }
 }

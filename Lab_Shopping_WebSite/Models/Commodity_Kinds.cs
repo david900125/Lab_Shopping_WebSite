@@ -28,8 +28,8 @@ namespace Lab_Shopping_WebSite.Models
         [ForeignKey("Modifier"), InverseProperty("CommodityKindsModifer")]
         public virtual Members? ModifyMember { get; set; }
 
-        public ICollection<Tags>? Tags { get; set; }
-        public ICollection<Sizes>? Sizes { get; set; }
+        public virtual ICollection<Tags>? Tags { get; set; }
+        public virtual ICollection<Sizes>? Sizes { get; set; }
         #endregion
     }
 }
