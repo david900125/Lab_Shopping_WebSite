@@ -42,6 +42,22 @@ namespace Lab_Shopping_WebSite.DTO
         public List<int> CommodityColors { get; set; }
         public List<string> CommodityImages { get; set; }
     }
+    
+    public class UpdateCommodityDto
+    {
+        public int CommodityID { get; set; }
+        public string CommodityName { get; set; }
+        public string Description { get; set; }
+        public string Material { get; set; }
+        public bool isReleased { get; set; }
+        public decimal Price { get; set; }
+        public decimal S_Price { get; set; }
+        public int CommodityKinds { get; set; }
+        public List<int> CommodityTags { get; set; }
+        public List<int> CommoditySizes { get; set; }
+        public List<int> CommodityColors { get; set; }
+        public List<string> CommodityImages { get; set; }
+    }
 
     public class CommodityDto
     {
@@ -58,5 +74,13 @@ namespace Lab_Shopping_WebSite.DTO
         public List<string> CommoditySizes { get; set; }
         public List<string> CommodityColors { get; set; }
         public List<string> CommodityImages { get; set; }
+    }
+
+    public class SalesOrder
+    {
+        public int DeliveryOptionsID { get; set; } // 運送方式
+        public int PaymentID { get; set; } // 付款方式
+        public string? Address { get; set; } // 地址
+        public List<CartDto> Carts { get; set; } // 訂單內容
     }
 }

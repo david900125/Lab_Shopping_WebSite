@@ -14,35 +14,29 @@ namespace Lab_Shopping_WebSite.Apis
     {
         async Task<IResult> CheckOut(
             [FromServices] IService<SalesService> service,
-            [FromBody] CheckOutDto dto,
-            HttpContext http)
+            [FromServices] AuthDto auth,
+            [FromBody] SalesOrder dto)
         {
-
             SalesService ss = (SalesService)service;
-            var req = http.User.FindFirst("Sid");
-            if (req == null)
+            if (!auth.IsAuth)
                 return Results.Unauthorized();
-
-            int MemberID = Convert.ToInt16(req.Value);
-            List<Shopping_Carts> lists = await ss.Shopping_Cart_List(MemberID);
-            if(lists.Count > 0)
+            // Check Stock
+            var check_1 = await ss.Check_Inventor_Over(dto.Carts);
+            if (check_1.Item1)
             {
-               var result = await ss.CreateSales(lists , dto , MemberID);
-                if (result.Item1)
+                // Create Sales Order
+                var create = await ss.CreateSales(dto);
+                if (create.Item1)
                 {
                     return Results.Ok();
                 }
                 else
                 {
-                    return Results.BadRequest("Sales Create Error.");
+                    return Results.BadRequest(create.Item2);
                 }
             }
-            else
-            {
-                return Results.Ok("No Shopping List.");
-            }
 
-            
+            return Results.BadRequest(check_1.Item2);
         }
 
 
@@ -57,7 +51,7 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.Unauthorized();
 
             int MemberID = Convert.ToInt16(req.Value);
-            var result = await ss.UpdateSales(dto , MemberID);
+            var result = await ss.UpdateSales(dto, MemberID);
             if (result.Item1)
             {
                 return Results.Ok();

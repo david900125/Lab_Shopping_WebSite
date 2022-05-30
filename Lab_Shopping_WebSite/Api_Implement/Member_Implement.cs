@@ -106,7 +106,7 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Member not found.");
         }
 
-        [Authorize]
+        [Authorize(Policy = "OnlyAdminRole")]
         async Task<IResult> GetTopMember(
                [FromServices] DataContext _db,
                [FromServices] IService<MemberService> service,
@@ -126,6 +126,7 @@ namespace Lab_Shopping_WebSite.Apis
                                            Gender = ((members.Gender == true) ? Gender.Male.ToString() : Gender.Female.ToString()),
                                            Role = roles.RoleName,
                                            BirthDay = members.BirthDay.ToString(),
+                                           LastSignin = members.LastSignin.Value != default? members.LastSignin.Value.ToString("yyyy/MM/dd HH:mm:ss"):"",
                                            CreateTime = members.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
                                            ModifyTime = members.ModifyTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
                                        }).Take(count).ToList();

@@ -50,6 +50,7 @@ namespace Lab_Shopping_WebSite.DTO
         public string? Gender { get; set; }
         public string? BirthDay { get; set; }
         public string Role { get; set; }
+        public string? LastSignin { get; set; }
         public string? CreateTime { get; set; }
         public string? ModifyTime { get; set; }
     }

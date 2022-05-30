@@ -31,7 +31,7 @@ namespace Lab_Shopping_WebSite.Apis
                     var result = await fs.Insert_File(formFile, store.Item2);
                     if (result.Item1)
                     {
-                        return Results.Ok(result.Item3);
+                        return Results.Ok(result.Item3.FileName);
                     }
                 }
             }

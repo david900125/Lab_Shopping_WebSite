@@ -25,7 +25,7 @@ namespace Lab_Shopping_WebSite.Apis
             Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
             if (query.Item1)
             {
-                var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID , query.Item2, dto.Amount);
+                var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
                 if (result.Item1)
                     return Results.Ok();
                 else
@@ -61,6 +61,9 @@ namespace Lab_Shopping_WebSite.Apis
             if (!auth.IsAuth)
                 return Results.Unauthorized();
 
+            if (dto.Price < dto.S_Price)
+                return Results.BadRequest("Preferential Price is over Bid Price!");
+
             var Sid = auth.UserID.MemberID;
             var insert1 = await cs.Insert_Commodities(dto, Sid);
             if (insert1.Item1)
@@ -83,6 +86,39 @@ namespace Lab_Shopping_WebSite.Apis
             }
 
             return Results.BadRequest("Commodity Insert Error.");
+        }
+
+        [Authorize]
+        async Task<IResult> UpdateCommodity(
+            [FromServices] IService<CommodityService> service,
+            [FromServices] AuthDto auth,
+            [FromBody] UpdateCommodityDto dto)
+        {
+            Tuple<bool, string> result = new Tuple<bool, string>(false,"Not Found!");
+            CommodityService cs = (CommodityService)service;
+            if (!auth.IsAuth)
+                return Results.Unauthorized();
+
+            if (dto.Price < dto.S_Price)
+                return Results.BadRequest("Preferential Price is over Bid Price!");
+
+            Commodities mast = await cs.FindCommodity(dto.CommodityID);
+            if(mast != null)
+            {
+               result =  await cs.Update_Commodity(mast,dto);
+                if (result.Item1)
+                    result = await cs.Update_Images(mast , dto);
+                    if (result.Item1)
+                        result = await cs.Update_Prices(mast , dto);
+                        if(result.Item1)
+                            result = await cs.Update_Sizes(mast,dto);
+                            if (result.Item1)
+                                result = await cs.Update_Tags(mast, dto);
+                                if (result.Item1)
+                                    return Results.Ok();
+            }
+
+            return Results.BadRequest("Update Failed!");
         }
 
         async Task<IResult> Get_full_Commodity_info(
@@ -139,7 +175,7 @@ namespace Lab_Shopping_WebSite.Apis
             [FromServices] AuthDto auth)
         {
             CommodityService cs = (CommodityService)service;
-            if(!auth.IsAuth)
+            if (!auth.IsAuth)
                 return Results.Unauthorized();
 
             return Results.Ok();

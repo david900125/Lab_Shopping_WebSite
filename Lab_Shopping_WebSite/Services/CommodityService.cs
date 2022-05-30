@@ -88,7 +88,6 @@ namespace Lab_Shopping_WebSite.Services
             return result;
         }
 
-
         public async Task<Tuple<bool, string>> Insert_Shopping_Cart(int MemberID, Commodity_Sizes sizes, int Amount)
         {
             return await
@@ -110,11 +109,7 @@ namespace Lab_Shopping_WebSite.Services
                 CommodityName = dto.CommodityName,
                 Description = dto.Description,
                 Material = dto.Material,
-                isReleased = dto.isReleased,
-                Creator = Sid,
-                CreateTime = DateTime.Now,
-                Modifier = Sid,
-                ModifyTime = DateTime.Now
+                isReleased = dto.isReleased
             };
 
             var result = await Creater(mast);
@@ -209,11 +204,7 @@ namespace Lab_Shopping_WebSite.Services
                     {
                         CommodityID = commodity.CommodityID,
                         SizeID = size,
-                        ColorID = color,
-                        Creator = Sid,
-                        CreateTime = DateTime.Now,
-                        Modifier = Sid,
-                        ModifyTime = DateTime.Now
+                        ColorID = color
                     });
 
                     if (!mast.Item1)
@@ -234,41 +225,75 @@ namespace Lab_Shopping_WebSite.Services
                 MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null
             });
         }
-        public async Task<List<CommodityDto>> SelectByName(Commodity_Selection_Dto dto)
+        
+
+        public async Task<Tuple<bool,string>> Update_Commodity(Commodities mast , UpdateCommodityDto dto)
         {
-            List<Commodities> commodities = _db.Commodities.Where(n => n.CommodityName.Contains(dto.Selection)).ToList();
-            List<CommodityDto> result = new List<CommodityDto>();
-            foreach (var commodity in commodities)
+            mast.CommodityName = dto.CommodityName == mast.CommodityName ? mast.CommodityName : dto.CommodityName;
+            mast.Description = dto.Description == mast.Description ? mast.Description : dto.Description;
+            mast.Material = dto.Material == mast.Material ? mast.Material : dto.Material;
+            mast.isReleased = dto.isReleased == mast.isReleased ? mast.isReleased : dto.isReleased;
+            return await Updater<Commodities>(mast);
+        }
+        public async Task<Tuple<bool,string>> Update_Images(Commodities mast , UpdateCommodityDto dto)
+        {
+            Tuple<bool, string> result = new Tuple<bool, string>(true , "");
+            List<Commodity_Images> images = mast.Images.ToList();
+            for(int i = 0; i < images.Count; i++)
             {
-                result.Add(await Inject(commodity));
+                if(i < dto.CommodityImages.Count)
+                {
+                    if (images[i].Url != dto.CommodityImages[i])
+                    {
+                        images[i].Url = dto.CommodityImages[i];
+                        result = await Updater<Commodity_Images>(images[i]);
+                        if (!result.Item1)
+                        {
+                            break;
+                        }
+                    }
+                }
             }
             return result;
         }
-        public async Task<List<CommodityDto>> SalectByKinds(int KindID)
+        public async Task<Tuple<bool, string>> Update_Prices(Commodities mast, UpdateCommodityDto dto)
         {
-            List<CommodityDto> result = new List<CommodityDto>();
-            var kinds = _db.Commodity_Kinds.Where(n => n.Commodity_KindID == KindID).Select(n => n.Commodity_KindID).ToList();
-            var sizes = _db.Sizes.Where(n => kinds.Contains(n.Commodity_KindsID)).Select(n => n.SizeID).ToList();
-            var commotdity_size = _db.Commodity_Sizes.Where(n => sizes.Contains(n.Commodity_SizesID)).Select(n => n.CommodityID).ToList();
-            List<Commodities> tmps = _db.Commodities.Where(n => commotdity_size.Contains(n.CommodityID)).ToList();
-            foreach (var tmp in tmps)
+            Tuple<bool, string> result = new Tuple<bool, string>(false, "");
+            List<Commodity_Prices> prices = mast.Commodity_Prices.ToList();
+            // 優惠價
+            List<Commodity_Prices> S_Price = prices.Where(p => p.PriceID == 1).ToList();
+            S_Price[0].Price =  S_Price[0].Price == dto.S_Price ?  S_Price[0].Price : dto.S_Price;
+            result = await Updater<Commodity_Prices>(S_Price[0]);
+
+            if (result.Item1)
             {
-                result.Add(await Inject(tmp));
+                List<Commodity_Prices> Price = prices.Where(p => p.PriceID == 2).ToList();
+                Price[0].Price = Price[0].Price == dto.Price ? Price[0].Price : dto.Price;
+                result = await Updater<Commodity_Prices>(Price[0]);
             }
 
             return result;
         }
-        public async Task<List<CommodityDto>> GetRandom(int Count)
+        public async Task<Tuple<bool, string>> Update_Tags(Commodities mast, UpdateCommodityDto dto)
         {
-            Random random = new Random();
-            List<CommodityDto> results = new List<CommodityDto>();
-            List<Commodities> items = _db.Commodities.OrderBy(x => Guid.NewGuid()).Take(Count).ToList();
-            foreach (var item in items)
+            Tuple<bool, string> result =  await DeleteTag(mast.CommodityID);
+            if (result.Item1)
             {
-                results.Add(await Inject(item));
+                result = await Insert_Tags(mast, dto.CommodityTags , _auth.UserID.MemberID);
             }
 
-            return results;
+            return result;
+        }
+        public async Task<Tuple<bool,string>> Update_Sizes(Commodities mast , UpdateCommodityDto dto)
+        {
+            Tuple<bool, string> result = new Tuple<bool, string>(false , "");
+            result = await DeleteSize(mast.CommodityID);
+            if (result.Item1)
+            {
+                result = await Insert_Sizes(mast, dto.CommoditySizes, dto.CommodityColors, _auth.UserID.MemberID);
+            }
+
+            return result;
         }
 
         public async Task<Tuple<bool, string>> DeleteCommodity(int CommodityID)
@@ -307,33 +332,90 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> DeleteSize(int CommodityID)
         {
-            var query = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).ToList();
-            if (query.Count > 0)
-            {
-                return await Deleter(query);
-            }
-            return Tuple.Create(true, "NotFound.");
-        }
-        public async Task<Tuple<bool, string>> DeletePrice(int CommodityID)
-        {
+            Tuple<bool, string> result = new Tuple<bool, string>(true,"");
             var query = _db.Commodity_Sizes.Where(n => n.CommodityID == CommodityID).ToList();
             if (query.Count > 0)
             {
-                return await Deleter(query);
+                foreach(var item in query)
+                {
+                    result = await Deleter(item);
+                    if (!result.Item1)
+                        return result;
+                }
             }
-            return Tuple.Create(true, "NotFound.");
+            return result;
+        }
+        public async Task<Tuple<bool, string>> DeletePrice(int CommodityID)
+        {
+            Tuple<bool, string> result = new Tuple<bool, string>(true, "");
+            var query = _db.Commodity_Prices.Where(n => n.CommodityID == CommodityID).ToList();
+            if (query.Count > 0)
+            {
+                foreach (var item in query)
+                {
+                    result = await Deleter(item);
+                    if (!result.Item1)
+                        return result;
+                }
+            }
+            return result;
         }
         public async Task<Tuple<bool, string>> DeleteTag(int CommodityID)
         {
+            Tuple<bool, string> result = new Tuple<bool, string>(true, "");
             var query = _db.Commodity_Tags.Where(n => n.CommodityID == CommodityID).ToList();
             if (query.Count > 0)
             {
-                return await Deleter(query);
+                foreach (var item in query)
+                {
+                    result = await Deleter(item);
+                    if (!result.Item1)
+                        return result;
+                }
             }
-            return Tuple.Create(true, "NotFound.");
+            return result;
         }
 
+        public async Task<Commodities> FindCommodity(int CommodityID)
+        {
+            return _db.Commodities.Where(s => s.CommodityID == CommodityID).FirstOrDefault();
+        }
+        public async Task<List<CommodityDto>> SelectByName(Commodity_Selection_Dto dto)
+        {
+            List<Commodities> commodities = _db.Commodities.Where(n => n.CommodityName.Contains(dto.Selection)).ToList();
+            List<CommodityDto> result = new List<CommodityDto>();
+            foreach (var commodity in commodities)
+            {
+                result.Add(await Inject(commodity));
+            }
+            return result;
+        }
+        public async Task<List<CommodityDto>> SalectByKinds(int KindID)
+        {
+            List<CommodityDto> result = new List<CommodityDto>();
+            var kinds = _db.Commodity_Kinds.Where(n => n.Commodity_KindID == KindID).Select(n => n.Commodity_KindID).ToList();
+            var sizes = _db.Sizes.Where(n => kinds.Contains(n.Commodity_KindsID)).Select(n => n.SizeID).ToList();
+            var commotdity_size = _db.Commodity_Sizes.Where(n => sizes.Contains(n.Commodity_SizesID)).Select(n => n.CommodityID).ToList();
+            List<Commodities> tmps = _db.Commodities.Where(n => commotdity_size.Contains(n.CommodityID)).ToList();
+            foreach (var tmp in tmps)
+            {
+                result.Add(await Inject(tmp));
+            }
 
+            return result;
+        }
+        public async Task<List<CommodityDto>> GetRandom(int Count)
+        {
+            Random random = new Random();
+            List<CommodityDto> results = new List<CommodityDto>();
+            List<Commodities> items = _db.Commodities.OrderBy(x => Guid.NewGuid()).Take(Count).ToList();
+            foreach (var item in items)
+            {
+                results.Add(await Inject(item));
+            }
+
+            return results;
+        }
 
     }
 }
