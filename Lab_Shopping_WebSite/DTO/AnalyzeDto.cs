@@ -2,10 +2,9 @@
 {
     public class AnalyzeDto
     {
-        public int Viewed { get; set; } // 瀏覽輛
-        public int Sales { get; set; }  // 訂單量
-        public int UnShipping { get; set; } // 未出貨
-        public int UnPay { get; set; }  // 未付款
-
+        public int Viewed { get; set; } // 本周瀏覽輛
+        public int Sales { get; set; }  // 成交訂單量
+        public int UnShipping { get; set; } // 訂單未出貨
+        public int UnPay { get; set; }  // 訂單未付款
     }
 }

@@ -1,0 +1,122 @@
+[
+  {
+    "Commodity_SizesID": 1,
+    "CommodityID": 6,
+    "ColorID": 4,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 2,
+    "CommodityID": 6,
+    "ColorID": 4,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 3,
+    "CommodityID": 7,
+    "ColorID": 14,
+    "SizeID": 4
+  },
+  {
+    "Commodity_SizesID": 4,
+    "CommodityID": 8,
+    "ColorID": 6,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 5,
+    "CommodityID": 8,
+    "ColorID": 7,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 6,
+    "CommodityID": 8,
+    "ColorID": 8,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 7,
+    "CommodityID": 8,
+    "ColorID": 6,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 8,
+    "CommodityID": 8,
+    "ColorID": 7,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 9,
+    "CommodityID": 8,
+    "ColorID": 8,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 10,
+    "CommodityID": 9,
+    "ColorID": 5,
+    "SizeID": 11
+  },
+  {
+    "Commodity_SizesID": 11,
+    "CommodityID": 10,
+    "ColorID": 1,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 12,
+    "CommodityID": 10,
+    "ColorID": 1,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 13,
+    "CommodityID": 10,
+    "ColorID": 1,
+    "SizeID": 4
+  },
+  {
+    "Commodity_SizesID": 14,
+    "CommodityID": 10,
+    "ColorID": 1,
+    "SizeID": 5
+  },
+  {
+    "Commodity_SizesID": 54,
+    "CommodityID": 1,
+    "ColorID": 7,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 55,
+    "CommodityID": 1,
+    "ColorID": 15,
+    "SizeID": 2
+  },
+  {
+    "Commodity_SizesID": 56,
+    "CommodityID": 1,
+    "ColorID": 7,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 57,
+    "CommodityID": 1,
+    "ColorID": 15,
+    "SizeID": 3
+  },
+  {
+    "Commodity_SizesID": 58,
+    "CommodityID": 1,
+    "ColorID": 7,
+    "SizeID": 4
+  },
+  {
+    "Commodity_SizesID": 59,
+    "CommodityID": 1,
+    "ColorID": 15,
+    "SizeID": 4
+  }
+]

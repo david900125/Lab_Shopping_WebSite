@@ -57,7 +57,7 @@ namespace Lab_Shopping_WebSite.Apis
                 if (query.Item2.Password == signin.Password.ToMD5())
                 {
                     // update sigin time
-                    ms.UpdateSinginTime(query.Item2);
+                    await ms.UpdateSinginTime(query.Item2);
                     // make token
                     StringBuilder sbuild = new StringBuilder("Bearer ");
                     var token = jwt.GenerateToken(query.Item2.Name, query.Item2.RoleID, query.Item2.MemberID);
@@ -73,15 +73,34 @@ namespace Lab_Shopping_WebSite.Apis
 
         }
 
-        [Authorize]
+        [AllowAnonymous]
         async Task<IResult> GetMember(
             [FromServices] DataContext _db,
             [FromServices] IService<MemberService> service,
-            HttpContext http)
+            [FromServices] AuthDto _auth)
         {
-            int MemberID = Convert.ToInt16(http.User.FindFirst("Sid").Value);
-            var result = _db.Members.Where(u => u.MemberID == MemberID).ToList();
-            return Results.Ok(result);
+            if (!_auth.IsAuth)
+                return Results.Unauthorized();
+
+            Members user = _auth.UserID;
+            List<MemberDto> results = (from members in _db.Members
+                                       where members.MemberID == user.MemberID
+                                       select new MemberDto()
+                                       {
+                                           MemberID = members.MemberID,
+                                           Email_Address = members.Email_Address,
+                                           Name = members.Name,
+                                           Address = members.Address,
+                                           Phone_Number = members.Phone_Number,
+                                           Gender = (members.Gender == default ? "" : members.Gender == true ? Gender.Male.ToString() : Gender.Female.ToString()),
+                                           Role = members.Role.RoleName,
+                                           BirthDay = members.BirthDay.ToString(),
+                                           LastSignin = members.LastSignin.Value != default ? members.LastSignin.Value.ToString("yyyy/MM/dd HH:mm:ss") : "",
+                                           CreateTime = members.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                                           ModifyTime = members.ModifyTime.Value.ToString("yyyy/MM/dd HH:mm:ss")
+                                       }).ToList();
+
+            return Results.Ok(results);
         }
 
         [Authorize]
@@ -113,9 +132,6 @@ namespace Lab_Shopping_WebSite.Apis
                int count)
         {
             List<MemberDto> results = (from members in _db.Members
-                                       join roles in _db.Roles
-                                       on members.RoleID equals roles.RoleID
-                                       //orderby members.CreateTime descending
                                        select new MemberDto()
                                        {
                                            MemberID = members.MemberID,
@@ -123,12 +139,12 @@ namespace Lab_Shopping_WebSite.Apis
                                            Name = members.Name,
                                            Address = members.Address,
                                            Phone_Number = members.Phone_Number,
-                                           Gender = ((members.Gender == true) ? Gender.Male.ToString() : Gender.Female.ToString()),
-                                           Role = roles.RoleName,
+                                           Gender = (members.Gender == default ? "" : members.Gender == true ? Gender.Male.ToString() : Gender.Female.ToString()),
+                                           Role = members.Role.RoleName,
                                            BirthDay = members.BirthDay.ToString(),
                                            LastSignin = members.LastSignin.Value != default? members.LastSignin.Value.ToString("yyyy/MM/dd HH:mm:ss"):"",
                                            CreateTime = members.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
-                                           ModifyTime = members.ModifyTime.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                                           ModifyTime = members.ModifyTime.Value.ToString("yyyy/MM/dd HH:mm:ss")
                                        }).Take(count).ToList();
 
             return Results.Ok(results);

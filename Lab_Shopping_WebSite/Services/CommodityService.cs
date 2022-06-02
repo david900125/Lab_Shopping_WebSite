@@ -13,10 +13,10 @@ namespace Lab_Shopping_WebSite.Services
 
         public async Task<Tuple<bool, Commodity_Sizes>> Get_Commodity_Size(CartDto dto)
         {
-            var result = _db.Commodity_Sizes.Where(n => n.ColorID == dto.ColorID)
-                                           .Where(n => n.SizeID == dto.SizeID)
-                                           .Where(n => n.CommodityID == dto.CommodityID)
-                                           .FirstOrDefault();
+            var result = _db.Commodity_Sizes.Where(n => n.Color.Color == dto.Color)
+                                            .Where(n => n.Size.Size == dto.Size)
+                                            .Where(n => n.CommodityID == dto.CommodityID)
+                                            .FirstOrDefault();
 
             if (result == null)
                 return Tuple.Create(false, new Commodity_Sizes());
@@ -53,7 +53,7 @@ namespace Lab_Shopping_WebSite.Services
             result.isReleased = item.isReleased;
             result.Price = item.Commodity_Prices?.FirstOrDefault(s => s.PriceID == 2)?.Price ?? decimal.Zero;
             result.S_Price = item.Commodity_Prices?.FirstOrDefault(s => s.PriceID == 1)?.Price ?? decimal.Zero;
-            result.CommodityTags =  item.Commodity_Tags.Join(_db.Tags, ct => ct.TagID, t => t.TagID, (ct, t) => t.Tag).Distinct().ToList();
+            result.CommodityTags = item.Commodity_Tags.Join(_db.Tags, ct => ct.TagID, t => t.TagID, (ct, t) => t.Tag).Distinct().ToList();
             result.CommodityKinds = (from tmp in _db.Commodity_Tags
                                      join tags in _db.Tags
                                        on tmp.TagID equals tags.TagID
@@ -225,9 +225,9 @@ namespace Lab_Shopping_WebSite.Services
                 MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null
             });
         }
-        
 
-        public async Task<Tuple<bool,string>> Update_Commodity(Commodities mast , UpdateCommodityDto dto)
+
+        public async Task<Tuple<bool, string>> Update_Commodity(Commodities mast, UpdateCommodityDto dto)
         {
             mast.CommodityName = dto.CommodityName == mast.CommodityName ? mast.CommodityName : dto.CommodityName;
             mast.Description = dto.Description == mast.Description ? mast.Description : dto.Description;
@@ -235,13 +235,13 @@ namespace Lab_Shopping_WebSite.Services
             mast.isReleased = dto.isReleased == mast.isReleased ? mast.isReleased : dto.isReleased;
             return await Updater<Commodities>(mast);
         }
-        public async Task<Tuple<bool,string>> Update_Images(Commodities mast , UpdateCommodityDto dto)
+        public async Task<Tuple<bool, string>> Update_Images(Commodities mast, UpdateCommodityDto dto)
         {
-            Tuple<bool, string> result = new Tuple<bool, string>(true , "");
+            Tuple<bool, string> result = new Tuple<bool, string>(true, "");
             List<Commodity_Images> images = mast.Images.ToList();
-            for(int i = 0; i < images.Count; i++)
+            for (int i = 0; i < images.Count; i++)
             {
-                if(i < dto.CommodityImages.Count)
+                if (i < dto.CommodityImages.Count)
                 {
                     if (images[i].Url != dto.CommodityImages[i])
                     {
@@ -262,7 +262,7 @@ namespace Lab_Shopping_WebSite.Services
             List<Commodity_Prices> prices = mast.Commodity_Prices.ToList();
             // 優惠價
             List<Commodity_Prices> S_Price = prices.Where(p => p.PriceID == 1).ToList();
-            S_Price[0].Price =  S_Price[0].Price == dto.S_Price ?  S_Price[0].Price : dto.S_Price;
+            S_Price[0].Price = S_Price[0].Price == dto.S_Price ? S_Price[0].Price : dto.S_Price;
             result = await Updater<Commodity_Prices>(S_Price[0]);
 
             if (result.Item1)
@@ -276,17 +276,17 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> Update_Tags(Commodities mast, UpdateCommodityDto dto)
         {
-            Tuple<bool, string> result =  await DeleteTag(mast.CommodityID);
+            Tuple<bool, string> result = await DeleteTag(mast.CommodityID);
             if (result.Item1)
             {
-                result = await Insert_Tags(mast, dto.CommodityTags , _auth.UserID.MemberID);
+                result = await Insert_Tags(mast, dto.CommodityTags, _auth.UserID.MemberID);
             }
 
             return result;
         }
-        public async Task<Tuple<bool,string>> Update_Sizes(Commodities mast , UpdateCommodityDto dto)
+        public async Task<Tuple<bool, string>> Update_Sizes(Commodities mast, UpdateCommodityDto dto)
         {
-            Tuple<bool, string> result = new Tuple<bool, string>(false , "");
+            Tuple<bool, string> result = new Tuple<bool, string>(false, "");
             result = await DeleteSize(mast.CommodityID);
             if (result.Item1)
             {
@@ -332,11 +332,11 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> DeleteSize(int CommodityID)
         {
-            Tuple<bool, string> result = new Tuple<bool, string>(true,"");
+            Tuple<bool, string> result = new Tuple<bool, string>(true, "");
             var query = _db.Commodity_Sizes.Where(n => n.CommodityID == CommodityID).ToList();
             if (query.Count > 0)
             {
-                foreach(var item in query)
+                foreach (var item in query)
                 {
                     result = await Deleter(item);
                     if (!result.Item1)
@@ -416,6 +416,14 @@ namespace Lab_Shopping_WebSite.Services
 
             return results;
         }
+        public async Task<List<CartDto>> GetShoppingCart()
+        {
+            var query = _db.Shopping_Carts.Where(s => s.MemberID == _auth.UserID.MemberID).ToList();
+            foreach(var item in query)
+            {
 
+            }
+            return new List<CartDto>();
+        }
     }
 }

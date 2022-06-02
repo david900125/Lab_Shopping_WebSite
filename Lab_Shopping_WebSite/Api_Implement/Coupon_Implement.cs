@@ -12,17 +12,16 @@ namespace Lab_Shopping_WebSite.Apis
 {
     public partial class CouponApi
     {
-        public async Task<IResult> Create_Coupon(
+        async Task<IResult> Create_Coupon(
             [FromServices] IService<CouponServices> service,
-            [FromBody] CraeteCouponDto dto,
-            HttpContext http)
+            [FromServices] AuthDto _auth,
+            [FromBody] CraeteCouponDto dto)
         {
             CouponServices ss = (CouponServices)service;
-            var req = http.User.FindFirst("Sid");
-            if (req == null)
+            if (!_auth.IsAuth)
                 return Results.Unauthorized();
 
-            int MemberID = Convert.ToInt16(req.Value);
+            int MemberID = _auth.UserID.MemberID;
             var result = await ss.CreateCoupon(dto, MemberID);
             if (result.Item1)
             {
@@ -34,12 +33,56 @@ namespace Lab_Shopping_WebSite.Apis
             }
         }
 
+        async Task<IResult> Update_Coupon(
+            [FromServices] IService<CouponServices> service,
+            [FromServices] AuthDto _auth,
+            [FromBody] UpdateCouponDto dto)
+        {
+            CouponServices ss = (CouponServices)service;
+            if (!_auth.IsAuth)
+                return Results.Unauthorized();
+
+            var result = await ss.UpdateCoupon(dto);
+            if (result.Item1)
+            {
+                return Results.Ok();
+            }
+            else
+            {
+                return Results.BadRequest("Update Failed.");
+            }
+        }
+
         async Task<IResult> GetAllCoupon(
-            [FromServices] IService<CouponServices> service
-            )
+            [FromServices] IService<CouponServices> service)
         {
             CouponServices cs = (CouponServices)service;
             return Results.Ok(await cs.GetCoupons());
+        }
+
+        async Task<IResult> Get_All_Coupon_Ways(
+            [FromServices] IService<CouponServices> service)
+        {
+            CouponServices cs = (CouponServices)service;
+            return Results.Ok(await cs.GetCoupon_Ways());
+        }
+
+        [Authorize(Policy = "OnlyAdminRole")]
+        async Task<IResult> Delete_Coupon(
+            [FromServices] IService<CouponServices> service,
+            [FromServices] AuthDto _auth,
+            int CouponID)
+        {
+            CouponServices cs = (CouponServices)service;
+            if (!_auth.IsAuth)
+                return Results.Unauthorized();
+
+            var query = await cs.DeleteCoupon(CouponID);
+
+            if (!query.Item1)
+                return Results.BadRequest();
+
+            return Results.Ok();
         }
     }
 }

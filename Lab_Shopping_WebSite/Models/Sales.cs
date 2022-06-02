@@ -32,6 +32,10 @@ namespace Lab_Shopping_WebSite.Models
         [Required(ErrorMessage = "Total_Price is required")]
         public string? Address { get; set; }
 
+        [MaxLength(10)]
+        [Required(ErrorMessage = "Phone_Number is required")]
+        public string? Phone_Number { get; set; }
+
         [Required(ErrorMessage = "MemberID is required")]
         public int MemberID { get; set; }
 
@@ -55,6 +59,9 @@ namespace Lab_Shopping_WebSite.Models
 
         [Required(ErrorMessage = "isChecked is required")]
         public bool isChecked { get; set; }
+
+        [Required(ErrorMessage = "isPayed is required")]
+        public bool isPayed { get; set; }
         public int? Modifier { get; set; }
         public int? Creator { get; set; }
 

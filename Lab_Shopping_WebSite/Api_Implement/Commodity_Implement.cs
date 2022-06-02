@@ -16,23 +16,27 @@ namespace Lab_Shopping_WebSite.Apis
         async Task<IResult> Add_Shopping_Cart(
                 [FromServices] IService<CommodityService> service,
                 [FromServices] AuthDto auth,
-                CartDto dto)
+                List<CartDto> dtos)
         {
             CommodityService cs = (CommodityService)service;
             if (!auth.IsAuth)
                 return Results.Unauthorized();
 
-            Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
-            if (query.Item1)
+            foreach(var dto in dtos)
             {
-                var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
-                if (result.Item1)
-                    return Results.Ok();
+                Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
+                if (query.Item1)
+                {
+                    var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
+                    if (result.Item1)
+                        continue;
+                    else
+                        return Results.BadRequest("Insert Error.");
+                }
                 else
-                    return Results.BadRequest("Insert Error.");
+                    return Results.BadRequest("Commodity Detail Error.");
             }
-            else
-                return Results.BadRequest("Commodity Detail Error.");
+            return Results.Ok();
         }
 
         async Task<IResult> GetCommodities(
@@ -178,8 +182,19 @@ namespace Lab_Shopping_WebSite.Apis
             if (!auth.IsAuth)
                 return Results.Unauthorized();
 
+            var query = await cs.GetShoppingCart();
+
             return Results.Ok();
 
+        }
+    
+        async Task<IResult> View_Recoder(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID)
+        {
+            CommodityService cs = (CommodityService)service;
+            await cs.Insert_Viewed(CommodityID);
+            return Results.Ok();
         }
     }
 }

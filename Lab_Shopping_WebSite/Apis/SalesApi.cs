@@ -11,9 +11,10 @@ namespace Lab_Shopping_WebSite.Apis
 
         public void Register(WebApplication app)
         {
-            app.MapPost("/api/Sales/checkout",CheckOut);
-            app.MapPost("/api/Sales/Update", UpdSales);
-            app.MapGet("/api/Sales/GetAll", GetAllSales);
+            app.MapGet("/api/Sales/GetAll", GetAllSales).WithTags("Sales");
+            app.MapGet("/api/Sales/GetMySales", GetSales).WithTags("Sales");
+            app.MapPost("/api/Sales/checkout",CheckOut).WithTags("Sales");
+            app.MapPost("/api/Sales/Update", UpdSales).WithTags("Sales");
         }
     }
 }

@@ -4,7 +4,7 @@
     "CommodityName": "YOBI 全機能抗 UV 防曬外套 (經典款)",
     "Description": "正面立體大口袋：可收納隨身用品，容量大方便又實用",
     "Material": "防潑水抗 UV 布料：尼龍材質，具有耐磨特性。質地輕薄但帶有挺度，不易皺、不易起毛球",
-    "isReleased": true
+    "isReleased": false
   },
   {
     "CommodityID": 2,
@@ -32,6 +32,41 @@
     "CommodityName": "Billy Pants 比例神褲",
     "Description": "不過寬的穠纖合度，配合精心設計的版型，打造出不論高、矮身型都能呈現好比例的寬褲搭配",
     "Material": "彈性佳，不易皺，表面帶有些微光澤",
+    "isReleased": true
+  },
+  {
+    "CommodityID": 6,
+    "CommodityName": "Robin Tang X plain-me保介人蔘復古毛衣",
+    "Description": "保介人蔘大圖刺繡：精緻刺繡於正面中心。\n整體配色呼應現代化產品“科學中藥”。\n下身可搭配寬鬆褲款，營造簡約休閒風格。",
+    "Material": "純棉紗線針織毛衣：整件由16支棉紗織造而成，手感親膚舒適。 Oversized 輪廓：復古大圖毛衣款式，結合Oversized 輪廓，呈現新的搭配樣貌。",
+    "isReleased": true
+  },
+  {
+    "CommodityID": 7,
+    "CommodityName": "混紡休閒西裝外套",
+    "Description": "鬆身輪廓稍寬的版型設計，別具精神、俐落感的領片設計，穿著舒適且達到修身效果。\n剪接及多口袋設定，不對稱的貼式口袋設計勾勒出休閒氛圍，斜向剪接片，點綴整體輪廓。",
+    "Material": "亞麻感面料，聚酯與彈性纖維混紡，布面、手感呈現亞麻材質，觸感乾爽、舒適，具良好垂墜度及不易皺的特性。",
+    "isReleased": true
+  },
+  {
+    "CommodityID": 8,
+    "CommodityName": "YOBI全機能抗UV防曬外套(比例款)",
+    "Description": "機能加工：抗UV加工 UPF50+，可阻擋 98%以上的紫外線。\nHigh IQ SUN PROTECTION：高效防止紫外線(UV-A \/ UV-B)，提供穿著者良好的防護，經多次洗滌次後，仍保有良好的抗UV效果。\nTeflon EcoElite™：環境友善，不含氟素， 60%的原材料源自可再生資源，在各類面料上皆有出眾的防潑水持久性。",
+    "Material": "防潑水抗UV布料：尼龍材質，具有耐磨特性。質地輕薄但帶有挺度，不易皺、不易起毛球。",
+    "isReleased": true
+  },
+  {
+    "CommodityID": 9,
+    "CommodityName": "防潑水拼接水桶包 (中)",
+    "Description": "防潑水面料，帶有時髦的高光澤感。\n多種背法﹔可做為肩背包、手拿包、側背包\n四點千鳥針車，呼應機能系的特種縫線，同色深淺、跳色等的配色，添加整體豐富性。\n首次嘗試的水桶包大色塊拼接組合，整體搭配的點綴色好選擇。\n內層多隔間，三隔間的內袋，隨身物品好分類。",
+    "Material": "主布-尼龍100%；配布-聚酯纖維100%",
+    "isReleased": true
+  },
+  {
+    "CommodityID": 10,
+    "CommodityName": "多色經典素面短TEE",
+    "Description": "親膚舒適20支棉質布料。\n100% 純棉材質，手感舒適、親膚。\n厚薄適中，具良好透氣度，適合台灣悶熱潮濕的氣候。\n落肩鬆身版型，穿著舒適。\n基本款百搭素TEE提供多款色系選擇，夏日必備單品。",
+    "Material": "主布-棉100%；羅紋-棉97%、彈性纖維3%",
     "isReleased": true
   }
 ]

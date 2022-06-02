@@ -1,0 +1,62 @@
+[
+  {
+    "CommodityID": 1,
+    "TagID": 1
+  },
+  {
+    "CommodityID": 6,
+    "TagID": 1
+  },
+  {
+    "CommodityID": 7,
+    "TagID": 1
+  },
+  {
+    "CommodityID": 8,
+    "TagID": 1
+  },
+  {
+    "CommodityID": 10,
+    "TagID": 1
+  },
+  {
+    "CommodityID": 1,
+    "TagID": 2
+  },
+  {
+    "CommodityID": 7,
+    "TagID": 2
+  },
+  {
+    "CommodityID": 8,
+    "TagID": 2
+  },
+  {
+    "CommodityID": 10,
+    "TagID": 4
+  },
+  {
+    "CommodityID": 6,
+    "TagID": 5
+  },
+  {
+    "CommodityID": 9,
+    "TagID": 11
+  },
+  {
+    "CommodityID": 1,
+    "TagID": 14
+  },
+  {
+    "CommodityID": 8,
+    "TagID": 14
+  },
+  {
+    "CommodityID": 1,
+    "TagID": 15
+  },
+  {
+    "CommodityID": 8,
+    "TagID": 15
+  }
+]

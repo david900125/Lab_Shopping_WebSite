@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Shopping_WebSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220515071438_InitialCreate")]
+    [Migration("20220602052414_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -413,7 +413,7 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("PriceID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("date");
 
                     b.HasKey("Commodity_PriceID");
@@ -1300,6 +1300,11 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("PaymentID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Phone_Number")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<DateTime?>("SendDate")
                         .HasColumnType("datetime2");
 
@@ -1308,6 +1313,9 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<bool>("isChecked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isPayed")
                         .HasColumnType("bit");
 
                     b.HasKey("SaleID");

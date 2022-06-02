@@ -4,69 +4,159 @@
     "CommodityID": 1,
     "PriceID": 1,
     "Price": 1786.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 2,
     "CommodityID": 1,
     "PriceID": 2,
-    "Price": 1881.00,
-    "StartDate": "2022-05-01"
+    "Price": 1888.00,
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 3,
     "CommodityID": 2,
     "PriceID": 1,
     "Price": 2166.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 4,
     "CommodityID": 2,
     "PriceID": 2,
     "Price": 2280.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 5,
     "CommodityID": 3,
     "PriceID": 2,
     "Price": 2480.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 6,
     "CommodityID": 3,
     "PriceID": 1,
     "Price": 2356.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 7,
     "CommodityID": 4,
     "PriceID": 2,
     "Price": 2080.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 8,
     "CommodityID": 4,
     "PriceID": 1,
     "Price": 1976.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 9,
     "CommodityID": 5,
     "PriceID": 2,
     "Price": 1880.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
   },
   {
     "Commodity_PriceID": 10,
     "CommodityID": 5,
     "PriceID": 1,
     "Price": 1480.00,
-    "StartDate": "2022-05-01"
+    "StartDate": "2022-05-01",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 11,
+    "CommodityID": 6,
+    "PriceID": 2,
+    "Price": 2680.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 12,
+    "CommodityID": 6,
+    "PriceID": 1,
+    "Price": 1608.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 13,
+    "CommodityID": 7,
+    "PriceID": 2,
+    "Price": 3980.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 14,
+    "CommodityID": 7,
+    "PriceID": 1,
+    "Price": 3781.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 15,
+    "CommodityID": 8,
+    "PriceID": 2,
+    "Price": 1980.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 16,
+    "CommodityID": 8,
+    "PriceID": 1,
+    "Price": 1683.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 17,
+    "CommodityID": 9,
+    "PriceID": 2,
+    "Price": 1480.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 18,
+    "CommodityID": 9,
+    "PriceID": 1,
+    "Price": 1180.00,
+    "StartDate": "2022-05-28",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 19,
+    "CommodityID": 10,
+    "PriceID": 2,
+    "Price": 1080.00,
+    "StartDate": "2022-05-29",
+    "EndDate": null
+  },
+  {
+    "Commodity_PriceID": 20,
+    "CommodityID": 10,
+    "PriceID": 1,
+    "Price": 1026.00,
+    "StartDate": "2022-05-29",
+    "EndDate": null
   }
 ]

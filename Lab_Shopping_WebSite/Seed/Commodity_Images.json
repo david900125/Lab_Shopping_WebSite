@@ -124,5 +124,95 @@
     "CommodityID": 5,
     "Url": "https:\/\/cdn-plain-me.fonlego.com\/\/upload_files\/fonlego-rwd\/prodpic\/D_cop3563_13_1_02.jpg",
     "Order": 5
+  },
+  {
+    "Commodity_ImageID": 22,
+    "CommodityID": 6,
+    "Url": "https:\/\/localhost:7206\/api\/file\/9bdf791b-bb5a-4313-9f4f-c28fcf03cfc2.jpg",
+    "Order": 1
+  },
+  {
+    "Commodity_ImageID": 23,
+    "CommodityID": 6,
+    "Url": "https:\/\/localhost:7206\/api\/file\/ff0c41bc-b93e-461d-984d-94ec0f755e63.jpg",
+    "Order": 2
+  },
+  {
+    "Commodity_ImageID": 24,
+    "CommodityID": 6,
+    "Url": "https:\/\/localhost:7206\/api\/file\/61b391ae-057e-46a3-8214-88a5736c5911.jpg",
+    "Order": 3
+  },
+  {
+    "Commodity_ImageID": 25,
+    "CommodityID": 7,
+    "Url": "https:\/\/localhost:7206\/api\/file\/40096ccd-8f29-4e73-8087-7b9ae2a0db4b.jpg",
+    "Order": 1
+  },
+  {
+    "Commodity_ImageID": 26,
+    "CommodityID": 7,
+    "Url": "https:\/\/localhost:7206\/api\/file\/8ff9f008-caad-44ef-bc15-0f83885b7f7d.jpg",
+    "Order": 2
+  },
+  {
+    "Commodity_ImageID": 27,
+    "CommodityID": 7,
+    "Url": "https:\/\/localhost:7206\/api\/file\/3f1b8eb1-e5ad-4d2f-9b9e-e434bd07e0b0.jpg",
+    "Order": 3
+  },
+  {
+    "Commodity_ImageID": 28,
+    "CommodityID": 8,
+    "Url": "https:\/\/localhost:7206\/api\/file\/c9420aa2-369c-4177-84f4-e5a43b9c936d.jpg",
+    "Order": 1
+  },
+  {
+    "Commodity_ImageID": 29,
+    "CommodityID": 8,
+    "Url": "https:\/\/localhost:7206\/api\/file\/210b70da-dade-4358-a776-e6f2f1ea9e8a.jpg",
+    "Order": 2
+  },
+  {
+    "Commodity_ImageID": 30,
+    "CommodityID": 8,
+    "Url": "https:\/\/localhost:7206\/api\/file\/f83f511e-0b3a-4ba1-ac5a-17b47e1c954a.jpg",
+    "Order": 3
+  },
+  {
+    "Commodity_ImageID": 31,
+    "CommodityID": 9,
+    "Url": "https:\/\/localhost:7206\/api\/file\/a9032b42-ef2d-45de-b4e3-7deb2dfa9a8a.jpg",
+    "Order": 1
+  },
+  {
+    "Commodity_ImageID": 32,
+    "CommodityID": 9,
+    "Url": "https:\/\/localhost:7206\/api\/file\/661f8c7a-5e66-4cc2-b8bb-d394ef66cb72.jpg",
+    "Order": 2
+  },
+  {
+    "Commodity_ImageID": 33,
+    "CommodityID": 9,
+    "Url": "https:\/\/localhost:7206\/api\/file\/7f0584e4-782c-4f92-a3e2-a0aa72f89aa8.jpg",
+    "Order": 3
+  },
+  {
+    "Commodity_ImageID": 34,
+    "CommodityID": 10,
+    "Url": "https:\/\/localhost:7206\/api\/file\/373437a1-661c-4bae-9307-8591c75bd569.jpg",
+    "Order": 1
+  },
+  {
+    "Commodity_ImageID": 35,
+    "CommodityID": 10,
+    "Url": "https:\/\/localhost:7206\/api\/file\/64d4e645-1f05-4765-9f62-dcd98cb30815.jpg",
+    "Order": 2
+  },
+  {
+    "Commodity_ImageID": 36,
+    "CommodityID": 10,
+    "Url": "https:\/\/localhost:7206\/api\/file\/8158eec1-58d7-434b-8e09-8281bc1cf192.jpg",
+    "Order": 3
   }
 ]

@@ -5,6 +5,7 @@ using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.DTO;
 using AutoMapper;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Lab_Shopping_WebSite.Services
 {
@@ -86,6 +87,7 @@ namespace Lab_Shopping_WebSite.Services
             sales.MemberID = _auth.UserID.MemberID;
             sales.PaymentID = dto.PaymentID;
             sales.Total_Price = await CheckOut_TotalPrice(dto.Carts);
+            sales.Phone_Number = dto.Phone_Number;
             sales.isChecked = false; // 未寄出
             var result = await InsertSales(sales);
 
@@ -197,26 +199,36 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<Commodity_Sizes> FindCommodity_Size(CartDto cart)
         {
             Commodity_Sizes? item = await _db.Commodity_Sizes.Where(s => s.CommodityID == cart.CommodityID)
-                                                              .Where(s => s.SizeID == cart.SizeID)
-                                                              .Where(s => s.ColorID == cart.ColorID).FirstOrDefaultAsync();
+                                                             .Where(s => s.Size.Size == cart.Size)
+                                                             .Where(s => s.Color.Color == cart.Color).FirstOrDefaultAsync();
             return item;
         }
 
+
         public async Task<List<SaleDto>> GetAllSales()
         {
-            List<SaleDto> result = (from sales in _db.Sales
-                                    join delivery in _db.Delivery_Options
-                                      on sales.Delivery_optionID equals delivery.Delivery_PlaceID
-                                    select new SaleDto
-                                    {
-                                        SaleID = sales.SaleID,
-                                        Address = sales.Address,
-                                        Delivery = delivery.Delivery_Option,
-                                        SendDate = sales.SendDate != null ? sales.SendDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
-                                        Established = sales.Established.ToString("yyyy-MM-dd HH:mm:ss"),
-                                        Total_Price = sales.Total_Price,
-                                        isChecked = sales.isChecked
-                                    }).ToList();
+            var result = _mapper.ProjectTo<SaleDto>(_db.Sales).ToList();
+
+
+
+            //List<SaleDto> result = (from sales in _db.Sales
+            //                        join delivery in _db.Delivery_Options
+            //                          on sales.Delivery_optionID equals delivery.Delivery_PlaceID
+            //                        select new SaleDto
+            //                        {
+            //                            SaleID = sales.SaleID,
+            //                            Address = sales.Address,
+            //                            Delivery = delivery.Delivery_Option,
+            //                            SendDate = sales.SendDate != null ? sales.SendDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+            //                            Established = sales.Established.ToString("yyyy-MM-dd HH:mm:ss"),
+            //                            Total_Price = sales.Total_Price,
+            //                            isChecked = sales.isChecked
+            //                        }).ToList();
+            return result;
+        }
+        public async Task<List<SaleDto>> GetSalesForm()
+        {
+            var result = _mapper.ProjectTo<SaleDto>(_db.Sales.Where(s => s.MemberID == _auth.UserID.MemberID)).ToList();
             return result;
         }
         public async Task<Tuple<bool , string>> Check_Inventor_Over(List<CartDto> carts)

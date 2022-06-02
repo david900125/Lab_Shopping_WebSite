@@ -7,8 +7,8 @@ namespace Lab_Shopping_WebSite.DTO
     public class CartDto
     {
         public int CommodityID { get; set; }
-        public int SizeID { get; set; }
-        public int ColorID { get; set; }
+        public string Size { get; set; }
+        public string Color { get; set; }
         public int Amount { get; set; }
     }
 
@@ -81,6 +81,8 @@ namespace Lab_Shopping_WebSite.DTO
         public int DeliveryOptionsID { get; set; } // 運送方式
         public int PaymentID { get; set; } // 付款方式
         public string? Address { get; set; } // 地址
+        public string? Phone_Number { get; set; } // 電話號碼
         public List<CartDto> Carts { get; set; } // 訂單內容
     }
+
 }

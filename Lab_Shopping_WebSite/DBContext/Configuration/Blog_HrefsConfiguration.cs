@@ -46,6 +46,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommodityTagsCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommodityTagsModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Commodity_Tags>();
         }
     }
     public class CommoditiesConfiguration : IEntityTypeConfiguration<Commodities>
@@ -89,6 +90,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.CommoditySizesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.CommoditySizesModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Commodity_Sizes>();
         }
     }
     public class CouponUsesConfiguration : IEntityTypeConfiguration<Coupon_Uses>
@@ -368,6 +370,7 @@ namespace Lab_Shopping_WebSite.DBContext
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.FilesCreator).HasForeignKey(n => n.Creator);
             builder.HasOne(n => n.ModifyMember).WithMany(t => t.FilesModifer).HasForeignKey(n => n.Modifier);
+            builder.Seed<Files>();
         }
     }
     public class DeliveryPlacesConfiguration : IEntityTypeConfiguration<Delivery_Places>
