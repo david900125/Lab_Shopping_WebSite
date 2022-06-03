@@ -108,7 +108,6 @@ namespace Lab_Shopping_WebSite.DBContext
     {
         public void Configure(EntityTypeBuilder<Like_Commodities> builder)
         {
-            builder.HasKey(n => new { n.MemberID, n.CommodityID });
             builder.HasOne(n => n.CreateMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.ModifyMember).WithOne().OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(n => n.CreateMember).WithMany(t => t.LikeCommoditiesCreator).HasForeignKey(n => n.Creator);

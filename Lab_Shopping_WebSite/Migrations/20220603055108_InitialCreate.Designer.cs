@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Shopping_WebSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220602052414_InitialCreate")]
+    [Migration("20220603055108_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -879,19 +879,25 @@ namespace Lab_Shopping_WebSite.Migrations
 
             modelBuilder.Entity("Lab_Shopping_WebSite.Models.Like_Commodities", b =>
                 {
-                    b.Property<int>("MemberID")
+                    b.Property<int>("Like_CommodityID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CommodityID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Like_CommodityID"), 1L, 1);
 
                     b.Property<DateTime>("Add_Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CommodityID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Creator")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MemberID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Modifier")
@@ -900,11 +906,13 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<DateTime?>("ModifyTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MemberID", "CommodityID");
+                    b.HasKey("Like_CommodityID");
 
                     b.HasIndex("CommodityID");
 
                     b.HasIndex("Creator");
+
+                    b.HasIndex("MemberID");
 
                     b.HasIndex("Modifier");
 
@@ -1285,8 +1293,8 @@ namespace Lab_Shopping_WebSite.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InVoice")
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("MemberID")
                         .HasColumnType("int");
@@ -2126,9 +2134,7 @@ namespace Lab_Shopping_WebSite.Migrations
 
                     b.HasOne("Lab_Shopping_WebSite.Models.Members", "Member")
                         .WithMany("Like_Commodities")
-                        .HasForeignKey("MemberID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberID");
 
                     b.HasOne("Lab_Shopping_WebSite.Models.Members", "ModifyMember")
                         .WithMany("LikeCommoditiesModifer")

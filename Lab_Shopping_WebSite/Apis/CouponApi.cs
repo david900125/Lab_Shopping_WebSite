@@ -11,7 +11,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapGet("/api/Coupon/Delete/{CouponID:int}", Delete_Coupon).WithTags("Coupon");
             app.MapPost("/api/Coupon/Create", Create_Coupon).WithTags("Coupon");
             app.MapPost("/api/Coupon/Update", Update_Coupon).WithTags("Coupon");
-            //app.MapPost("/api/Coupon/Use", )
+            app.MapPost("/api/Coupon/Condition", Cond_Coupon).WithTags("Coupon");
         }
     }
 }

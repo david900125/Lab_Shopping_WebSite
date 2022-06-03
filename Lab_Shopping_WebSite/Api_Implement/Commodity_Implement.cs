@@ -18,16 +18,26 @@ namespace Lab_Shopping_WebSite.Apis
                 [FromServices] AuthDto auth,
                 [FromBody] List<CartDto> dtos)
         {
+            Tuple<bool, string> result;
             CommodityService cs = (CommodityService)service;
             if (!auth.IsAuth)
                 return Results.Unauthorized();
 
-            foreach(var dto in dtos)
+            foreach (var dto in dtos)
             {
                 Tuple<bool, Commodity_Sizes> query = await cs.Get_Commodity_Size(dto);
                 if (query.Item1)
                 {
-                    var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
+                    Shopping_Carts shopping_Cart = await cs.GetShoppingCart(query.Item2.Commodity_SizesID);
+                    if (shopping_Cart == default)
+                    {
+                        result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
+                    }
+                    else
+                    {
+                        result = await cs.Update_Shopping_Cart(shopping_Cart, dto.Amount);
+                    }
+
                     if (!result.Item1)
                         return Results.BadRequest("Insert Error.");
                 }
@@ -96,7 +106,7 @@ namespace Lab_Shopping_WebSite.Apis
             [FromServices] AuthDto auth,
             [FromBody] UpdateCommodityDto dto)
         {
-            Tuple<bool, string> result = new Tuple<bool, string>(false,"Not Found!");
+            Tuple<bool, string> result = new Tuple<bool, string>(false, "Not Found!");
             CommodityService cs = (CommodityService)service;
             if (!auth.IsAuth)
                 return Results.Unauthorized();
@@ -105,19 +115,19 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.BadRequest("Preferential Price is over Bid Price!");
 
             Commodities mast = await cs.FindCommodity(dto.CommodityID);
-            if(mast != null)
+            if (mast != null)
             {
-               result =  await cs.Update_Commodity(mast,dto);
+                result = await cs.Update_Commodity(mast, dto);
                 if (result.Item1)
-                    result = await cs.Update_Images(mast , dto);
-                    if (result.Item1)
-                        result = await cs.Update_Prices(mast , dto);
-                        if(result.Item1)
-                            result = await cs.Update_Sizes(mast,dto);
-                            if (result.Item1)
-                                result = await cs.Update_Tags(mast, dto);
-                                if (result.Item1)
-                                    return Results.Ok();
+                    result = await cs.Update_Images(mast, dto);
+                if (result.Item1)
+                    result = await cs.Update_Prices(mast, dto);
+                if (result.Item1)
+                    result = await cs.Update_Sizes(mast, dto);
+                if (result.Item1)
+                    result = await cs.Update_Tags(mast, dto);
+                if (result.Item1)
+                    return Results.Ok();
             }
 
             return Results.BadRequest("Update Failed!");
@@ -183,13 +193,22 @@ namespace Lab_Shopping_WebSite.Apis
             return Results.Ok(await cs.GetShoppingCart());
 
         }
-    
+
         async Task<IResult> View_Recoder(
             [FromServices] IService<CommodityService> service,
             int CommodityID)
         {
             CommodityService cs = (CommodityService)service;
             await cs.Insert_Viewed(CommodityID);
+            return Results.Ok();
+        }
+
+        async Task<IResult> Like_Commodity(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID)
+        {
+            CommodityService cs = (CommodityService)service;
+            await cs.Insert_Liked(CommodityID);
             return Results.Ok();
         }
     }

@@ -17,6 +17,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapGet("/api/Commodity/Delete/{CommodityID:int}", Delete_Commodity).WithTags("Commodity");
             app.MapGet("/api/Commodity/View_Recoder", View_Recoder).WithTags("Commodity");
             app.MapGet("/api/Shopping_Cart/GetAll", GetShoppingCart).WithTags("Shopping Cart");
+            app.MapGet("/api/Commodity/LikeCommodity", Like_Commodity).WithTags("Shopping Cart");
             app.MapPost("/api/Commodity/Search", SelectCommodity).WithTags("Commodity");
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity).WithTags("Commodity");
             app.MapPost("/api/Commodity/UpdateCommodity", UpdateCommodity).WithTags("Commodity").WithName("UpdateCommodity");

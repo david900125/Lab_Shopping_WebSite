@@ -74,4 +74,11 @@ namespace Lab_Shopping_WebSite.DTO
                            .ForMember(d => d.Coupon_Way, opt => opt.MapFrom(s => s.Coupon_Way));
         }
     }
+    public class Coupon_Condition
+    {
+        public decimal Amount_Achieved { get; set; }   // 達成條件
+        public bool Free_Shipping { get; set; } // 免運
+        public decimal DisCount { get; set; } // 打折
+        public decimal Rebate { get; set; } // 回扣
+    }
 }

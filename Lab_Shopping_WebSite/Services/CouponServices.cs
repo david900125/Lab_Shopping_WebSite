@@ -77,5 +77,32 @@ namespace Lab_Shopping_WebSite.Services
             
             return await _mapper.ProjectTo<Coupon_WaysDto>(_db.Coupon_Ways).ToListAsync();
         }
+        public async Task<Coupons> Find_Coupon(string Coupon_Key)
+        {
+            return await _db.Coupons.Where(s => s.Coupon_Key == Coupon_Key).FirstOrDefaultAsync();
+        }
+        public async Task<Coupon_Condition> Create_Condition(Coupons coupon)
+        {
+            Coupon_Condition result = new Coupon_Condition();
+            result.Amount_Achieved = coupon.Amount_Achieved;
+
+            if (coupon.Coupon_WayID == 1)
+                result.DisCount = coupon.Discount;
+            else
+                result.DisCount = 0;
+
+            if (coupon.Coupon_WayID == 2)
+                result.Free_Shipping = true;
+            else
+                result.Free_Shipping = false;
+
+            if (coupon.Coupon_WayID == 3)
+                result.Rebate = coupon.Discount;
+            else
+                result.Rebate = 0;
+
+
+            return result;
+        }
     }
 }

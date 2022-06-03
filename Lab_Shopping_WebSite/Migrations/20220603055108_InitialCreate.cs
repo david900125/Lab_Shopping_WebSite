@@ -443,7 +443,9 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "Like_Commodities",
                 columns: table => new
                 {
-                    MemberID = table.Column<int>(type: "int", nullable: false),
+                    Like_CommodityID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberID = table.Column<int>(type: "int", nullable: true),
                     CommodityID = table.Column<int>(type: "int", nullable: false),
                     Add_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
@@ -453,7 +455,7 @@ namespace Lab_Shopping_WebSite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Like_Commodities", x => new { x.MemberID, x.CommodityID });
+                    table.PrimaryKey("PK_Like_Commodities", x => x.Like_CommodityID);
                     table.ForeignKey(
                         name: "FK_Like_Commodities_Commodities_CommodityID",
                         column: x => x.CommodityID,
@@ -922,7 +924,7 @@ namespace Lab_Shopping_WebSite.Migrations
                     PaymentID = table.Column<int>(type: "int", nullable: false),
                     Delivery_optionID = table.Column<int>(type: "int", nullable: false),
                     Delivery_Cost = table.Column<decimal>(type: "decimal(7,2)", precision: 7, scale: 2, nullable: false),
-                    InVoice = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
+                    InVoice = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Established = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     isChecked = table.Column<bool>(type: "bit", nullable: false),
@@ -1317,6 +1319,11 @@ namespace Lab_Shopping_WebSite.Migrations
                 name: "IX_Like_Commodities_Creator",
                 table: "Like_Commodities",
                 column: "Creator");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Like_Commodities_MemberID",
+                table: "Like_Commodities",
+                column: "MemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Like_Commodities_Modifier",
@@ -1935,8 +1942,7 @@ namespace Lab_Shopping_WebSite.Migrations
                 table: "Like_Commodities",
                 column: "MemberID",
                 principalTable: "Members",
-                principalColumn: "MemberID",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "MemberID");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Like_Commodities_Members_Modifier",

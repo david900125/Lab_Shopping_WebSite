@@ -16,7 +16,10 @@ namespace Lab_Shopping_WebSite.Models
         }
 
         #region 屬性
-        public int MemberID { get; set; }
+        [Key]
+        public int Like_CommodityID { get; set; }
+        
+        public int? MemberID { get; set; }
 
         public int CommodityID { get; set; }
 

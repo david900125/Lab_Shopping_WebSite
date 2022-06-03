@@ -94,13 +94,9 @@ namespace Lab_Shopping_WebSite.Services
             return await
             Creater<Shopping_Carts>(new Shopping_Carts
             {
-                MemberID = MemberID,
+                MemberID = _auth.UserID.MemberID,
                 Commodity_SizeID = sizes.Commodity_SizesID,
-                Amount = Convert.ToDecimal(Amount),
-                Creator = MemberID,
-                CreateTime = DateTime.Now,
-                Modifier = MemberID,
-                ModifyTime = DateTime.Now
+                Amount = Convert.ToDecimal(Amount)
             });
         }
         public async Task<Tuple<bool, string, Commodities>> Insert_Commodities(NewCommodityDto dto, int Sid)
@@ -223,10 +219,20 @@ namespace Lab_Shopping_WebSite.Services
             (new Recently_Viewed
             {
                 CommodityID = CommodityID,
-                MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null
+                MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null,
+                Viewed_Date = DateTime.Now
             });
         }
-
+        public async Task<Tuple<bool, string>> Insert_Liked(int CommodityID)
+        {
+            return await Creater
+            (new Like_Commodities
+            {
+                CommodityID = CommodityID,
+                MemberID = _auth.IsAuth ? _auth.UserID.MemberID : null,
+                Add_Date = DateTime.Now
+            });
+        }
 
         public async Task<Tuple<bool, string>> Update_Commodity(Commodities mast, UpdateCommodityDto dto)
         {
@@ -295,6 +301,11 @@ namespace Lab_Shopping_WebSite.Services
             }
 
             return result;
+        }
+        public async Task<Tuple<bool, string>> Update_Shopping_Cart(Shopping_Carts cart, int Amount)
+        {
+            cart.Amount = Amount;
+            return await Updater<Shopping_Carts>(cart);
         }
 
         public async Task<Tuple<bool, string>> DeleteCommodity(int CommodityID)
@@ -420,6 +431,13 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<List<CartDto>> GetShoppingCart()
         {
             return await _mapper.ProjectTo<CartDto>(_db.Shopping_Carts.Where(s => s.MemberID == _auth.UserID.MemberID)).ToListAsync();
+        }
+        public async Task<Shopping_Carts> GetShoppingCart(int Commodity_SizeID)
+        {
+            Shopping_Carts query = await _db.Shopping_Carts.Where(s => s.MemberID == _auth.UserID.MemberID)
+                                                            .Where(s => s.Commodity_SizeID == Commodity_SizeID).FirstOrDefaultAsync();
+
+            return query;
         }
     }
 }

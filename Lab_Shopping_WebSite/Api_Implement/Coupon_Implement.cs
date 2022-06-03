@@ -84,5 +84,24 @@ namespace Lab_Shopping_WebSite.Apis
 
             return Results.Ok();
         }
+
+
+        async Task<IResult> Cond_Coupon(
+            [FromServices] IService<CouponServices> service,
+            [FromServices] AuthDto _auth,
+            string Coupon_Key)
+        {
+            CouponServices cs = (CouponServices)service;
+            if (!_auth.IsAuth)
+                return Results.Unauthorized();
+
+            var query = await cs.Find_Coupon(Coupon_Key);
+
+
+            if (query != default)
+                return Results.Ok(await cs.Create_Condition(query));
+
+            return Results.BadRequest();
+        }
     }
 }
