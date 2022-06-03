@@ -217,6 +217,10 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<List<SaleDto>> GetSalesForm()
         {
             var result = _mapper.ProjectTo<SaleDto>(_db.Sales.Where(s => s.MemberID == _auth.UserID.MemberID)).ToList();
+            foreach (var item in result)
+            {
+                item.Items = _mapper.ProjectTo<Sale_Item>(_db.Sales_Items.Where(s => s.SaleID == item.SaleID)).ToList();
+            }
             return result;
         }
         public async Task<Tuple<bool, string>> Check_Inventor_Over(List<CartDto> carts)
