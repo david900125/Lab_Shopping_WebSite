@@ -41,5 +41,30 @@ namespace Lab_Shopping_WebSite.Apis
             AnalyzeService ans = (AnalyzeService)service;
             return Results.Ok(await ans.Get_Sales_UnPay_Count());
         }
+
+        // 前 {} 名次瀏覽商品
+        async Task<IResult> Get_Top_Commodity (
+            [FromServices] IService<AnalyzeService> service,
+            int Count)
+        {
+            AnalyzeService ans = (AnalyzeService)service;
+            return Results.Ok(await ans.Get_Top_Commodity(Count));
+        }
+
+        // 圖一  產品存貨
+        async Task<IResult> Get_All_Inventor(
+            [FromServices] IService<AnalyzeService> service)
+        {
+            AnalyzeService ans = (AnalyzeService)service;
+            return Results.Ok(await ans.Get_All_Inventor());
+        }
+    
+        // 圖二 本周銷貨
+        async Task<IResult> Get_All_Sales(
+            [FromServices] IService<AnalyzeService> service)
+        {
+            AnalyzeService ans = (AnalyzeService)service;
+            return Results.Ok(await ans.Get_All_Sales());
+        }
     }
 }

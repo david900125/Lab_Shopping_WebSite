@@ -439,5 +439,13 @@ namespace Lab_Shopping_WebSite.Services
 
             return query;
         }
+        public async Task<int>Get_Viewed(int CommodityID)
+        {
+            return _db.Recently_Viewed.Where(s => s.CommodityID == CommodityID).Count();
+        }
+        public async Task<int> Get_Liked(int CommodityID)
+        {
+            return _db.Like_Commodities.Where(s => s.CommodityID == CommodityID).Count();
+        }
     }
 }

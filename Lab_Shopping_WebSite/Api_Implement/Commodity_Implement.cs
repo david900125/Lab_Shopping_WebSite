@@ -200,7 +200,7 @@ namespace Lab_Shopping_WebSite.Apis
         {
             CommodityService cs = (CommodityService)service;
             await cs.Insert_Viewed(CommodityID);
-            return Results.Ok();
+            return Results.Ok(await cs.Get_Viewed(CommodityID));
         }
 
         async Task<IResult> Like_Commodity(
@@ -209,7 +209,7 @@ namespace Lab_Shopping_WebSite.Apis
         {
             CommodityService cs = (CommodityService)service;
             await cs.Insert_Liked(CommodityID);
-            return Results.Ok();
+            return Results.Ok(await cs.Get_Liked(CommodityID));
         }
     }
 }
