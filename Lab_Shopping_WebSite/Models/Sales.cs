@@ -49,7 +49,7 @@ namespace Lab_Shopping_WebSite.Models
         [Required(ErrorMessage = "Delivery_Cost is required")]
         public decimal Delivery_Cost { get; set; }
 
-        [MaxLength(9)]
+        [MaxLength(10)]
         public string? InVoice { get; set; }
 
         [Required(ErrorMessage = "InVoice is required.")]

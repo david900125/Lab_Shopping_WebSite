@@ -208,22 +208,10 @@ namespace Lab_Shopping_WebSite.Services
         public async Task<List<SaleDto>> GetAllSales()
         {
             var result = _mapper.ProjectTo<SaleDto>(_db.Sales).ToList();
-
-
-
-            //List<SaleDto> result = (from sales in _db.Sales
-            //                        join delivery in _db.Delivery_Options
-            //                          on sales.Delivery_optionID equals delivery.Delivery_PlaceID
-            //                        select new SaleDto
-            //                        {
-            //                            SaleID = sales.SaleID,
-            //                            Address = sales.Address,
-            //                            Delivery = delivery.Delivery_Option,
-            //                            SendDate = sales.SendDate != null ? sales.SendDate.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
-            //                            Established = sales.Established.ToString("yyyy-MM-dd HH:mm:ss"),
-            //                            Total_Price = sales.Total_Price,
-            //                            isChecked = sales.isChecked
-            //                        }).ToList();
+            foreach (var item in result)
+            {
+                item.Items = _mapper.ProjectTo<Sale_Item>(_db.Sales_Items.Where(s => s.SaleID == item.SaleID)).ToList();
+            }
             return result;
         }
         public async Task<List<SaleDto>> GetSalesForm()
@@ -231,7 +219,7 @@ namespace Lab_Shopping_WebSite.Services
             var result = _mapper.ProjectTo<SaleDto>(_db.Sales.Where(s => s.MemberID == _auth.UserID.MemberID)).ToList();
             return result;
         }
-        public async Task<Tuple<bool , string>> Check_Inventor_Over(List<CartDto> carts)
+        public async Task<Tuple<bool, string>> Check_Inventor_Over(List<CartDto> carts)
         {
             Inventories inv;
             Commodity_Sizes cs;
@@ -239,12 +227,16 @@ namespace Lab_Shopping_WebSite.Services
             {
                 cs = await FindCommodity_Size(cart);
                 inv = cs.inventories.OrderByDescending(s => s.InventoryID).Take(1).FirstOrDefault();
+                if (inv == default)
+                {
+                    return Tuple.Create(false, "Inventory shortage");
+                }
                 if (inv.Total_Amount < cart.Amount)
                 {
                     return Tuple.Create(false, cs.Commodity.CommodityName + " Inventory shortage."); ;
                 }
             }
-            return Tuple.Create(true,"");
+            return Tuple.Create(true, "");
         }
     }
 }

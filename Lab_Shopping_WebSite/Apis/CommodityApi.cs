@@ -10,7 +10,6 @@ namespace Lab_Shopping_WebSite.Apis
 
         public void Register(WebApplication app)
         {
-            
             app.MapGet("/api/Commodity/GetTopCommodity", GetCommodities).WithTags("Commodity");
             app.MapGet("/api/Commodity/GetCommodity/full_info/{CommodityID:int}", Get_full_Commodity_info).WithTags("Commodity");
             app.MapGet("/api/Commodity/GetByKinds/{KindID:int}", Get_Commodity_By_Kinds).WithTags("Commodity");
@@ -22,8 +21,6 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity).WithTags("Commodity");
             app.MapPost("/api/Commodity/UpdateCommodity", UpdateCommodity).WithTags("Commodity").WithName("UpdateCommodity");
             app.MapPost("/api/Commodity/addshoppingcart", Add_Shopping_Cart).WithTags("Shopping Cart");
-            
-
         }
     }
 }

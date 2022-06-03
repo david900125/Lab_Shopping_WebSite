@@ -4,6 +4,7 @@ using Lab_Shopping_WebSite.Models;
 using Lab_Shopping_WebSite.Interfaces;
 using AutoMapper;
 using System.Runtime.InteropServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab_Shopping_WebSite.Services
 {
@@ -418,12 +419,7 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<List<CartDto>> GetShoppingCart()
         {
-            var query = _db.Shopping_Carts.Where(s => s.MemberID == _auth.UserID.MemberID).ToList();
-            foreach(var item in query)
-            {
-
-            }
-            return new List<CartDto>();
+            return await _mapper.ProjectTo<CartDto>(_db.Shopping_Carts.Where(s => s.MemberID == _auth.UserID.MemberID)).ToListAsync();
         }
     }
 }

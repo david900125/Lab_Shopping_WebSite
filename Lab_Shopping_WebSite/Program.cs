@@ -189,6 +189,7 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     // Add Apis
     svcs.AddTransient<IApi, ArticleApi>();
+    svcs.AddTransient<IApi, AnalyzeApi>();
     svcs.AddTransient<IApi, MemberApi>();
     svcs.AddTransient<IApi, CommodityApi>();
     svcs.AddTransient<IApi, FileApi>();
@@ -205,6 +206,7 @@ void RegisterServices(IServiceCollection svcs)
     svcs.AddTransient<IService<CouponServices>, CouponServices>();
     svcs.AddTransient<IService<CommodityService>, CommodityService>();
     svcs.AddTransient<IService<SizeServices>, SizeServices>();
+    svcs.AddTransient<IService<AnalyzeService>, AnalyzeService>();
     // authdto
     svcs.AddScoped<AuthDto>();
 }

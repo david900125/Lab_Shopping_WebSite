@@ -27,7 +27,7 @@ namespace Lab_Shopping_WebSite.DTO
         public decimal Total_Price { get; set; }
         public bool isChecked { get; set; }
         public bool isPayed { get; set; }
-        public List<Sales_items> Items { get; set; }
+        public List<Sale_Item> Items { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -41,7 +41,27 @@ namespace Lab_Shopping_WebSite.DTO
                            .ForMember(d => d.Total_Price, opt => opt.MapFrom(s => s.Total_Price))
                            .ForMember(d => d.isPayed, opt => opt.MapFrom(s => s.isPayed))
                            .ForMember(d => d.isPayed, opt => opt.MapFrom(s => s.isChecked))
-                           .ForMember(d => d.Items, opt => opt.MapFrom(s => s.Sales_items));
+                           .ForMember(d => d.Items, opt => opt.Ignore());
+        }
+    }
+    public class Sale_Item:IMapFrom<Sales_items>
+    {
+        public string CommodityName { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Unit_Price { get; set; }
+        public decimal Total_Price { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Sales_items, Sale_Item>()
+                    .ForMember(d => d.CommodityName, opt => opt.MapFrom(s => s.Commodity_Size.Commodity.CommodityName))
+                    .ForMember(d => d.Color, opt => opt.MapFrom(s => s.Commodity_Size.Color.Color))
+                    .ForMember(d => d.Size, opt => opt.MapFrom(s => s.Commodity_Size.Size.Size))
+                    .ForMember(d => d.Amount, opt => opt.MapFrom(s => s.Amount))
+                    .ForMember(d => d.Unit_Price, opt => opt.MapFrom(s => s.Unit_Price))
+                    .ForMember(d => d.Total_Price, opt => opt.MapFrom(s => s.Total_Price));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Lab_Shopping_WebSite.Apis
         async Task<IResult> Add_Shopping_Cart(
                 [FromServices] IService<CommodityService> service,
                 [FromServices] AuthDto auth,
-                List<CartDto> dtos)
+                [FromBody] List<CartDto> dtos)
         {
             CommodityService cs = (CommodityService)service;
             if (!auth.IsAuth)
@@ -28,9 +28,7 @@ namespace Lab_Shopping_WebSite.Apis
                 if (query.Item1)
                 {
                     var result = await cs.Insert_Shopping_Cart(auth.UserID.MemberID, query.Item2, dto.Amount);
-                    if (result.Item1)
-                        continue;
-                    else
+                    if (!result.Item1)
                         return Results.BadRequest("Insert Error.");
                 }
                 else
@@ -182,9 +180,7 @@ namespace Lab_Shopping_WebSite.Apis
             if (!auth.IsAuth)
                 return Results.Unauthorized();
 
-            var query = await cs.GetShoppingCart();
-
-            return Results.Ok();
+            return Results.Ok(await cs.GetShoppingCart());
 
         }
     

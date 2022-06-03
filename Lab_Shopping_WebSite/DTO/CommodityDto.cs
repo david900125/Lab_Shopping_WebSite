@@ -4,12 +4,21 @@ using AutoMapper;
 
 namespace Lab_Shopping_WebSite.DTO
 {
-    public class CartDto
+    public class CartDto : IMapFrom<Shopping_Carts>
     {
         public int CommodityID { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
         public int Amount { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Shopping_Carts, CartDto>()
+                          .ForMember(d => d.CommodityID, opt => opt.MapFrom(s => s.Commodity_Sizes.CommodityID))
+                          .ForMember(d => d.Size, opt => opt.MapFrom(s => s.Commodity_Sizes.Size.Size))
+                          .ForMember(d => d.Color, opt => opt.MapFrom(s => s.Commodity_Sizes.Color.Color))
+                          .ForMember(d => d.Amount, opt => opt.MapFrom(s => s.Amount));
+        }
     }
 
     public class Commodity_Simple_Dto
@@ -42,7 +51,7 @@ namespace Lab_Shopping_WebSite.DTO
         public List<int> CommodityColors { get; set; }
         public List<string> CommodityImages { get; set; }
     }
-    
+
     public class UpdateCommodityDto
     {
         public int CommodityID { get; set; }
