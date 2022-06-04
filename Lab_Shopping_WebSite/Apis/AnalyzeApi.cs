@@ -17,6 +17,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapGet("/api/Analyze/TopCommodity", Get_Top_Commodity).WithTags("Analyze");
             app.MapGet("/api/Analyze/AllInventor", Get_All_Inventor).WithTags("Analyze");
             app.MapGet("/api/Analyze/AllSales", Get_All_Sales).WithTags("Analyze");
+            app.MapGet("/api/Analyze/AllKind", Get_All_Kinds).WithTags("Analyze");
         }
     }
 }

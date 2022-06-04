@@ -40,7 +40,7 @@ namespace Lab_Shopping_WebSite.DTO
                            .ForMember(d => d.Established, opt => opt.MapFrom(s => s.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss")))
                            .ForMember(d => d.Total_Price, opt => opt.MapFrom(s => s.Total_Price))
                            .ForMember(d => d.isPayed, opt => opt.MapFrom(s => s.isPayed))
-                           .ForMember(d => d.isPayed, opt => opt.MapFrom(s => s.isChecked))
+                           .ForMember(d => d.isChecked, opt => opt.MapFrom(s => s.isChecked))
                            .ForMember(d => d.Items, opt => opt.Ignore());
         }
     }

@@ -79,10 +79,14 @@ namespace Lab_Shopping_WebSite.Interfaces
             // set creater
             PropertyInfo propInfo = model.GetType().GetProperty("Creator");
             if (propInfo != null && propInfo.GetValue(model) == null)
-            {
                 if(_auth.IsAuth)
                     propInfo.SetValue(model, _auth.UserID.MemberID, null);
-            }
+
+            // set CreateTime
+            propInfo = model.GetType().GetProperty("CreateTime");
+            if (propInfo != null && propInfo.GetValue(model) == null)
+                if (_auth.IsAuth)
+                    propInfo.SetValue(model, DateTime.Now, null);
 
             using var transaction = _db.Database.BeginTransaction();
             try

@@ -21,4 +21,17 @@
         public List<string> Label { get; set; }
         public List<decimal> Data { get; set; }
     }
+
+    public class Pictur2Dto
+    {
+        public string Label { get; set; }
+        public List<decimal> Data { get; set; }
+    }
+
+    public class TempViewModel
+    {
+        public string Label { get; set; }
+        public List<decimal> Sales { get; set; }
+        public List<decimal> Inventor { get; set; }
+    }
 }

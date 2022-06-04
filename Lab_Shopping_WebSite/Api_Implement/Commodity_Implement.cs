@@ -211,5 +211,21 @@ namespace Lab_Shopping_WebSite.Apis
             await cs.Insert_Liked(CommodityID);
             return Results.Ok(await cs.Get_Liked(CommodityID));
         }
+
+        async Task<IResult> Get_Like_Commodity(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID)
+        {
+            CommodityService cs = (CommodityService)service;
+            return Results.Ok(await cs.Get_Liked(CommodityID));
+        }
+
+        async Task<IResult> Get_Viewed_Commodity(
+            [FromServices] IService<CommodityService> service,
+            int CommodityID)
+        {
+            CommodityService cs = (CommodityService)service;
+            return Results.Ok(await cs.Get_Viewed(CommodityID));
+        }
     }
 }

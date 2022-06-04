@@ -66,5 +66,14 @@ namespace Lab_Shopping_WebSite.Apis
             AnalyzeService ans = (AnalyzeService)service;
             return Results.Ok(await ans.Get_All_Sales());
         }
+
+        // 圖三 各種類存貨與銷貨
+        async Task<IResult> Get_All_Kinds(
+           [FromServices] IService<AnalyzeService> service)
+        {
+            AnalyzeService ans = (AnalyzeService)service;
+            List<TempViewModel> temp = await ans.Get_All_Kind();
+            return Results.Ok(await ans.Temp2Pic2(temp));
+        }
     }
 }
