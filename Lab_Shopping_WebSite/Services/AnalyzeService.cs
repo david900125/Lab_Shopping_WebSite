@@ -76,7 +76,7 @@ namespace Lab_Shopping_WebSite.Services
                                 (x, y) => new
                                 {
                                     Index = x,
-                                    Last = y.OrderBy(y => y.InventoryID).LastOrDefault().Total_Amount
+                                    Last = y.OrderBy(y => y.CreateTime).LastOrDefault().Total_Amount
                                 }).Select(g => g.Last).Sum();
 
 
