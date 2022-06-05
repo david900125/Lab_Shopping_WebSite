@@ -39,6 +39,7 @@ namespace Lab_Shopping_WebSite.Apis
                         return Results.BadRequest(create.Item2);
                     }
                 }
+                return Results.BadRequest(check_2.Item2);
             }
             return Results.BadRequest(check_1.Item2);
         }

@@ -38,7 +38,7 @@ namespace Lab_Shopping_WebSite.DTO
                            .ForMember(d => d.Delivery, opt => opt.MapFrom(s => s.Delivery_Option.Delivery_Option))
                            .ForMember(d => d.SendDate, opt => opt.MapFrom(s => s.SendDate.HasValue ? s.SendDate.Value.ToString("yyyy/MM/dd HH:mm:ss") : null))
                            .ForMember(d => d.Established, opt => opt.MapFrom(s => s.CreateTime.Value.ToString("yyyy/MM/dd HH:mm:ss")))
-                           .ForMember(d => d.Total_Price, opt => opt.MapFrom(s => s.Total_Price))
+                           .ForMember(d => d.Total_Price, opt => opt.MapFrom(s => s.Total_Price + s.Delivery_Cost - s.Discount_Total))
                            .ForMember(d => d.isPayed, opt => opt.MapFrom(s => s.isPayed))
                            .ForMember(d => d.isChecked, opt => opt.MapFrom(s => s.isChecked))
                            .ForMember(d => d.Items, opt => opt.Ignore());

@@ -81,7 +81,7 @@ namespace Lab_Shopping_WebSite.Services
             Sales sales = new Sales();
             sales.SaleID = DateTime.Now.ToString("yyyyMMddHH") + _db.Sales.Count().ToString("00");
             sales.Delivery_optionID = dto.DeliveryOptionsID;
-           
+
             sales.Established = DateTime.Now;
             sales.isChecked = false;
             sales.InVoice = "AB" + _db.Sales.Count().ToString("00000000");
@@ -91,7 +91,9 @@ namespace Lab_Shopping_WebSite.Services
             sales.Phone_Number = dto.Phone_Number;
             sales.isChecked = false; // 未寄出
             sales.Total_Price = await CheckOut_TotalPrice(dto.Carts);
-            var coupon_use = await CheckOut_TotalPrice(sales.SaleID, dto.Coupons, sales.Total_Price);
+            var result = await InsertSales(sales);
+
+            var coupon_use = await CheckOut_Coupon(sales.SaleID, dto.Coupons, sales.Total_Price);
             sales.Discount_Total = coupon_use.Item1;
             if (coupon_use.Item2)
             {
@@ -101,27 +103,35 @@ namespace Lab_Shopping_WebSite.Services
             {
                 sales.Delivery_Cost = _db.Delivery_Options.Where(n => n.Delivery_OptionsID == sales.Delivery_optionID).Select(n => n.Delivery_Cost).FirstOrDefault();
             }
-            var result = await InsertSales(sales);
+            var r2 = await UpdateSales(sales);
 
-            if (result.Item1)
+            if (r2.Item1)
             {
                 foreach (var cart in dto.Carts)
                 {
                     Commodity_Sizes cs = await FindCommodity_Size(cart);
-                    Sales_items item = new Sales_items()
+                    var inv = await Insert_Inventories(cs, cart.Amount, false, sales.SaleID);
+                    if (inv.Item1)
                     {
-                        SaleID = result.Item3.SaleID,
-                        Commodity_SizeID = cs.Commodity_SizesID,
-                        Amount = cart.Amount,
-                        Unit_Price = await Price(cs.Commodity_SizesID),
-                        StatusID = 3  // 準備中
-                    };
-                    item.Total_Price = item.Amount * item.Unit_Price;
+                        Sales_items item = new Sales_items()
+                        {
+                            SaleID = result.Item3.SaleID,
+                            Commodity_SizeID = cs.Commodity_SizesID,
+                            Amount = cart.Amount,
+                            Unit_Price = await Price(cs.Commodity_SizesID),
+                            StatusID = 3  // 準備中
+                        };
+                        item.Total_Price = item.Amount * item.Unit_Price;
 
-                    var iresult = await InsertSalesItem(item);
-                    if (!iresult.Item1)
+                        var iresult = await InsertSalesItem(item);
+                        if (!iresult.Item1)
+                        {
+                            return iresult;
+                        }
+                    }
+                    else
                     {
-                        return iresult;
+                        return inv;
                     }
                 }
                 return Tuple.Create(true, "");
@@ -144,6 +154,20 @@ namespace Lab_Shopping_WebSite.Services
         {
             var result = await Creater(item);
             return Tuple.Create(result.Item1, result.Item2);
+        }
+        public async Task<Tuple<bool, string>> Insert_Inventories(Commodity_Sizes cs, int Amount, bool Increase, string SaleID = "")
+        {
+            Inventories last = cs.inventories.OrderBy(s => s.CreateTime).Last();
+            return await Creater<Inventories>(
+            new Inventories()
+            {
+                Commodity_SizeID = last.Commodity_SizeID,
+                Increase_Decrease = Increase,
+                Amount = Amount,
+                SaleID = SaleID == "" ? null : SaleID,
+                Total_Amount = Increase ? last.Total_Amount + Amount : last.Total_Amount - Amount
+            });
+
         }
         public async Task<Tuple<bool, string>> Delete_Shopping_Cart(Shopping_Carts cart)
         {
@@ -181,6 +205,11 @@ namespace Lab_Shopping_WebSite.Services
         {
             return await Updater<Coupon_Uses>(item);
         }
+        public async Task<Tuple<bool, string>> UpdateSales(Sales sales)
+        {
+            var result = await Updater(sales);
+            return Tuple.Create(result.Item1, result.Item2);
+        }
         public async Task<decimal> CheckOut_TotalPrice(List<Shopping_Carts> carts)
         {
             decimal total = 0;
@@ -203,10 +232,10 @@ namespace Lab_Shopping_WebSite.Services
             return total;
         }
         // decimal 總價 bool 是否免運
-        public async Task<Tuple<decimal, bool>> CheckOut_TotalPrice(string SaleID, List<string> coupons, decimal Total_Price)
+        public async Task<Tuple<decimal, bool>> CheckOut_Coupon(string SaleID, List<string> coupons, decimal Total_Price)
         {
             bool Free_Ship = false;
-            decimal discount = 0 , per_discount = 0;
+            decimal discount = 0, per_discount = 0;
             foreach (var coupon in coupons)
             {
                 per_discount = 0;
@@ -222,7 +251,7 @@ namespace Lab_Shopping_WebSite.Services
                     decimal tmp = Total_Price * cond.DisCount;
                     if (Decimal.Ceiling(tmp) == tmp)
                     {
-                        per_discount  = (Total_Price - tmp);
+                        per_discount = (Total_Price - tmp);
                         Total_Price = tmp;
                     }
                     else
@@ -242,7 +271,7 @@ namespace Lab_Shopping_WebSite.Services
                     // do nothing
                 }
 
-                
+
                 var query = await FindCoupon_Use(SaleID, c.CouponID);
                 if (query == default)
                 {
@@ -259,6 +288,7 @@ namespace Lab_Shopping_WebSite.Services
                 else
                 {
                     query.Amount++;
+                    query.Discount += per_discount;
                     result = await UpdateCoupon_Use(query);
                 }
 
@@ -357,5 +387,6 @@ namespace Lab_Shopping_WebSite.Services
 
             return Tuple.Create(true, "");
         }
+
     }
 }
