@@ -244,23 +244,9 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> Update_Images(Commodities mast, UpdateCommodityDto dto)
         {
-            Tuple<bool, string> result = new Tuple<bool, string>(true, "");
-            List<Commodity_Images> images = mast.Images.ToList();
-            for (int i = 0; i < images.Count; i++)
-            {
-                if (i < dto.CommodityImages.Count)
-                {
-                    if (images[i].Url != dto.CommodityImages[i])
-                    {
-                        images[i].Url = dto.CommodityImages[i];
-                        result = await Updater<Commodity_Images>(images[i]);
-                        if (!result.Item1)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
+            Tuple<bool, string> result = await DeleteImg(mast.CommodityID);
+            if (result.Item1)
+                result = await Insert_Images(mast , dto.CommodityImages , _auth.UserID.MemberID);
             return result;
         }
         public async Task<Tuple<bool, string>> Update_Prices(Commodities mast, UpdateCommodityDto dto)

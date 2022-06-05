@@ -1,10 +1,14 @@
 [
   {
     "Coupon_WayID": 1,
-    "Coupon_Way": "折價券"
+    "Coupon_Way": "折扣券"
   },
   {
     "Coupon_WayID": 2,
     "Coupon_Way": "免運費"
+  },
+  {
+    "Coupon_WayID": 3,
+    "Coupon_Way": "折價券"
   }
 ]
