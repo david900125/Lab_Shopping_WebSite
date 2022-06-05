@@ -519,8 +519,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int?>("Creator")
                         .HasColumnType("int");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("Modifier")
                         .HasColumnType("int");
@@ -1283,9 +1283,9 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("Delivery_optionID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Discount_Total")
+                    b.Property<decimal>("Discount_Total")
                         .HasPrecision(10, 2)
-                        .HasColumnType("int");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("Established")
                         .HasColumnType("datetime2");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_Shopping_WebSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220603055108_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220605065214_InitalCreate")]
+    partial class InitalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -521,8 +521,8 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int?>("Creator")
                         .HasColumnType("int");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("Modifier")
                         .HasColumnType("int");
@@ -1285,9 +1285,9 @@ namespace Lab_Shopping_WebSite.Migrations
                     b.Property<int>("Delivery_optionID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Discount_Total")
+                    b.Property<decimal>("Discount_Total")
                         .HasPrecision(10, 2)
-                        .HasColumnType("int");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("Established")
                         .HasColumnType("datetime2");

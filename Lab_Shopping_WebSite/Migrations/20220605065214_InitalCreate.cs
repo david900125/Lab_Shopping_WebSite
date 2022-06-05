@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Lab_Shopping_WebSite.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -267,7 +267,7 @@ namespace Lab_Shopping_WebSite.Migrations
                     SaleID = table.Column<string>(type: "nvarchar(12)", nullable: false),
                     CouponID = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Use_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modifier = table.Column<int>(type: "int", nullable: true),
                     Creator = table.Column<int>(type: "int", nullable: true),
@@ -916,7 +916,7 @@ namespace Lab_Shopping_WebSite.Migrations
                 columns: table => new
                 {
                     SaleID = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
-                    Discount_Total = table.Column<int>(type: "int", precision: 10, scale: 2, nullable: false),
+                    Discount_Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total_Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     Phone_Number = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
