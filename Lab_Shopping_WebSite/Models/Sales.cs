@@ -22,7 +22,7 @@ namespace Lab_Shopping_WebSite.Models
 
         [Precision(10, 2)]
         [Required(ErrorMessage = "Discount_Total is required")]
-        public int Discount_Total { get; set; }
+        public decimal Discount_Total { get; set; }
 
         [Precision(10, 2)]
         [Required(ErrorMessage = "Total_Price is required")]

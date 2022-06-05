@@ -25,7 +25,7 @@ namespace Lab_Shopping_WebSite.Models
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Discount is required.")]
-        public int Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Required(ErrorMessage = "Use_Date is required.")]
         public DateTime Use_Date { get; set; }

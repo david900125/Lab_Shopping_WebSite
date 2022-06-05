@@ -22,20 +22,24 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.Unauthorized();
             // Check Stock
             var check_1 = await ss.Check_Inventor_Over(dto.Carts);
+            
             if (check_1.Item1)
             {
-                // Create Sales Order
-                var create = await ss.CreateSales(dto);
-                if (create.Item1)
+                var check_2 = await ss.Check_Coupon_Use(dto);
+                if (check_2.Item1)
                 {
-                    return Results.Ok();
-                }
-                else
-                {
-                    return Results.BadRequest(create.Item2);
+                    // Create Sales Order
+                    var create = await ss.CreateSales(dto);
+                    if (create.Item1)
+                    {
+                        return Results.Ok();
+                    }
+                    else
+                    {
+                        return Results.BadRequest(create.Item2);
+                    }
                 }
             }
-
             return Results.BadRequest(check_1.Item2);
         }
 

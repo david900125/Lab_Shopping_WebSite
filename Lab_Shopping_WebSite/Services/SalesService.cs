@@ -11,8 +11,10 @@ namespace Lab_Shopping_WebSite.Services
 {
     public class SalesService : IService<SalesService>
     {
-        public SalesService(DataContext db, AuthDto auth, IMapper mapper) : base(db, auth, mapper)
+        private readonly CouponServices cs;
+        public SalesService(DataContext db, AuthDto auth, IMapper mapper, IService<CouponServices> service) : base(db, auth, mapper)
         {
+            cs = (CouponServices)service;
         }
 
         public async Task<List<Shopping_Carts>> Shopping_Cart_List(int MemberID)
@@ -79,16 +81,26 @@ namespace Lab_Shopping_WebSite.Services
             Sales sales = new Sales();
             sales.SaleID = DateTime.Now.ToString("yyyyMMddHH") + _db.Sales.Count().ToString("00");
             sales.Delivery_optionID = dto.DeliveryOptionsID;
-            sales.Delivery_Cost = _db.Delivery_Options.Where(n => n.Delivery_OptionsID == sales.Delivery_optionID).Select(n => n.Delivery_Cost).FirstOrDefault();
+           
             sales.Established = DateTime.Now;
             sales.isChecked = false;
             sales.InVoice = "AB" + _db.Sales.Count().ToString("00000000");
             sales.Address = dto.Address;
             sales.MemberID = _auth.UserID.MemberID;
             sales.PaymentID = dto.PaymentID;
-            sales.Total_Price = await CheckOut_TotalPrice(dto.Carts);
             sales.Phone_Number = dto.Phone_Number;
             sales.isChecked = false; // 未寄出
+            sales.Total_Price = await CheckOut_TotalPrice(dto.Carts);
+            var coupon_use = await CheckOut_TotalPrice(sales.SaleID, dto.Coupons, sales.Total_Price);
+            sales.Discount_Total = coupon_use.Item1;
+            if (coupon_use.Item2)
+            {
+                sales.Delivery_Cost = 0;
+            }
+            else
+            {
+                sales.Delivery_Cost = _db.Delivery_Options.Where(n => n.Delivery_OptionsID == sales.Delivery_optionID).Select(n => n.Delivery_Cost).FirstOrDefault();
+            }
             var result = await InsertSales(sales);
 
             if (result.Item1)
@@ -128,6 +140,11 @@ namespace Lab_Shopping_WebSite.Services
             var result = await Creater(item);
             return Tuple.Create(result.Item1, result.Item2);
         }
+        public async Task<Tuple<bool, string>> InsertCoupon_Use(Coupon_Uses item)
+        {
+            var result = await Creater(item);
+            return Tuple.Create(result.Item1, result.Item2);
+        }
         public async Task<Tuple<bool, string>> Delete_Shopping_Cart(Shopping_Carts cart)
         {
             return await Deleter(cart);
@@ -160,6 +177,10 @@ namespace Lab_Shopping_WebSite.Services
 
             return sales;
         }
+        public async Task<Tuple<bool, string>> UpdateCoupon_Use(Coupon_Uses item)
+        {
+            return await Updater<Coupon_Uses>(item);
+        }
         public async Task<decimal> CheckOut_TotalPrice(List<Shopping_Carts> carts)
         {
             decimal total = 0;
@@ -180,6 +201,74 @@ namespace Lab_Shopping_WebSite.Services
                 total += unit * cart.Amount;
             }
             return total;
+        }
+        // decimal 總價 bool 是否免運
+        public async Task<Tuple<decimal, bool>> CheckOut_TotalPrice(string SaleID, List<string> coupons, decimal Total_Price)
+        {
+            bool Free_Ship = false;
+            decimal discount = 0 , per_discount = 0;
+            foreach (var coupon in coupons)
+            {
+                per_discount = 0;
+                Tuple<bool, string> result;
+                Coupons c = await cs.Find_Coupon(coupon);
+                Coupon_Condition cond = await cs.Create_Condition(c);
+                if (cond.Free_Shipping)
+                {
+                    Free_Ship = true;
+                }
+                else if (cond.DisCount > 0)
+                {
+                    decimal tmp = Total_Price * cond.DisCount;
+                    if (Decimal.Ceiling(tmp) == tmp)
+                    {
+                        per_discount  = (Total_Price - tmp);
+                        Total_Price = tmp;
+                    }
+                    else
+                    {
+                        per_discount = (Total_Price - Decimal.Ceiling(tmp));
+                        Total_Price = Decimal.Ceiling(tmp);
+                    }
+
+                }
+                else if (cond.Rebate > 0)
+                {
+                    per_discount = cond.Rebate;
+                    Total_Price -= cond.Rebate;
+                }
+                else
+                {
+                    // do nothing
+                }
+
+                
+                var query = await FindCoupon_Use(SaleID, c.CouponID);
+                if (query == default)
+                {
+                    Coupon_Uses rec = new Coupon_Uses()
+                    {
+                        SaleID = SaleID,
+                        CouponID = c.CouponID,
+                        Amount = 1,
+                        Discount = per_discount,
+                        Use_Date = DateTime.Now
+                    };
+                    result = await InsertCoupon_Use(rec);
+                }
+                else
+                {
+                    query.Amount++;
+                    result = await UpdateCoupon_Use(query);
+                }
+
+                discount += per_discount;
+
+                if (!result.Item1)
+                    break;
+            }
+
+            return Tuple.Create(discount, Free_Ship);
         }
         public async Task<decimal> Price(int Commodity_SizeID)
         {
@@ -203,7 +292,10 @@ namespace Lab_Shopping_WebSite.Services
                                                              .Where(s => s.Color.Color == cart.Color).FirstOrDefaultAsync();
             return item;
         }
-
+        public async Task<Coupon_Uses> FindCoupon_Use(string SaleID, int CouponID)
+        {
+            return _db.Coupon_Uses.Where(s => s.SaleID == SaleID).Where(s => s.CouponID == CouponID).FirstOrDefault();
+        }
 
         public async Task<List<SaleDto>> GetAllSales()
         {
@@ -240,6 +332,29 @@ namespace Lab_Shopping_WebSite.Services
                     return Tuple.Create(false, cs.Commodity.CommodityName + " Inventory shortage."); ;
                 }
             }
+            return Tuple.Create(true, "");
+        }
+        public async Task<Tuple<bool, string>> Check_Coupon_Use(SalesOrder order)
+        {
+            decimal Total_Pirce = await CheckOut_TotalPrice(order.Carts);
+
+            foreach (var coupon in order.Coupons)
+            {
+                Coupons c = await cs.Find_Coupon(coupon);
+                if (c != default)
+                {
+                    Coupon_Condition cond = await cs.Create_Condition(c);
+                    if (Total_Pirce < cond.Amount_Achieved)
+                    {
+                        return Tuple.Create(false, "Total Price Doesn't Achieved");
+                    }
+                }
+                else
+                {
+                    return Tuple.Create(false, "Coupon Not Found!");
+                }
+            }
+
             return Tuple.Create(true, "");
         }
     }

@@ -1,12 +1,8 @@
-﻿using Lab_Shopping_WebSite.Apis;
-using Lab_Shopping_WebSite.Models;
-using Lab_Shopping_WebSite.Services;
+﻿using Lab_Shopping_WebSite.Services;
 using Lab_Shopping_WebSite.DTO;
 using Lab_Shopping_WebSite.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Lab_Shopping_WebSite.DBContext;
 
 namespace Lab_Shopping_WebSite.Apis
 {
@@ -96,7 +92,6 @@ namespace Lab_Shopping_WebSite.Apis
                 return Results.Unauthorized();
 
             var query = await cs.Find_Coupon(Coupon_Key);
-
 
             if (query != default)
                 return Results.Ok(await cs.Create_Condition(query));

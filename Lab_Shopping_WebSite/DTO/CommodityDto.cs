@@ -91,6 +91,7 @@ namespace Lab_Shopping_WebSite.DTO
         public int PaymentID { get; set; } // 付款方式
         public string? Address { get; set; } // 地址
         public string? Phone_Number { get; set; } // 電話號碼
+        public List<string> Coupons { get; set; } // 優惠券使用
         public List<CartDto> Carts { get; set; } // 訂單內容
     }
 
