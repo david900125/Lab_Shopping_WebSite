@@ -157,16 +157,27 @@ namespace Lab_Shopping_WebSite.Services
         }
         public async Task<Tuple<bool, string>> Insert_Inventories(Commodity_Sizes cs, int Amount, bool Increase, string SaleID = "")
         {
-            Inventories last = cs.inventories.OrderBy(s => s.CreateTime).Last();
-            return await Creater<Inventories>(
-            new Inventories()
-            {
-                Commodity_SizeID = last.Commodity_SizeID,
-                Increase_Decrease = Increase,
-                Amount = Amount,
-                SaleID = SaleID == "" ? null : SaleID,
-                Total_Amount = Increase ? last.Total_Amount + Amount : last.Total_Amount - Amount
-            });
+            Inventories last = cs.inventories.OrderBy(s => s.CreateTime).LastOrDefault();
+            if(last == default)
+                return await Creater<Inventories>(
+                new Inventories()
+                {
+                    Commodity_SizeID = cs.Commodity_SizesID,
+                    Increase_Decrease = Increase,
+                    Amount = Amount,
+                    SaleID = SaleID == "" ? null : SaleID,
+                    Total_Amount = Amount
+                });
+            else
+                return await Creater<Inventories>(
+                new Inventories()
+                {
+                    Commodity_SizeID = last.Commodity_SizeID,
+                    Increase_Decrease = Increase,
+                    Amount = Amount,
+                    SaleID = SaleID == "" ? null : SaleID,
+                    Total_Amount = Increase ? last.Total_Amount + Amount : last.Total_Amount - Amount
+                });
 
         }
         public async Task<Tuple<bool, string>> Delete_Shopping_Cart(Shopping_Carts cart)
@@ -322,11 +333,18 @@ namespace Lab_Shopping_WebSite.Services
                                                              .Where(s => s.Color.Color == cart.Color).FirstOrDefaultAsync();
             return item;
         }
+        public async Task<Commodity_Sizes> FindCommodity_Size(InventorDto dto)
+        {
+            Commodity_Sizes? item = await _db.Commodity_Sizes.Where(s => s.CommodityID == dto.CommodityId)
+                                                             .Where(s => s.Size.Size == dto.CommoditySize)
+                                                             .Where(s => s.Color.Color == dto.CommodityColor).FirstOrDefaultAsync();
+            return item;
+        }
         public async Task<Coupon_Uses> FindCoupon_Use(string SaleID, int CouponID)
         {
             return _db.Coupon_Uses.Where(s => s.SaleID == SaleID).Where(s => s.CouponID == CouponID).FirstOrDefault();
         }
-
+        
         public async Task<List<SaleDto>> GetAllSales()
         {
             var result = _mapper.ProjectTo<SaleDto>(_db.Sales).ToList();

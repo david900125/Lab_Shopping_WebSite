@@ -227,5 +227,22 @@ namespace Lab_Shopping_WebSite.Apis
             CommodityService cs = (CommodityService)service;
             return Results.Ok(await cs.Get_Viewed(CommodityID));
         }
+
+
+        async Task<IResult> Insert_Inventor(
+            [FromServices] IService<SalesService> service,
+            InventorDto dto)
+        {
+            SalesService ss = (SalesService)service;
+            Commodity_Sizes size =  await ss.FindCommodity_Size(dto);
+            if(size != default)
+            {
+                var result = await ss.Insert_Inventories(size, dto.Amount, true);
+                if (!result.Item1)
+                    return Results.BadRequest("Insert Error");
+                return Results.Ok();
+            }
+            return Results.BadRequest("Commodity Size Not Found");
+        }
     }
 }

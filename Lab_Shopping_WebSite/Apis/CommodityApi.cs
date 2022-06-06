@@ -24,6 +24,7 @@ namespace Lab_Shopping_WebSite.Apis
             app.MapPost("/api/Commodity/AddCommodity", AddNewCommodity).WithTags("Commodity");
             app.MapPost("/api/Commodity/UpdateCommodity", UpdateCommodity).WithTags("Commodity").WithName("UpdateCommodity");
             app.MapPost("/api/Commodity/addshoppingcart", Add_Shopping_Cart).WithTags("Shopping Cart");
+            app.MapPost("/api/Inventor/AddInventor", Insert_Inventor).WithTags("Inventor");
             
         }
     }

@@ -75,10 +75,11 @@ namespace Lab_Shopping_WebSite.Services
             var amount_col = (from tmp in item.Commodity_Sizes
                               select new
                               {
-                                  Amount = _db.Inventories.OrderByDescending(n => n.InventoryID)
+                                  Amount = _db.Inventories.OrderByDescending(n => n.CreateTime)
                                           .Where(n => n.Commodity_SizeID == tmp.Commodity_SizesID)
-                                          .Select(n => n.Amount).Take(1).FirstOrDefault()
+                                          .Select(n => n.Total_Amount).Take(1).FirstOrDefault()
                               }).ToList();
+            
 
             result.Amount = new List<decimal>();
             foreach (var amount in amount_col)
@@ -324,7 +325,13 @@ namespace Lab_Shopping_WebSite.Services
             var query = _db.Commodity_Images.Where(n => n.CommodityID == CommodityID).ToList();
             if (query.Count > 0)
             {
-                return await Deleter(query);
+                foreach (var item in query)
+                {
+                   var result=  await Deleter(query);
+                    if (!result.Item1)
+                        return Tuple.Create(false, "Delete Img Error");
+                }
+                return Tuple.Create(true, "");
             }
             return Tuple.Create(true, "NotFound.");
         }

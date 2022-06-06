@@ -95,4 +95,11 @@ namespace Lab_Shopping_WebSite.DTO
         public List<CartDto> Carts { get; set; } // 訂單內容
     }
 
+    public class InventorDto
+    {
+        public int CommodityId { get; set; }
+        public string CommodityColor { get; set; }
+        public string CommoditySize { get; set; }
+        public int Amount { get; set; }
+    }
 }
