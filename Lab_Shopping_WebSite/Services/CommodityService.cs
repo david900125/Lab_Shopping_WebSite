@@ -327,7 +327,7 @@ namespace Lab_Shopping_WebSite.Services
             {
                 foreach (var item in query)
                 {
-                   var result=  await Deleter(query);
+                   var result=  await Deleter(item);
                     if (!result.Item1)
                         return Tuple.Create(false, "Delete Img Error");
                 }
